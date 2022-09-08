@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Trial.py
+#  EdgeConnect.py
 #  
 #  Copyright 2022 SMartPump <smartpump@smartpump-desktop>
 #  
@@ -27,10 +27,10 @@ from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 from pymodbus.transaction import ModbusRtuFramer
 import time
 from datetime import datetime
-import serial
 import pandas as pd
 import paho.mqtt.client as mqtt
 import json
+import pyodbc
 
 # MQTT defenitions
 mqtt_client = mqtt.Client('BuckmanDigital')
@@ -70,8 +70,4 @@ try:
 			time.sleep(5)
 except Exception as e:
 	print(e)
-
-
-final = pd.DataFrame.from_dict(translator(data))
-print(final)
 
