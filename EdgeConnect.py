@@ -37,36 +37,38 @@ mqtt_broker = 'broker.hivemq.com'
 topic = 'buckman/ackumen/ddapump'
 mqtt_client.connect(mqtt_broker)
 
-def translator(data):
-	reg = {}
-	i = 201
-	for c in range(len(data)):
-		reg.update({i:data[c]})
-		i += 1
-	return reg
-	
-#Connect To Client and Get Data	 
-client = ModbusClient(method='rtu', port='/dev/ttyUSB0', parity= 'N', baudrate= 9600, stopbits=2, auto_open=True)
-try:
-	conn = client.connect()
-	if conn:
-		print('Connected')
-		while True:
-			read = client.read_holding_registers(address=201, count=100, unit=27) #read holding registers from device number 27
-			metrics = translator(read.registers) #formulate data dictionary
-			# define data in SparkPlugB structure
-			pub_data = {
-						'site' : 'digitalHUB',
-						'timestamp' : str(datetime.now()),
-						'metrics' : metrics
-						}
-			message = json.dumps(pub_data) 
-			try:
-				mqtt_client.publish(topic, message, qos = 0) # publish to MQTT Broker every 5s
-				print(f'{datetime.now()}: publishing {message} to {topic}')
-			except:
-				print('There was an issue sending data')
-			time.sleep(5)
-except Exception as e:
-	print(e)
 
+def translator(data):
+    reg = {}
+    i = 201
+    for c in range(len(data)):
+        reg.update({i: data[c]})
+        i += 1
+    return reg
+
+
+# Connect To Client and Get Data
+client = ModbusClient(method='rtu', port='/dev/ttyUSB0', parity='N', baudrate=9600, stopbits=2, auto_open=True)
+try:
+    conn = client.connect()
+    if conn:
+        print('Connected')
+        while True:
+            read = client.read_holding_registers(address=201, count=100,
+                                                 unit=27)  # read holding registers from device number 27
+            metrics = translator(read.registers)  # formulate data dictionary
+            # define data in SparkPlugB structure
+            pub_data = {
+                'site': 'digitalHUB',
+                'timestamp': str(datetime.now()),
+                'metrics': metrics
+            }
+            message = json.dumps(pub_data)
+            try:
+                mqtt_client.publish(topic, message, qos=0)  # publish to MQTT Broker every 5s
+                print(f'{datetime.now()}: publishing {message} to {topic}')
+            except:
+                print('There was an issue sending data')
+            time.sleep(5)
+except Exception as e:
+    print(e)
