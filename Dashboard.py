@@ -1,279 +1,246 @@
-import warnings
-warnings.filterwarnings("ignore")
+######## Imports ########
 import dash
+from dash.dependencies import Input, Output, State
+from dash import dash_table
 from dash import dcc
 from dash import html
-from dash.dependencies import Input, Output, State
-import plotly.graph_objs as go
-import dash_daq as daq
-import datetime as dt
 import pandas as pd
-from dbConnect import dbServices as db
+import dash_daq as daq
+import plotly.express as px
+from urllib.request import urlopen
+import json
+import dash_bootstrap_components as dbc
+import textwrap
+from datetime import datetime, timedelta, timezone
 from collections import deque
+import os
+import sys
+import inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir)
+# from dbServices import dbServices
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = dash.Dash(
-    __name__,
-    meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
-    external_stylesheets=external_stylesheets
-)
+######## Imports ########
+
+######## App Declarations ########
+external_stylesheets = [dbc.themes.MINTY]
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
+app.config.suppress_callback_exceptions = True
+######## App Declarations ########
+
 
 X = deque(maxlen=20)
 Y = deque(maxlen=20)
 
-tab_style = {
-    'padding': '6px',
-    'background': '#040830',
-    'color': 'white'
+users = {
+    'mmuthumani@buckman.com': 'pass@123',
+    'ramachandran@buckman.com': 'password',
+    'mscatolin@buckman.com': 'password123'
 }
-
-app_color = { "graph_bg": "#792721", "graph_line": "#009BEF"}
-
-app.title = "ISE CNC Dashboard"
-server = app.server
-app.config["suppress_callback_exceptions"] = True
 
 
 def build_banner():
     return html.Div(
-        style=tab_style,
         id="banner",
         className="banner",
         children=[
             html.Div(
-                id='ncsu-logo',
-                style={'width': '33.33%', 'display': 'inline-block', 'textAlign': 'left', 'verticalAlign': 'center'},
+                id='buckman-logo',
+                style={'width': '20%', 'display': 'inline-block', 'textAlign': 'left', 'verticalAlign': 'center'},
                 children=[
                     html.A
-                    (html.Img(id="logo2", src='https://brand.ncsu.edu/img/logo/brick2x2.jpg', height="50px",
+                    (html.Img(id="logo2", src='https://www.papnews.com/wp-content/uploads/2020/04/Buckman_Logo_Preferred_GREEN.png',
+                              height="80px",
                               style={'textAlign': 'left'}
                               ),
-                     href="https://www.ncsu.edu/",
+                     href="https://www.buckman.com/",
                      )
                 ],
             ),
             html.Div(
                 id="banner-text",
                 children=[
-                    html.H5("ISE 725 Smart Manufacturing Dashboard"),
+                    html.H2("Smart Pump Monitoring and Control"),
                 ],
-                style={'textAlign': 'center', 'width': '33.33%', 'display': 'inline-block', 'verticalAlign': 'center'}
+                style={'textAlign': 'center', 'width': '60%', 'display': 'inline-block', 'verticalAlign': 'center'}
             ),
             html.Div(
-                id="banner-logo",
-                style={'width': '33.33%', 'display': 'inline-block', 'textAlign': 'right', 'verticalAlign': 'center'},
-                children=[
-                    html.Button(
-                        id="learn-more-button", children="LEARN MORE", n_clicks=0, style={'verticalAlign': 'center',
-                                                                                          'marginRight': 10}
+                [
+                    dbc.Button("Pages", id="open-offcanvas", n_clicks=0),
+                    dbc.Offcanvas(children=[
+                        html.Div([dbc.Button("Home", id="home", n_clicks=0)], style={'marginBottom': 5}),
+                        html.Div([dbc.Button("Assets", id="assets", n_clicks=0)], style={'marginBottom': 5}),
+                        html.Div(dbc.Button("Controls", id="controls", n_clicks=0, disabled=True))
+                    ],
+                        id="offcanvas",
+                        title="Pages",
+                        is_open=False,
                     ),
-                    html.A(
-                        html.Img(id="logo", src='https://www.ise.ncsu.edu/wp-content/uploads/2016/01/'
-                                                'ise-symbol-logo-01.jpg', height='50px'),
-                        style={'verticalAlign': 'center',
-                               'marginRight': 10},
-                        href="https://www.ise.ncsu.edu/",
+                    html.Div(dbc.Button("Login", id="login", n_clicks=0, disabled=False),
+                             style={'display': 'inline-block',
+                                    'marginLeft': 5}),
+                    html.Div(dbc.Button("Learn More", id="learn-more-button", n_clicks=0, disabled=False),
+                             style={'display': 'inline-block',
+                                    'marginLeft': 5}),
+                    html.Div(id='username'),
+                    html.Div(
+                        [
+                            dbc.Modal(
+                                id="modal",
+                                is_open=False,
+                                children=[
+                                    dbc.ModalHeader(dbc.ModalTitle("Login")),
+                                    dbc.ModalBody(
+                                        [html.Div(
+                                            [
+                                                dbc.Label("Email", html_for="example-email"),
+                                                dbc.Input(type="email", id="example-email", placeholder="Enter email",
+                                                          value=''),
+                                                dbc.FormText(
+                                                    "example@buckman.com",
+                                                    color="gray",
+                                                ),
+                                            ],
+                                            className="mb-3",
+                                        ),
+                                            html.Div(
+                                                [
+                                                    dbc.Label("Password", html_for="example-password"),
+                                                    dbc.Input(
+                                                        type="password",
+                                                        id="example-password",
+                                                        placeholder="Enter password",
+                                                    ),
+                                                    dbc.FormText(
+                                                        "Make sure its right",
+                                                        color="gray"
+                                                    ),
+                                                ],
+                                                className="mb-3",
+                                            ),
+                                            dbc.Button(
+                                                "Submit", id="submit", className="ms-auto", n_clicks=0
+                                            )
+                                        ]
+                                    ),
+                                    dbc.ModalFooter(
+                                        dbc.Button(
+                                            "Close", id="close", className="ms-auto", n_clicks=0
+                                        )
+                                    )
+
+                                ]
+                            )
+                        ]
                     ),
+                    html.Div(
+                        [
+                            dbc.Modal(
+                                id="modal2",
+                                is_open=False,
+                                children=[
+                                    dbc.ModalHeader(dbc.ModalTitle("Learn More")),
+                                    dbc.ModalBody(
+                                        [html.Div(
+                                            html.P(
+                                                "This Dashboard allows us to remotely monitor the Grundfos DDA pump "
+                                                "in the field and also allows us to have complete control over all "
+                                                "the parameters that control the running of the pump "
+                                            )
+                                        ),
+                                        ]
+                                    ),
+                                    dbc.ModalFooter(
+                                        dbc.Button(
+                                            "Close", id="close2", className="ms-auto", n_clicks=0
+                                        )
+                                    )
+
+                                ]
+                            )
+                        ]
+                    )
                 ],
-            ),
+                style={'textAlign': 'center', 'width': '20%', 'display': 'inline-block', 'verticalAlign': 'center'}
+            )
         ],
     )
 
 
-def generate_modal():
-    return html.Div(
-        id="markdown",
-        className="modal",
-        style=tab_style,
-        children=(
-            html.Div(
-                id="markdown-container",
-                className="markdown-container",
-                children=[
-                    html.Div(
-                        className="close-container",
-                        children=html.Button(
-                            "Close",
-                            id="markdown_close",
-                            n_clicks=0,
-                            className="closeButton",
-                        ),
-                    ),
-                    html.Div(
-                        className="markdown-text",
-                        style=tab_style,
-                        children=dcc.Markdown(
-                            children=(
-                                """
-                        ##### Overview:
-                        This dashboard is created for the purpose of demonstrating a plotly dashboard can 
-                        access the data in a PostgreSQL database located on a heroku cloud server. 
-                        All code is written in python and the protocol used to transmit data is MQTT. 
-                    """
-                            )
-                        ),
-                    ),
-                ],
-            )
-        ),
-    )
+@app.callback(
+    Output("offcanvas", "is_open"),
+    Input("open-offcanvas", "n_clicks"),
+    [State("offcanvas", "is_open")],
+)
+def toggle_offcanvas(n1, is_open):
+    if n1:
+        return not is_open
+    return is_open
 
 
-def build_hmi():
-    return html.Div(style=tab_style,
-                    children=[
-                        html.Div(
-                            className='twelve columns',
-                            children=[
-                                html.P('Machine_1'),
-                            ],
-                            style={'marginTop': 10, 'marginBottom': 30,
-                                   'font-size': 18,
-                                   'color': 'white',
-                                   'background': '#040830'
-                                   }
-                        ),
+@app.callback(
+    [Output("example-email", "valid"),
+     Output("example-email", "invalid")
+     ],
+    [Input("example-email", "value")],
+)
+def check_validity(user):
+    for u in list(users.keys()):
+        if user == u:
+            return True, False
+    return False, False
 
-                        html.Div(
-                            style=tab_style,
-                            id="card-0",
-                            children=[
-                                daq.LEDDisplay(
-                                    id="machine-led",
-                                    label="machine ID",
-                                    labelPosition="top",
-                                    value="1521",
-                                    color="#92e0d3",
-                                    backgroundColor="#1e2130",
-                                    size=50,
-                                    style={'width': '25%', 'display': 'inline-block',
-                                           'verticalAlign': 'center'}
-                                        ),
-                                daq.Tank(
-                                    id="humidity",
-                                    label="Humidity",
-                                    labelPosition="top",
-                                    min=0,
-                                    max=100,
-                                    showCurrentValue=True,
-                                    units='%',
-                                    style={'width': '25%', 'display': 'inline-block',
-                                           'verticalAlign': 'center'}
-                                        ),
-                                daq.Gauge(
-                                    color={"gradient": True,
-                                           "ranges": {"green": [0, 60], "yellow": [60, 80], "red": [80, 100]}},
-                                    label="Temperature deg F",
-                                    labelPosition="top",
-                                    id="temperature-gauge",
-                                    # max=max_length * 2,
-                                    min=0,
-                                    showCurrentValue=True,  # default size 200 pixel
-                                    max=100,
-                                    style={'width': '25%', 'display': 'inline-block',
-                                           'verticalAlign': 'center'}
-                                        ),
-                                daq.Gauge(
-                                    color={"gradient": True,
-                                           "ranges": {"green": [0, 60], "yellow": [60, 80], "red": [80, 100]}},
-                                    label="Pressure kPa",
-                                    labelPosition="top",
-                                    id="pressure-gauge",
-                                    # max=max_length * 2,
-                                    min=0,
-                                    showCurrentValue=True,  # default size 200 pixel
-                                    max=100,
-                                    style={'width': '25%', 'display': 'inline-block',
-                                           'verticalAlign': 'center'}
-                                )
-                                    ]
-                        ),
 
-                        html.Div(
-                            style=tab_style,
-                            children=[
-                                dcc.Graph(id= "sensor-temperature", animate=True)
-                            ]
-                        )
-            ]
-    )
+@app.callback(
+    [Output("example-password", "valid"),
+     Output("example-password", "invalid")
+     ],
+    [
+        Input("example-password", "value"),
+        Input("example-email", "value")],
+)
+def check_validity(pwd, user):
+    if pwd == users[user]:
+        return True, False
+    return False, False
+
+
+@app.callback(
+    Output("modal", "is_open"),
+    [Input("login", "n_clicks"),
+     Input("close", "n_clicks"),
+     Input("submit", "n_clicks"),
+     ],
+    [State("modal", "is_open")],
+)
+def toggle_modal(n1, n2, n3, is_open):
+    if n1 or n2 or n3:
+        return not is_open
+    return is_open
+
+
+@app.callback(
+    Output("modal2", "is_open"),
+    [Input("learn-more-button", "n_clicks"),
+     Input("close2", "n_clicks")
+     ],
+    [State("modal2", "is_open")],
+)
+def toggle_modal2(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
 
 
 app.layout = html.Div(
-    style={'background': '#333333', 'width': '100%','height': '100%'},
+    style={'background': 'white', 'width': '100%', 'height': '100%'},
     id="big-app-container",
     children=[
         build_banner(),
-        generate_modal(),
-        dcc.Interval(
-            id="interval-component",
-            interval=1*1000,  # in milliseconds
-            n_intervals=0,
-            disabled=False,
-        ),
-        html.Div(
-            id="app-container",
-            children=[
-                build_hmi()
-            ],
-        ),
-    ],
+    ]
 )
-
-
-# ======= Callbacks for modal popup =======
-@app.callback(
-    Output("markdown", "style"),
-    [Input("learn-more-button", "n_clicks"), Input("markdown_close", "n_clicks")],
-)
-def update_click_output(button_click, close_click):
-    ctx = dash.callback_context
-
-    if ctx.triggered:
-        prop_id = ctx.triggered[0]["prop_id"].split(".")[0]
-        if prop_id == "learn-more-button":
-            return {"display": "block"}
-
-    return {"display": "none"}
-
-
-# ======= update progress gauge =========
-@app.callback(
-    output=[Output("temperature-gauge", "value"),
-            Output("pressure-gauge", "value"),
-            Output("machine-led", "value"),
-            Output("humidity", "value"),
-            Output("sensor-temperature", "figure")],
-    inputs=[Input("interval-component", "n_intervals")],
-)
-def update_gauge(interval):
-    tablename = "sensorData"
-    if interval < 20000:
-        temperature = db.getData(tablename)['temperature'].tolist()[0]
-        pressure = db.getData(tablename)['pressure'].tolist()[0]
-        machine_id = db.getData(tablename)['machine_id'].tolist()[0]
-        humidity = db.getData(tablename)['humidity'].tolist()[0]
-        X.append(get_current_time())
-        Y.append(temperature)
-        data = go.Scatter(
-            x=list(X),
-            y=list(Y),
-            name='Scatter',
-            mode='lines+markers'
-        )
-        figure = {'data': [data], 'layout': go.Layout(xaxis=dict(range=[min(X), max(X)]),
-                                             yaxis=dict(range=[min(Y), max(Y)]), title="Sensor Temperature Live",)}
-        return temperature, pressure, machine_id, humidity, figure
-
-
-#---Helper function
-def get_current_time():
-    now = dt.datetime.now()
-    total_time = (now.hour * 3600) + (now.minute * 60) + (now.second)
-    return total_time
-
 
 if __name__ == "__main__":
-    app.run_server(debug=False)
-
-
+    app.run(debug=True)
