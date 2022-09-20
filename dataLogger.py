@@ -14,6 +14,16 @@ mqtt_topic = db_config.topic
 mqttBroker = db_config.broker
 dbCon = db.conn
 
+
+def getDict(metrics):
+    cols = [list(i.keys())[0] for i in metrics]
+    vals = [list(i.values())[0] for i in metrics]
+    dataDict={}
+    for i in range(len(cols)):
+        dataDict.update({cols[i]: vals[i]})
+    return dataDict
+
+
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("Connected to MQTT Broker!")
@@ -27,8 +37,9 @@ def on_disconnect(client, userdata, rc):
 
 def on_message(client, userdata, msg):
     x = msg.payload
-    metrics = json.loads(x)['metrics']
-    db.writeValues(metrics, dbCon, db_config.table)
+    load = json.loads(x)['metrics']
+    metrics = getDict(load)
+    db.writeValues(metrics, dbCon, db_config.dataTable)
 
 
 mqttClient.connect(mqttBroker)

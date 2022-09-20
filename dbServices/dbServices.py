@@ -5,16 +5,17 @@ import time
 import os
 import sys
 import inspect
+
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-import db_config as config
+from dbServices import db_config as config
 
 conn = db.connect(DRIVER='SQL Server',
-                 SERVER = config.server_name,
-                 UID = config.user,
-                 PWD=config.pwd,
-                 DATABASE=config.database_name)
+                  SERVER=config.server_name,
+                  UID=config.user,
+                  PWD=config.pwd,
+                  DATABASE=config.database_name)
 
 
 def createTable(db_name, tablename, columns, conn):
@@ -36,7 +37,7 @@ def writeValues(metrics, conn, table):
     keys = list(metrics.keys())
     values = tuple(metrics.values())
     cols = '"' + ('","').join(keys) + '"'
-    s_lens = "?,"*len(keys)
+    s_lens = "?," * len(keys)
     s = s_lens.split(",")
     s = (",").join(s[:-1])
     insertQ = f""" INSERT INTO {table} ({cols})
@@ -65,5 +66,3 @@ def delData(tablename, conn):
             print("Delete Succesful")
     except (Exception, db.DatabaseError) as error:
         print(error)
-
-

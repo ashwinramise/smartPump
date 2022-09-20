@@ -5,4 +5,5 @@ database_name = "budig-bb-pltsql-05-d"
 broker = 'broker.hivemq.com'
 topic ='buckman/ackumen/ddapump1'
 table = 'PoC_SP_MonitoringTags'
+dataTable = 'PoC_SP_Metrics'
 

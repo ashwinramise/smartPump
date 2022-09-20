@@ -9,6 +9,7 @@ import dash_daq as daq
 import plotly.express as px
 from urllib.request import urlopen
 import json
+import dash_daq as daq
 import dash_bootstrap_components as dbc
 import textwrap
 from datetime import datetime, timedelta, timezone
@@ -16,10 +17,12 @@ from collections import deque
 import os
 import sys
 import inspect
+
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-# from dbServices import dbServices
+from dbServices import dbServices
+from mqttServices import pumpControl as ctrl
 
 ######## Imports ########
 
@@ -30,6 +33,7 @@ server = app.server
 app.config.suppress_callback_exceptions = True
 ######## App Declarations ########
 
+logs = []
 
 X = deque(maxlen=20)
 Y = deque(maxlen=20)
@@ -51,9 +55,10 @@ def build_banner():
                 style={'width': '20%', 'display': 'inline-block', 'textAlign': 'left', 'verticalAlign': 'center'},
                 children=[
                     html.A
-                    (html.Img(id="logo2", src='https://www.papnews.com/wp-content/uploads/2020/04/Buckman_Logo_Preferred_GREEN.png',
+                    (html.Img(id="logo2",
+                              src='https://www.papnews.com/wp-content/uploads/2020/04/Buckman_Logo_Preferred_GREEN.png',
                               height="80px",
-                              style={'textAlign': 'left'}
+                              style={'textAlign': 'left', 'marginLeft':10}
                               ),
                      href="https://www.buckman.com/",
                      )
@@ -234,6 +239,211 @@ def toggle_modal2(n1, n2, is_open):
     return is_open
 
 
+@app.callback(
+    [
+        Output('controls', 'disabled'),
+        Output('login', 'disabled'),
+        Output('username', 'children')
+    ],
+    [
+        Input("submit", "n_clicks"),
+        Input("example-email", "value"),
+        Input("example-password", "value"),
+    ]
+)
+def editorpage(s, u, p):
+    history = pd.read_csv(r'Data\user_logs.csv')
+    history['Last_Access'] = [pd.Timestamp(d) for d in history['Last_Access']]
+    loglist = history.to_dict('records')
+    for r in loglist:
+        if r not in logs:
+            logs.append(r)
+    if s and u in list(users.keys()) and p == users[u]:
+        text = html.H6(u)
+        logs.append({'User': u, 'Last_Access': pd.Timestamp(datetime.now())})
+        pd.DataFrame.from_dict(logs).to_csv(r'Data\user_logs.csv', index=False)
+        return False, True, text
+
+
+def home():
+    pass
+
+
+def assets():
+    pass
+
+
+def control():
+    return html.Div(
+        style={'textAlign': 'center'},
+        children=[
+            html.Div(
+                id='users-log',
+                style={'marginTop': 15, 'width': "40%",
+                       'display': 'inline-block', 'textAlign': 'center', 'marginRight': 40, 'verticalAlign': 'top'},
+                children=[
+                    html.Div(
+                        [
+                            html.Div(dcc.DatePickerRange(
+                                id='my-date-picker-range',
+                                end_date=datetime.now().date()
+                            ), style={'display': 'inline-block', 'marginRight': 10}),
+                            html.Div(dbc.Button(
+                                "View Logs", id="logme", className="ms-auto", n_clicks=0),
+                                style={'display': 'inline-block'}),
+                        ]),
+                    html.Div(
+                        id='logs', style={'marginTop': 25},
+                        children=[
+                            html.Div(
+                                [
+                                    dcc.Graph(id='usage-stats'),
+                                ],
+                                style={'marginTop': 30}
+                            )
+                        ]
+                    ),
+                ]
+            ),
+            html.Div(
+                id='risk-appetite',
+                style={'marginTop': 15, 'width': "40%",
+                       'display': 'inline-block', 'textAlign': 'center'},
+                children=[
+                    html.Div(html.H4("Set Pump Control Parameters")),
+                    html.Div(
+                        [
+                            html.Div(
+                                [
+                                    dcc.Dropdown(
+                                        id='site-1',
+                                        multi=False,
+                                        style={'height': 15},
+                                        placeholder='Select Site',
+                                        searchable=True
+                                    )
+                                ], style={'marginTop': 0, 'marginBottom': 10,
+                                          'font-size': 18,
+                                          'color': 'black',
+                                          'width': '50%',
+                                          'display': 'inline-block'}
+                            ),
+                            html.Div(
+                                [
+                                    dcc.Dropdown(
+                                        id='pump-1',
+                                        multi=False,
+                                        style={'height': 15},
+                                        placeholder='Select Pump',
+                                        searchable=True
+                                    )
+                                ], style={'marginTop': 0, 'marginBottom': 10,
+                                          'font-size': 18,
+                                          'color': 'black',
+                                          'width': '50%',
+                                          'display': 'inline-block'}
+                            ),
+                            html.Div(
+                                [
+                                    html.H6("Pump Power:"),
+                                    daq.PowerButton(
+                                        id='powerON',
+                                    )
+                                ],
+                                style={'marginTop': 15, 'textAlign': 'center'}
+                            ),
+                            html.Div(
+                                [
+                                    html.H6("Pump Speed: % "),
+                                    html.Div(
+                                        dcc.Slider(0, 100, 1, marks=None,
+                                                   tooltip={"placement": "bottom",
+                                                            "always_visible": True}
+                                                   ),
+                                        style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
+                                               }
+                                    )
+                                ],
+                                style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
+                                       }
+                            ),
+                            html.Div(
+                                [
+                                    html.H6("Dosing Frequency: Seconds "),
+                                    html.Div(
+                                        dcc.Slider(min=0,
+                                                   max=10,
+                                                   step=0.1,
+                                                   marks=None,
+                                                   tooltip={"placement": "bottom",
+                                                            "always_visible": True}
+                                                   ),
+                                        style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
+                                               }
+                                    )
+                                ],
+                                style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
+                                       }
+                            ),
+                            dbc.Button(
+                                "Submit", id="submit-2", className="ms-auto", n_clicks=0
+                            )
+                        ]
+                    ),
+                ]
+            )
+        ]
+    )
+
+
+@app.callback(
+    [
+     Output('usage-stats', 'figure')],
+    [Input('my-date-picker-range', 'start_date'),
+     Input('my-date-picker-range', 'end_date'),
+     Input('logme', 'n_clicks')]
+)
+def updateLogs(d1, d2, clicks):
+    if d1 is None:
+        data = pd.read_csv(r'Data\user_logs.csv')
+        data['Last_Access'] = [pd.Timestamp(i) for i in data['Last_Access'].tolist()]
+        data.sort_values(by='Last_Access', ascending=False, inplace=True)
+        t = f"Usage Statistics upto {d2}"
+    elif d1 is not None and clicks:
+        l = pd.read_csv(r'Data\user_logs.csv')
+        l['Last_Access'] = [pd.Timestamp(i) for i in l['Last_Access'].tolist()]
+        l['date'] = [d.date() for d in l['Last_Access'].tolist()]
+        print(l['date'].to_list()[5], type(l['date'].to_list()[5]))
+        data = l[(l['date'] <= pd.Timestamp(d2).date()) & (l['date'] > pd.Timestamp(d1).date())].sort_values(
+            by='Last_Access',
+            ascending=False)
+        t = f"Usage Statistics from {d1} to {d2}"
+    cols = [
+        {"name": i, "id": i} for i in data.columns
+    ]
+    n = pd.DataFrame()
+    n['Users'] = [u.split('@')[0] for u in data['User'].unique()]
+    n['Counts'] = [data['User'].tolist().count(u) for u in data['User'].unique()]
+    n.sort_values(by='Counts', inplace=True, ascending=False)
+    use = px.bar(n, x='Users', y='Counts', color='Users', title=t)
+    return [use]
+
+
+@app.callback(
+    Output('powerON', 'color'),
+    Input('powerON', 'on')
+)
+def powerON(n):
+    ctrl.powerPump(n)
+    if n:
+        color = '#63ff5e'
+    if not n:
+        color = '#e6110e'
+    return color
+
+
+
+
 app.layout = html.Div(
     style={'background': 'white', 'width': '100%', 'height': '100%'},
     id="big-app-container",
@@ -242,5 +452,25 @@ app.layout = html.Div(
     ]
 )
 
+
+@app.callback(
+    output=[
+        Output("big-app-container", "children"),
+    ],
+    inputs=[
+        Input("home", "n_clicks"),
+        Input("assets", "n_clicks"),
+        Input("controls", "n_clicks"),
+    ],
+)
+def getPages(h, a, c):
+    if h > 0:
+        return [[build_banner(), home()]]
+    elif a > 0:
+        return [[build_banner(), assets()]]
+    elif c > 0:
+        return [[build_banner(), control()]]
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
