@@ -21,7 +21,7 @@ import inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from dbServices import dbServices
+from dbServices import dbServices as db
 from mqttServices import pumpControl as ctrl
 
 ######## Imports ########
@@ -252,16 +252,22 @@ def toggle_modal2(n1, n2, is_open):
     ]
 )
 def editorpage(s, u, p):
-    history = pd.read_csv(r'Data\user_logs.csv')
-    history['Last_Access'] = [pd.Timestamp(d) for d in history['Last_Access']]
+    history = db.getData('PoC_SP_UserLogs', 'RecordID')
+    if len(history['RecordID'].tolist()) == 0:
+        record = 0
+    else:
+        record = history['RecordID'].tolist()[0]
+    history['Last_Access'] = [pd.to_datetime(d) for d in history['Last_Access']]
     loglist = history.to_dict('records')
+
     for r in loglist:
         if r not in logs:
             logs.append(r)
     if s and u in list(users.keys()) and p == users[u]:
         text = html.H6(u)
-        logs.append({'User': u, 'Last_Access': pd.Timestamp(datetime.now())})
-        pd.DataFrame.from_dict(logs).to_csv(r'Data\user_logs.csv', index=False)
+        new_record = {'RecordID': record+1, 'User': u, 'Last_Access': str(datetime.now())}
+        logs.append(new_record)
+        db.writeValues(new_record, 'PoC_SP_UserLogs')
         return False, True, text
 
 
@@ -320,6 +326,7 @@ def control():
                                         multi=False,
                                         style={'height': 15},
                                         placeholder='Select Site',
+                                        options=['Digital Hub', 'Chennai'],
                                         searchable=True
                                     )
                                 ], style={'marginTop': 0, 'marginBottom': 10,
@@ -335,6 +342,7 @@ def control():
                                         multi=False,
                                         style={'height': 15},
                                         placeholder='Select Pump',
+                                        options=['Pump1', 'Pump2'],
                                         searchable=True
                                     )
                                 ], style={'marginTop': 0, 'marginBottom': 10,
@@ -354,12 +362,17 @@ def control():
                             ),
                             html.Div(
                                 [
-                                    html.H6("Pump Speed: % "),
+                                    html.H6("Flow Rate (l/h) "),
                                     html.Div(
-                                        dcc.Slider(0, 100, 1, marks=None,
-                                                   tooltip={"placement": "bottom",
-                                                            "always_visible": True}
-                                                   ),
+                                        daq.Knob(
+                                            id='flow-rate',
+                                            size=140,
+                                            max=6.3,
+                                            value=2.23,
+                                            persistence=True,
+                                            persisted_props=True,
+                                        )
+                                        ,
                                         style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
                                                }
                                     )
@@ -367,26 +380,38 @@ def control():
                                 style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
                                        }
                             ),
+                            # html.Div(
+                            #     [
+                            #         html.H6("Dosing Frequency: Seconds "),
+                            #         html.Div(
+                            #             dcc.Slider(min=0,
+                            #                        max=10,
+                            #                        step=0.1,
+                            #                        marks=None,
+                            #                        tooltip={"placement": "bottom",
+                            #                                 "always_visible": True}
+                            #                        ),
+                            #             style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
+                            #                    }
+                            #         )
+                            #     ],
+                            #     style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
+                            #            }
+                            # ),
                             html.Div(
                                 [
-                                    html.H6("Dosing Frequency: Seconds "),
                                     html.Div(
-                                        dcc.Slider(min=0,
-                                                   max=10,
-                                                   step=0.1,
-                                                   marks=None,
-                                                   tooltip={"placement": "bottom",
-                                                            "always_visible": True}
-                                                   ),
+                                        daq.LEDDisplay(
+                                            id='flow-rate-monitor',
+                                            value='0 l/h',
+                                            color="#FF5E5E"
+                                            ),
                                         style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
                                                }
                                     )
                                 ],
                                 style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
                                        }
-                            ),
-                            dbc.Button(
-                                "Submit", id="submit-2", className="ms-auto", n_clicks=0
                             )
                         ]
                     ),
@@ -405,13 +430,13 @@ def control():
 )
 def updateLogs(d1, d2, clicks):
     if d1 is None:
-        data = pd.read_csv(r'Data\user_logs.csv')
-        data['Last_Access'] = [pd.Timestamp(i) for i in data['Last_Access'].tolist()]
+        data = pd.DataFrame.from_dict(logs)
+        data['Last_Access'] = [pd.to_datetime(i) for i in data['Last_Access'].tolist()]
         data.sort_values(by='Last_Access', ascending=False, inplace=True)
         t = f"Usage Statistics upto {d2}"
     elif d1 is not None and clicks:
-        l = pd.read_csv(r'Data\user_logs.csv')
-        l['Last_Access'] = [pd.Timestamp(i) for i in l['Last_Access'].tolist()]
+        l = pd.DataFrame.from_dict(logs)
+        l['Last_Access'] = [pd.to_datetime(i) for i in l['Last_Access'].tolist()]
         l['date'] = [d.date() for d in l['Last_Access'].tolist()]
         print(l['date'].to_list()[5], type(l['date'].to_list()[5]))
         data = l[(l['date'] <= pd.Timestamp(d2).date()) & (l['date'] > pd.Timestamp(d1).date())].sort_values(
@@ -440,6 +465,15 @@ def powerON(n):
     if not n:
         color = '#e6110e'
     return color
+
+
+@app.callback(
+    Output('flow-rate-monitor', 'value'),
+    Input('flow-rate', 'value')
+)
+def update_output(value):
+    ctrl.pumpSpeed(value)
+    return [str(value)]
 
 
 

@@ -18,7 +18,7 @@ conn = db.connect(DRIVER='SQL Server',
                   DATABASE=config.database_name)
 
 
-def createTable(db_name, tablename, columns, conn):
+def createTable(db_name, tablename, columns, conn=conn):
     insertCMD = f'''CREATE TABLE "{tablename}" ({columns});'''
     cur = conn.cursor()
     try:
@@ -29,7 +29,7 @@ def createTable(db_name, tablename, columns, conn):
         print(error)
 
 
-def writeValues(metrics, conn, table):
+def writeValues(metrics, table, conn=conn):
     try:
         cur = conn.cursor()
     except (Exception, db.DatabaseError) as error:
@@ -50,13 +50,13 @@ def writeValues(metrics, conn, table):
         print(error)
 
 
-def getData(tablename, conn):
-    qu = f'select * from "{tablename}"'
+def getData(tablename, orderby, conn=conn):
+    qu = f'select * from "{tablename}" order by "{orderby}" desc'
     alldata = pd.read_sql_query(qu, conn)
     return alldata
 
 
-def delData(tablename, conn):
+def delData(tablename, conn=conn):
     try:
         cur = conn.cursor()
         q = f"delete from {tablename};"

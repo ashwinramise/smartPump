@@ -3,6 +3,7 @@ import json
 import os
 import sys
 import inspect
+import pandas as pd
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
@@ -37,9 +38,19 @@ def on_disconnect(client, userdata, rc):
 
 def on_message(client, userdata, msg):
     x = msg.payload
-    load = json.loads(x)['metrics']
+    incoming = json.loads(x)
+    load = incoming['metrics']
+    load.append({'Timestamp': incoming['timestamp']})
+    load.append({'site': incoming['site']})
+    load.append({'pumpID': incoming['pump']})
+    history = db.getData('PoC_SP_UserLogs', 'RecordID')
+    if len(history['RecordID'].tolist()) == 0:
+        record = 1
+    else:
+        record = history['RecordID'].tolist()[0] + 1
+    load.append({'RecordID': record})
     metrics = getDict(load)
-    db.writeValues(metrics, dbCon, db_config.dataTable)
+    db.writeValues(metrics, db_config.dataTable)
 
 
 mqttClient.connect(mqttBroker)
