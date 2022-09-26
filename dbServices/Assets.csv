@@ -1,0 +1,6 @@
+RecordID	Location	PumpName	PumpType
+1	DigitalHub	DH_dda001	Grundfos DDA FCM
+2	DigitalHub	DH_dda002	Grundfos DDA FCM
+3	Chennai	Ch_dda003	Grundfos DDA FCM
+4	Chicago	IL_dda004	Grundfos DDA FCM
+5	Charlotte	NC_dda005	Grundfos DDA FCM

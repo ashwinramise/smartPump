@@ -38,6 +38,9 @@ logs = []
 X = deque(maxlen=20)
 Y = deque(maxlen=20)
 
+####### Assets #####
+assets = db.getData("PoC_SP_Assets", "RecordID")
+
 users = {
     'mmuthumani@buckman.com': 'pass@123',
     'ramachandran@buckman.com': 'password',
@@ -77,6 +80,7 @@ def build_banner():
                     dbc.Offcanvas(children=[
                         html.Div([dbc.Button("Home", id="home", n_clicks=0)], style={'marginBottom': 5}),
                         html.Div([dbc.Button("Assets", id="assets", n_clicks=0)], style={'marginBottom': 5}),
+                        html.Div([dbc.Button("Logs", id="log", n_clicks=0)], style={'marginBottom': 5}),
                         html.Div(dbc.Button("Controls", id="controls", n_clicks=0, disabled=True))
                     ],
                         id="offcanvas",
@@ -259,9 +263,9 @@ def editorpage(s, u, p):
         record = history['RecordID'].tolist()[0]
     history['Last_Access'] = [pd.to_datetime(d) for d in history['Last_Access']]
     loglist = history.to_dict('records')
-
+    existing = [i['RecordID'] for i in logs]
     for r in loglist:
-        if r not in logs:
+        if r['RecordID'] not in existing:
             logs.append(r)
     if s and u in list(users.keys()) and p == users[u]:
         text = html.H6(u)
@@ -275,11 +279,7 @@ def home():
     pass
 
 
-def assets():
-    pass
-
-
-def control():
+def history():
     return html.Div(
         style={'textAlign': 'center'},
         children=[
@@ -299,7 +299,7 @@ def control():
                                 style={'display': 'inline-block'}),
                         ]),
                     html.Div(
-                        id='logs', style={'marginTop': 25},
+                        id='usage-g', style={'marginTop': 25},
                         children=[
                             html.Div(
                                 [
@@ -307,6 +307,90 @@ def control():
                                 ],
                                 style={'marginTop': 30}
                             )
+                        ]
+                    ),
+                ]
+            ),
+            html.Div(
+                id='logs',
+                style={'marginTop': 15, 'width': "60%",
+                       'display': 'inline-block', 'textAlign': 'center', 'marginRight': 40, 'verticalAlign': 'top'},
+            )
+        ]
+    )
+
+
+@app.callback(
+    [Output('logs', 'children'),
+     Output('usage-stats', 'figure')],
+    [Input('my-date-picker-range', 'start_date'),
+     Input('my-date-picker-range', 'end_date'),
+     Input('logme', 'n_clicks')]
+)
+def updateLogs(d1, d2, clicks):
+    print(len(logs))
+    data = pd.DataFrame.from_dict(logs)
+    if d1 is None:
+        # data = db.getData("PoC_SP_UserLogs", "RecordID")
+        data['Last_Access'] = [pd.to_datetime(i) for i in data['Last_Access'].tolist()]
+        data.sort_values(by='Last_Access', ascending=False, inplace=True)
+        t = f"Usage Statistics upto {d2}"
+    elif d1 is not None and clicks:
+        l = data
+        l['Last_Access'] = [pd.to_datetime(i) for i in l['Last_Access'].tolist()]
+        l['date'] = [d.date() for d in l['Last_Access'].tolist()]
+        data = l[(l['date'] <= pd.Timestamp(d2).date()) & (l['date'] > pd.Timestamp(d1).date())].sort_values(
+            by='Last_Access',
+            ascending=False)
+        t = f"Usage Statistics from {d1} to {d2}"
+    cols = [
+        {"name": i, "id": i} for i in data.columns
+    ]
+    rows = data.to_dict('records')
+    table = [
+        dash_table.DataTable(
+            id='data-table',
+            columns=cols,
+            style_cell={
+                'textAlign': 'center',
+                'font_size': '15px'
+            },
+            data=rows,
+            editable=False,
+            filter_action="native",
+            sort_action="native",
+            sort_mode="multi",
+            page_action="native",
+            page_current=0,
+            page_size=20,
+        )
+    ]
+    n = pd.DataFrame()
+    n['Users'] = [u.split('@')[0] for u in data['User'].unique()]
+    n['Counts'] = [data['User'].tolist().count(u) for u in data['User'].unique()]
+    n.sort_values(by='Counts', inplace=True, ascending=False)
+    use = px.bar(n, x='Users', y='Counts', color='Users', title=t)
+    return table, use
+
+
+def control():
+    return html.Div(
+        style={'textAlign': 'center'},
+        children=[
+            html.Div(
+                id='live-graphs',
+                style={'marginTop': 15, 'width': "55%",
+                       'display': 'inline-block', 'textAlign': 'center', 'marginRight': 40, 'verticalAlign': 'top'},
+                children=[
+                    html.Div(
+                        id='live-view', style={'marginTop': 25},
+                        children=[
+                            html.Div(
+                                [
+                                    dcc.Graph(id='pump-speed1'),
+                                ],
+                                style={'marginBottom': 5}
+                            ),
                         ]
                     ),
                 ]
@@ -326,7 +410,7 @@ def control():
                                         multi=False,
                                         style={'height': 15},
                                         placeholder='Select Site',
-                                        options=['Digital Hub', 'Chennai'],
+                                        options= assets['Location'].unique(),
                                         searchable=True
                                     )
                                 ], style={'marginTop': 0, 'marginBottom': 10,
@@ -380,24 +464,6 @@ def control():
                                 style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
                                        }
                             ),
-                            # html.Div(
-                            #     [
-                            #         html.H6("Dosing Frequency: Seconds "),
-                            #         html.Div(
-                            #             dcc.Slider(min=0,
-                            #                        max=10,
-                            #                        step=0.1,
-                            #                        marks=None,
-                            #                        tooltip={"placement": "bottom",
-                            #                                 "always_visible": True}
-                            #                        ),
-                            #             style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
-                            #                    }
-                            #         )
-                            #     ],
-                            #     style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
-                            #            }
-                            # ),
                             html.Div(
                                 [
                                     html.Div(
@@ -422,44 +488,24 @@ def control():
 
 
 @app.callback(
-    [
-     Output('usage-stats', 'figure')],
-    [Input('my-date-picker-range', 'start_date'),
-     Input('my-date-picker-range', 'end_date'),
-     Input('logme', 'n_clicks')]
+    Output('pump-1', 'options'),
+    Input('site-1', 'value'),
 )
-def updateLogs(d1, d2, clicks):
-    if d1 is None:
-        data = pd.DataFrame.from_dict(logs)
-        data['Last_Access'] = [pd.to_datetime(i) for i in data['Last_Access'].tolist()]
-        data.sort_values(by='Last_Access', ascending=False, inplace=True)
-        t = f"Usage Statistics upto {d2}"
-    elif d1 is not None and clicks:
-        l = pd.DataFrame.from_dict(logs)
-        l['Last_Access'] = [pd.to_datetime(i) for i in l['Last_Access'].tolist()]
-        l['date'] = [d.date() for d in l['Last_Access'].tolist()]
-        print(l['date'].to_list()[5], type(l['date'].to_list()[5]))
-        data = l[(l['date'] <= pd.Timestamp(d2).date()) & (l['date'] > pd.Timestamp(d1).date())].sort_values(
-            by='Last_Access',
-            ascending=False)
-        t = f"Usage Statistics from {d1} to {d2}"
-    cols = [
-        {"name": i, "id": i} for i in data.columns
-    ]
-    n = pd.DataFrame()
-    n['Users'] = [u.split('@')[0] for u in data['User'].unique()]
-    n['Counts'] = [data['User'].tolist().count(u) for u in data['User'].unique()]
-    n.sort_values(by='Counts', inplace=True, ascending=False)
-    use = px.bar(n, x='Users', y='Counts', color='Users', title=t)
-    return [use]
+def getpump(location):
+    pump = assets[assets['Location'] == location]
+    r = pump['PumpName'].unique().tolist()
+    return [{'label': i, 'value': i} for i in r]
 
 
 @app.callback(
     Output('powerON', 'color'),
-    Input('powerON', 'on')
+    Input('powerON', 'on'),
+    Input('site-1', 'value'),
+    Input('pump-1', 'value')
 )
-def powerON(n):
-    ctrl.powerPump(n)
+def powerON(n, site, pump):
+    if site is not None and pump is not None:
+        ctrl.powerPump(site, pump, n)
     if n:
         color = '#63ff5e'
     if not n:
@@ -469,20 +515,21 @@ def powerON(n):
 
 @app.callback(
     Output('flow-rate-monitor', 'value'),
-    Input('flow-rate', 'value')
+    Input('flow-rate', 'value'),
+    Input('site-1', 'value'),
+    Input('pump-1', 'value')
 )
-def update_output(value):
-    ctrl.pumpSpeed(value)
+def update_output(value, site, pump,):
+    if site is not None and pump is not None:
+        ctrl.pumpSpeed(site, pump, value)
     return [str(value)]
-
-
 
 
 app.layout = html.Div(
     style={'background': 'white', 'width': '100%', 'height': '100%'},
     id="big-app-container",
     children=[
-        build_banner(),
+        build_banner()
     ]
 )
 
@@ -494,17 +541,39 @@ app.layout = html.Div(
     inputs=[
         Input("home", "n_clicks"),
         Input("assets", "n_clicks"),
+        Input("log", "n_clicks"),
         Input("controls", "n_clicks"),
     ],
 )
-def getPages(h, a, c):
+def getPages(h, a, l, c):
     if h > 0:
-        return [[build_banner(), home()]]
-    elif a > 0:
-        return [[build_banner(), assets()]]
+        return [[build_banner(),
+                dcc.Interval(
+                    id="interval-component",
+                    interval=1*1000,  # in milliseconds
+                    n_intervals=0,
+                    disabled=False,
+                ),
+                 home()]]
+    elif l > 0:
+        return [[build_banner(),
+                 dcc.Interval(
+                     id="interval-component",
+                     interval=1 * 1000,  # in milliseconds
+                     n_intervals=0,
+                     disabled=False,
+                 ),
+                 history()]]
     elif c > 0:
-        return [[build_banner(), control()]]
+        return [[build_banner(),
+                 dcc.Interval(
+                     id="interval-component",
+                     interval=1 * 1000,  # in milliseconds
+                     n_intervals=0,
+                     disabled=False,
+                 ),
+                 control()]]
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
