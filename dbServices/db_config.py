@@ -3,7 +3,7 @@ user = "buckmanadmin"
 pwd = "Buck|\/|123"
 database_name = "Demo"
 broker = 'broker.hivemq.com'
-topic ='buckman/ackumen/#'
+topic ='buckman/ackumen/rawdata/#'
 table = 'PoC_SP_MonitoringTags'
 dataTable = 'PoC_SP_Metrics'
 

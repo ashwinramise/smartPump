@@ -378,6 +378,7 @@ def retCounts(site, pump, interval):
             df = db.getData("PoC_SP_Metrics", "RecordID")
             df = df[df['site'] == site & df['pumpID'] == pump].head(1)
             h = df['103'].tolist()[0]
+            print(h)
             if int(h) == 1:
                 disp_h = [
                     html.H4("Pump Status", className="card-title"),
@@ -632,7 +633,7 @@ def control():
 
 
 @app.callback(
-    Output('pump-speed1'),
+    Output('pump-speed1', 'figure'),
     [Input('site-1', 'value'),
      Input('pump-1', 'value'),
      Input("interval-component", "n_intervals")]
@@ -699,6 +700,12 @@ app.layout = html.Div(
     id="big-app-container",
     children=[
         build_banner(),
+        dcc.Interval(
+            id="interval-component",
+            interval=1 * 1000,  # in milliseconds
+            n_intervals=0,
+            disabled=False,
+        ),
         home()
     ]
 )
@@ -740,4 +747,4 @@ def getPages(h, a, l, c):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

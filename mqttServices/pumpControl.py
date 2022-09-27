@@ -22,7 +22,7 @@ pumpOFF = {'register': [100, 103], 'bit': [0x01, 0x01]}
 
 
 def powerPump(location, pumpname, powerButton):
-    topic = domain + location + '/' + pumpname + '/' + 'edits'
+    topic = domain + 'edits/' + location + '/' + pumpname
     if powerButton:
         package = json.dumps(pumpON)
     if not powerButton:
@@ -35,7 +35,7 @@ def powerPump(location, pumpname, powerButton):
 
 
 def pumpSpeed(location, pumpname, rate):
-    topic = domain + location + '/' + pumpname + '/' + 'edits'
+    topic = domain + 'edits/' + location + '/' + pumpname
     package = json.dumps({'register': [104, 106], 'bit': [0x00, int(rate * 10000)]})
     try:
         mqtt_client.publish(topic, package, qos=0)  # publish to MQTT Broker every 5s
