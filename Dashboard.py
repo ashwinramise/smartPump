@@ -18,6 +18,8 @@ from collections import deque
 import os
 import sys
 import inspect
+import warnings
+warnings.filterwarnings("ignore")
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -376,9 +378,8 @@ def retCounts(site, pump, interval):
             return "Select a Pump", "Select a Pump", "Select a Pump"
         elif site and pump:
             df = db.getData("PoC_SP_Metrics", "RecordID")
-            df = df[df['site'] == site & df['pumpID'] == pump].head(1)
+            df = df[(df['site'] == site) & (df['pumpID'] == pump)].head(1)
             h = df['103'].tolist()[0]
-            print(h)
             if int(h) == 1:
                 disp_h = [
                     html.H4("Pump Status", className="card-title"),
@@ -403,11 +404,11 @@ def retCounts(site, pump, interval):
                     className="card-text",
                 ),
             ]
-            flowRate = df['207'].tolist()[0]
+            flowRate = int(df['207'].tolist()[0])/10000
             disp_l = [
-                html.H4("Flow Rate", className="card-title"),
+                html.H4("Flow Rate (l/h)", className="card-title"),
                 html.P(
-                    html.H1(float(flowRate), style={'color': '#33cc33'}),
+                    html.H1(float(flowRate), style={'color': 'blue'}),
                     className="card-text",
                 ),
             ]
@@ -641,9 +642,9 @@ def control():
 def updatespeed(site, pump, interval):
     if interval < 20000:
         df = db.getData("PoC_SP_Metrics", "RecordID")
-        df = df[df['site'] == site & df['pumpID'] == pump].head(1)
+        df = df[(df['site'] == site) & (df['pumpID'] == pump)].head(1)
         t = df['Timestamp'].tolist()[0]
-        speed = float(df['207'].tolist()[0])
+        speed = float(df['207'].tolist()[0])/10000
         X.append(t)
         Y.append(speed)
         data = go.Scatter(
@@ -665,6 +666,26 @@ def getpump(location):
     pump = assets[assets['Location'] == location]
     r = pump['PumpName'].unique().tolist()
     return [{'label': i, 'value': i} for i in r]
+
+
+@app.callback(
+    Output('powerON', 'on'),
+    Output('flow-rate', 'value'),
+    Input('site-1', 'value'),
+    Input('pump-1', 'value'),
+)
+def getStatus(site, pump):
+    if site is not None and pump is not None:
+        df = db.getData("PoC_SP_Metrics", "RecordID")
+        df = df[(df['site'] == site) & (df['pumpID'] == pump)].head(1)
+        speed = float(df['207'].tolist()[0])/10000
+        on = int(df['103'].tolist()[0])
+        if on == 0:
+            p = True
+        elif on == 1:
+            p = False
+        return p, speed
+
 
 
 @app.callback(
@@ -747,4 +768,4 @@ def getPages(h, a, l, c):
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)

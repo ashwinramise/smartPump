@@ -53,7 +53,7 @@ def on_message(client, userdata, msg):
     db.writeValues(metrics, db_config.dataTable)
 
 
-mqttClient.connect(mqttBroker)
+mqttClient.connect(mqttBroker, keepalive=60)
 mqttClient.on_connect = on_connect
 mqttClient.on_message = on_message
 mqttClient.on_disconnect = on_disconnect

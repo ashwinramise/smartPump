@@ -15,7 +15,7 @@ from mqttServices import mqtt_config as config
 mqtt_client = mqtt.Client(config.mqtt_client)
 domain = config.domain
 broker = config.mqtt_broker
-mqtt_client.connect(broker)
+mqtt_client.connect(broker, keepalive=60)
 
 pumpON = {'register': [100, 103], 'bit': [0x01, 0x00]}
 pumpOFF = {'register': [100, 103], 'bit': [0x01, 0x01]}
