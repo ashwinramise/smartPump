@@ -43,7 +43,7 @@ def on_message(client, userdata, msg):
     load.append({'Timestamp': incoming['timestamp']})
     load.append({'site': incoming['site']})
     load.append({'pumpID': incoming['pump']})
-    history = db.getData('PoC_SP_UserLogs', 'RecordID')
+    history = db.getData('PoC_SP_Metrics', 'RecordID')
     if len(history['RecordID'].tolist()) == 0:
         record = 1
     else:

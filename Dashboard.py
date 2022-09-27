@@ -7,6 +7,7 @@ from dash import html
 import pandas as pd
 import dash_daq as daq
 import plotly.express as px
+import plotly.graph_objects as go
 from urllib.request import urlopen
 import json
 import dash_daq as daq
@@ -276,7 +277,150 @@ def editorpage(s, u, p):
 
 
 def home():
-    pass
+    return html.Div(
+        style={'textAlign': 'center'},
+        children=[
+            html.Div(
+                style={'marginTop': 15, 'width': "40%",
+                       'display': 'inline-block', 'textAlign': 'center', 'marginRight': 40, 'verticalAlign': 'top'},
+                children=[
+                    html.Div(
+                        [
+                            dcc.Dropdown(
+                                id='site-2',
+                                multi=False,
+                                style={'height': 15},
+                                placeholder='Select Site',
+                                options= assets['Location'].unique(),
+                                searchable=True
+                            )
+                        ], style={'marginTop': 0, 'marginBottom': 10,
+                                  'font-size': 18,
+                                  'color': 'black',
+                                  'width': '50%',
+                                  'display': 'inline-block'}
+                    ),
+                    html.Div(
+                        [
+                            dcc.Dropdown(
+                                id='pump-2',
+                                multi=False,
+                                style={'height': 15},
+                                placeholder='Select Pump',
+                                searchable=True
+                            )
+                        ], style={'marginTop': 0, 'marginBottom': 10,
+                                  'font-size': 18,
+                                  'color': 'black',
+                                  'width': '50%',
+                                  'display': 'inline-block'}
+                    )
+                ]
+            ),
+            html.Div(
+                style={'textAlign': 'center'},
+                children=[
+                    html.Div([
+                        html.Div(
+                            children=
+                            [
+                                dbc.Card(
+                                    dbc.CardBody(
+                                        id='power-status',
+                                    ),
+                                    style={"width": "18rem"},
+                                )
+                            ], style={'display': 'inline-block', 'marginLeft': 15}
+                        ),
+                        html.Div(
+                            children=
+                            [
+                                dbc.Card(
+                                    dbc.CardBody(id='dosing-pressure',
+                                                 ),
+                                    style={"width": "18rem"},
+                                )
+                            ], style={'display': 'inline-block', 'marginLeft': 15}
+                        ),
+                        html.Div(
+                            children=
+                            [
+                                dbc.Card(
+                                    dbc.CardBody(id='flow-rate-act',
+                                                 ),
+                                    style={"width": "18rem"},
+                                )
+                            ], style={'display': 'inline-block', 'marginLeft': 15}
+                        )
+                    ], style={'marginTop': 15, 'textAlign': 'center'}
+                    ),
+                ]
+            )
+        ]
+    )
+
+
+@app.callback(
+    [Output('power-status', 'children'),
+     Output('dosing-pressure', 'children'),
+     Output('flow-rate-act', 'children')],
+    [Input('site-2', 'value'),
+     Input('pump-2', 'value'),
+     Input("interval-component", "n_intervals")]
+)
+def retCounts(site, pump, interval):
+    if interval < 20000:
+        if site is None and pump is None:
+            return "Make Selection", "Make Selection", "Make Selection"
+        elif site is not None and pump is None:
+            return "Select a Pump", "Select a Pump", "Select a Pump"
+        elif site and pump:
+            df = db.getData("PoC_SP_Metrics", "RecordID")
+            df = df[df['site'] == site & df['pumpID'] == pump].head(1)
+            h = df['103'].tolist()[0]
+            if int(h) == 1:
+                disp_h = [
+                    html.H4("Pump Status", className="card-title"),
+                    html.P(
+                        html.H1("Disabled", style={'color': 'red'}),
+                        className="card-text",
+                    ),
+                ]
+            elif int(h) == 0:
+                disp_h = [
+                    html.H4("Pump Status", className="card-title"),
+                    html.P(
+                        html.H1("Enabled", style={'color': '#33cc33'}),
+                        className="card-text",
+                    ),
+                ]
+            pressure = df['308'].tolist()[0]
+            disp_m = [
+                html.H4("Pump Pressure", className="card-title"),
+                html.P(
+                    html.H1(int(pressure), style={'color': 'Purple'}),
+                    className="card-text",
+                ),
+            ]
+            flowRate = df['207'].tolist()[0]
+            disp_l = [
+                html.H4("Flow Rate", className="card-title"),
+                html.P(
+                    html.H1(float(flowRate), style={'color': '#33cc33'}),
+                    className="card-text",
+                ),
+            ]
+            return disp_h, disp_m, disp_l
+
+
+@app.callback(
+    Output('pump-2', 'options'),
+    Input('site-2', 'value'),
+)
+def getpump(location):
+    pump = assets[assets['Location'] == location]
+    r = pump['PumpName'].unique().tolist()
+    return [{'label': i, 'value': i} for i in r]
 
 
 def history():
@@ -488,6 +632,31 @@ def control():
 
 
 @app.callback(
+    Output('pump-speed1'),
+    [Input('site-1', 'value'),
+     Input('pump-1', 'value'),
+     Input("interval-component", "n_intervals")]
+)
+def updatespeed(site, pump, interval):
+    if interval < 20000:
+        df = db.getData("PoC_SP_Metrics", "RecordID")
+        df = df[df['site'] == site & df['pumpID'] == pump].head(1)
+        t = df['Timestamp'].tolist()[0]
+        speed = float(df['207'].tolist()[0])
+        X.append(t)
+        Y.append(speed)
+        data = go.Scatter(
+            x=list(X),
+            y=list(Y),
+            name='Scatter',
+            mode='lines+markers'
+        )
+        figure = {'data': [data], 'layout': go.Layout(xaxis=dict(range=[min(X), max(X)]),
+                                                      yaxis=dict(range=[min(Y), max(Y)]),
+                                                      title="Pump Speed Live", )}
+        return figure
+
+@app.callback(
     Output('pump-1', 'options'),
     Input('site-1', 'value'),
 )
@@ -529,7 +698,8 @@ app.layout = html.Div(
     style={'background': 'white', 'width': '100%', 'height': '100%'},
     id="big-app-container",
     children=[
-        build_banner()
+        build_banner(),
+        home()
     ]
 )
 
@@ -557,12 +727,6 @@ def getPages(h, a, l, c):
                  home()]]
     elif l > 0:
         return [[build_banner(),
-                 dcc.Interval(
-                     id="interval-component",
-                     interval=1 * 1000,  # in milliseconds
-                     n_intervals=0,
-                     disabled=False,
-                 ),
                  history()]]
     elif c > 0:
         return [[build_banner(),

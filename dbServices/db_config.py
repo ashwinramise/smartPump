@@ -1,9 +1,9 @@
 server_name = "budig-bb-pltsql-01-d.database.windows.net"
 user = "buckmanadmin"
 pwd = "Buck|\/|123"
-database_name = "budig-bb-pltsql-05-d"
+database_name = "Demo"
 broker = 'broker.hivemq.com'
-topic ='buckman/ackumen/ddapump1'
+topic ='buckman/ackumen/#'
 table = 'PoC_SP_MonitoringTags'
 dataTable = 'PoC_SP_Metrics'
 
