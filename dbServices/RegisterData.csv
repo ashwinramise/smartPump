@@ -1,5 +1,5 @@
 Address,Register name,Scale,Description
-103,PumpPowerON,,Power State - 0 or 1
+104,PumpPowerON,,Power State - 0 or 1
 207,ActualSetpointManualHI,0.1 ml/h,"The actual setpoint used in operating mode ""Manual""."
 208,ActualSetpointManualLO,,Can be set via SetpointManual (register 00106-00107) or via the pump HMI.
 209,ActualPulseVolumeHI,1 nl,"The actual pulse volume used in operating mode ""Pulse""."

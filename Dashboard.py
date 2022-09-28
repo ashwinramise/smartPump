@@ -357,6 +357,32 @@ def home():
                     ], style={'marginTop': 15, 'textAlign': 'center'}
                     ),
                 ]
+            ),
+            html.Div(
+                style={'marginTop': 15, 'textAllign': 'left'},
+                children=[
+                    html.Div(
+                        id='met1',
+                        style={'marginLeft': 2, 'marginRight': 2, 'width': '20%',
+                               'display' : 'inline-block'},
+                        className='three-columns',
+                        children=[dcc.Graph(id='speed2')]
+                    ),
+                    html.Div(
+                        id='met2',
+                        style={'marginLeft': 2, 'marginRight': 2, 'width': '20%',
+                               'display': 'inline-block'},
+                        className='three-columns',
+                        children=[dcc.Graph(id='head1')]
+                    ),
+                    html.Div(
+                        id='met3',
+                        style={'marginLeft': 2, 'marginRight': 2, 'width': '20%',
+                               'display': 'inline-block'},
+                        className='three-columns',
+                        children=[dcc.Graph(id='motortemp')]
+                    ),
+                ]
             )
         ]
     )
@@ -379,7 +405,7 @@ def retCounts(site, pump, interval):
         elif site and pump:
             df = db.getData("PoC_SP_Metrics", "RecordID")
             df = df[(df['site'] == site) & (df['pumpID'] == pump)].head(1)
-            h = df['103'].tolist()[0]
+            h = df['104'].tolist()[0]
             if int(h) == 1:
                 disp_h = [
                     html.H4("Pump Status", className="card-title"),
@@ -396,15 +422,15 @@ def retCounts(site, pump, interval):
                         className="card-text",
                     ),
                 ]
-            pressure = df['308'].tolist()[0]
+            pressure = float(df['308'].tolist()[0])/100
             disp_m = [
-                html.H4("Pump Pressure", className="card-title"),
+                html.H4("Pump Pressure(bar)", className="card-title"),
                 html.P(
                     html.H1(int(pressure), style={'color': 'Purple'}),
                     className="card-text",
                 ),
             ]
-            flowRate = int(df['207'].tolist()[0])/10000
+            flowRate = int(df['208'].tolist()[0])/10000
             disp_l = [
                 html.H4("Flow Rate (l/h)", className="card-title"),
                 html.P(
@@ -679,7 +705,7 @@ def getStatus(site, pump):
         df = db.getData("PoC_SP_Metrics", "RecordID")
         df = df[(df['site'] == site) & (df['pumpID'] == pump)].head(1)
         speed = float(df['207'].tolist()[0])/10000
-        on = int(df['103'].tolist()[0])
+        on = int(df['104'].tolist()[0])
         if on == 0:
             p = True
         elif on == 1:
