@@ -1,3 +1,5 @@
+import socket
+import time
 import paho.mqtt.client as mqtt
 import json
 import os
@@ -33,7 +35,13 @@ def on_connect(client, userdata, flags, rc):
 
 
 def on_disconnect(client, userdata, rc):
-    print("Unexpected disconnection.")
+    print(f"Unexpected disconnection due to {rc}")
+    try:
+        print("Reconnecting...")
+        mqttClient.reconnect()
+    except socket.error:
+        time.sleep(5)
+        mqttClient.reconnect()
 
 
 def on_message(client, userdata, msg):
@@ -53,7 +61,7 @@ def on_message(client, userdata, msg):
     db.writeValues(metrics, db_config.dataTable)
 
 
-mqttClient.connect(mqttBroker, keepalive=60)
+mqttClient.connect(mqttBroker)
 mqttClient.on_connect = on_connect
 mqttClient.on_message = on_message
 mqttClient.on_disconnect = on_disconnect

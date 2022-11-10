@@ -19,6 +19,7 @@ import os
 import sys
 import inspect
 import warnings
+
 warnings.filterwarnings("ignore")
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -40,6 +41,12 @@ logs = []
 
 X = deque(maxlen=20)
 Y = deque(maxlen=20)
+X1 = deque(maxlen=20)
+Y1 = deque(maxlen=20)
+X2 = deque(maxlen=20)
+Y2 = deque(maxlen=20)
+X3 = deque(maxlen=20)
+Y3 = deque(maxlen=20)
 
 ####### Assets #####
 assets = db.getData("PoC_SP_Assets", "RecordID")
@@ -64,7 +71,7 @@ def build_banner():
                     (html.Img(id="logo2",
                               src='https://www.papnews.com/wp-content/uploads/2020/04/Buckman_Logo_Preferred_GREEN.png',
                               height="80px",
-                              style={'textAlign': 'left', 'marginLeft':10}
+                              style={'textAlign': 'left', 'marginLeft': 10}
                               ),
                      href="https://www.buckman.com/",
                      )
@@ -272,7 +279,7 @@ def editorpage(s, u, p):
             logs.append(r)
     if s and u in list(users.keys()) and p == users[u]:
         text = html.H6(u)
-        new_record = {'RecordID': record+1, 'User': u, 'Last_Access': str(datetime.now())}
+        new_record = {'RecordID': record + 1, 'User': u, 'Last_Access': str(datetime.now())}
         logs.append(new_record)
         db.writeValues(new_record, 'PoC_SP_UserLogs')
         return False, True, text
@@ -293,7 +300,7 @@ def home():
                                 multi=False,
                                 style={'height': 15},
                                 placeholder='Select Site',
-                                options= assets['Location'].unique(),
+                                options=assets['Location'].unique(),
                                 searchable=True
                             )
                         ], style={'marginTop': 0, 'marginBottom': 10,
@@ -361,25 +368,28 @@ def home():
             html.Div(
                 style={'marginTop': 15, 'textAllign': 'left'},
                 children=[
-                    html.Div(
-                        id='met1',
-                        style={'marginLeft': 2, 'marginRight': 2, 'width': '20%',
-                               'display' : 'inline-block'},
-                        className='three-columns',
-                        children=[dcc.Graph(id='speed2')]
-                    ),
-                    html.Div(
-                        id='met2',
-                        style={'marginLeft': 2, 'marginRight': 2, 'width': '20%',
-                               'display': 'inline-block'},
-                        className='three-columns',
-                        children=[dcc.Graph(id='head1')]
+                    html.Div
+                        (
+                        [
+                            html.Div(
+                                id='met1',
+                                style={'marginLeft': 2, 'marginRight': 2,
+                                       'display': 'inline-block'},
+                                children=[dcc.Graph(id='speed2')]
+                            ),
+                            html.Div(
+                                id='met2',
+                                style={'marginLeft': 2, 'marginRight': 2,
+                                       'display': 'inline-block'},
+                                children=[dcc.Graph(id='head1')]
+                            )
+                        ],
+                        style= {'width':'50%', 'display': 'inline-block'}
                     ),
                     html.Div(
                         id='met3',
-                        style={'marginLeft': 2, 'marginRight': 2, 'width': '20%',
+                        style={'marginLeft': 2, 'marginRight': 2, 'width': '35%',
                                'display': 'inline-block'},
-                        className='three-columns',
                         children=[dcc.Graph(id='motortemp')]
                     ),
                 ]
@@ -391,7 +401,9 @@ def home():
 @app.callback(
     [Output('power-status', 'children'),
      Output('dosing-pressure', 'children'),
-     Output('flow-rate-act', 'children')],
+     Output('flow-rate-act', 'children'),
+     Output('speed2', 'figure'),
+     Output('head1', 'figure')],
     [Input('site-2', 'value'),
      Input('pump-2', 'value'),
      Input("interval-component", "n_intervals")]
@@ -422,15 +434,15 @@ def retCounts(site, pump, interval):
                         className="card-text",
                     ),
                 ]
-            pressure = float(df['308'].tolist()[0])/100
+            pressure = float(df['312'].tolist()[0]) / 1000
             disp_m = [
-                html.H4("Pump Pressure(bar)", className="card-title"),
+                html.H4("Total Volume (l)", className="card-title"),
                 html.P(
                     html.H1(int(pressure), style={'color': 'Purple'}),
                     className="card-text",
                 ),
             ]
-            flowRate = int(df['208'].tolist()[0])/10000
+            flowRate = int(df['208'].tolist()[0]) / 10000
             disp_l = [
                 html.H4("Flow Rate (l/h)", className="card-title"),
                 html.P(
@@ -438,7 +450,30 @@ def retCounts(site, pump, interval):
                     className="card-text",
                 ),
             ]
-            return disp_h, disp_m, disp_l
+            speed = flowRate
+            t = df['Timestamp'].tolist()[0]
+            X1.append(t)
+            Y1.append(speed)
+            data = go.Scatter(
+                x=list(X1),
+                y=list(Y1),
+                name='Scatter',
+                mode='lines+markers'
+            )
+            flowFig = {'data': [data], 'layout': go.Layout(xaxis=dict(range=[min(X1), max(X1)]),
+                                                           yaxis=dict(range=[min(Y1), max(Y1)]),
+                                                           title="Pump Speed Live", )}
+            Y2.append(pressure)
+            data2 = go.Scatter(
+                x=list(X1),
+                y=list(Y2),
+                name='Scatter',
+                mode='lines+markers'
+            )
+            flowFig2 = {'data': [data2], 'layout': go.Layout(xaxis=dict(range=[min(X1), max(X1)]),
+                                                           yaxis=dict(range=[min(Y2), max(Y2)]),
+                                                           title="Total Volume Live", )}
+            return disp_h, disp_m, disp_l, flowFig, flowFig2
 
 
 @app.callback(
@@ -582,7 +617,7 @@ def control():
                                         multi=False,
                                         style={'height': 15},
                                         placeholder='Select Site',
-                                        options= assets['Location'].unique(),
+                                        options=assets['Location'].unique(),
                                         searchable=True
                                     )
                                 ], style={'marginTop': 0, 'marginBottom': 10,
@@ -612,6 +647,7 @@ def control():
                                     html.H6("Pump Power:"),
                                     daq.PowerButton(
                                         id='powerON',
+                                        on=False
                                     )
                                 ],
                                 style={'marginTop': 15, 'textAlign': 'center'}
@@ -624,7 +660,7 @@ def control():
                                             id='flow-rate',
                                             size=140,
                                             max=6.3,
-                                            value=2.23,
+                                            value=None,
                                             persistence=True,
                                             persisted_props=True,
                                         )
@@ -641,9 +677,8 @@ def control():
                                     html.Div(
                                         daq.LEDDisplay(
                                             id='flow-rate-monitor',
-                                            value='0 l/h',
                                             color="#FF5E5E"
-                                            ),
+                                        ),
                                         style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
                                                }
                                     )
@@ -666,11 +701,11 @@ def control():
      Input("interval-component", "n_intervals")]
 )
 def updatespeed(site, pump, interval):
-    if interval < 20000:
+    if interval < 20000 and site is not None and pump is not None:
         df = db.getData("PoC_SP_Metrics", "RecordID")
         df = df[(df['site'] == site) & (df['pumpID'] == pump)].head(1)
         t = df['Timestamp'].tolist()[0]
-        speed = float(df['207'].tolist()[0])/10000
+        speed = float(df['208'].tolist()[0]) / 10000
         X.append(t)
         Y.append(speed)
         data = go.Scatter(
@@ -681,8 +716,9 @@ def updatespeed(site, pump, interval):
         )
         figure = {'data': [data], 'layout': go.Layout(xaxis=dict(range=[min(X), max(X)]),
                                                       yaxis=dict(range=[min(Y), max(Y)]),
-                                                      title="Pump Speed Live", )}
+                                                      title="Pump Speed Live",)}
         return figure
+
 
 @app.callback(
     Output('pump-1', 'options'),
@@ -704,14 +740,17 @@ def getStatus(site, pump):
     if site is not None and pump is not None:
         df = db.getData("PoC_SP_Metrics", "RecordID")
         df = df[(df['site'] == site) & (df['pumpID'] == pump)].head(1)
-        speed = float(df['207'].tolist()[0])/10000
+        print(df)
+        speed = float(df['208'].tolist()[0]) / 10000
         on = int(df['104'].tolist()[0])
+        print(on, speed)
         if on == 0:
             p = True
         elif on == 1:
             p = False
         return p, speed
-
+    else:
+        return False, 0
 
 
 @app.callback(
@@ -736,7 +775,7 @@ def powerON(n, site, pump):
     Input('site-1', 'value'),
     Input('pump-1', 'value')
 )
-def update_output(value, site, pump,):
+def update_output(value, site, pump, ):
     if site is not None and pump is not None:
         ctrl.pumpSpeed(site, pump, value)
     return [str(value)]
@@ -772,12 +811,12 @@ app.layout = html.Div(
 def getPages(h, a, l, c):
     if h > 0:
         return [[build_banner(),
-                dcc.Interval(
-                    id="interval-component",
-                    interval=1*1000,  # in milliseconds
-                    n_intervals=0,
-                    disabled=False,
-                ),
+                 dcc.Interval(
+                     id="interval-component",
+                     interval=1 * 1000,  # in milliseconds
+                     n_intervals=0,
+                     disabled=False,
+                 ),
                  home()]]
     elif l > 0:
         return [[build_banner(),

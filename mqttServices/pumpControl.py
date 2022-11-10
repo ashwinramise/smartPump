@@ -1,3 +1,4 @@
+import socket
 import time
 from datetime import datetime
 import pandas as pd
@@ -15,13 +16,13 @@ from mqttServices import mqtt_config as config
 mqtt_client = mqtt.Client(config.mqtt_client)
 domain = config.domain
 broker = config.mqtt_broker
-mqtt_client.connect(broker, keepalive=60)
 
 pumpON = {'register': [101, 104], 'bit': [0x01, 0x00]}
 pumpOFF = {'register': [101, 104], 'bit': [0x01, 0x01]}
 
 
 def powerPump(location, pumpname, powerButton):
+    mqtt_client.connect(broker)
     topic = domain + 'edits/' + location + '/' + pumpname
     if powerButton:
         package = json.dumps(pumpON)
@@ -30,15 +31,18 @@ def powerPump(location, pumpname, powerButton):
     try:
         mqtt_client.publish(topic, package, qos=0)  # publish to MQTT Broker every 5s
         print(f'{datetime.now()}: publishing {package} to {topic}')
+        mqtt_client.disconnect()
     except Exception as e:
         print(e)
 
 
 def pumpSpeed(location, pumpname, rate):
+    mqtt_client.connect(broker)
     topic = domain + 'edits/' + location + '/' + pumpname
     package = json.dumps({'register': [104, 107], 'bit': [0x00, int(rate * 10000)]})
     try:
         mqtt_client.publish(topic, package, qos=0)  # publish to MQTT Broker every 5s
         print(f'{datetime.now()}: publishing {package} to {topic}')
+        mqtt_client.disconnect()
     except Exception as e:
         print(e)
