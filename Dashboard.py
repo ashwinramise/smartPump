@@ -411,7 +411,7 @@ def home():
 def retCounts(site, pump, interval):
     if interval < 20000:
         if site is None and pump is None:
-            return "Make Selection", "Make Selection", "Make Selection", None, None
+            return "Make Selection", "Make Selection", "Make Selection"
         elif site is not None and pump is None:
             return "Select a Pump", "Select a Pump", "Select a Pump", None, None
         elif site and pump:
