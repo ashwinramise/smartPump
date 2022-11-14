@@ -6,13 +6,17 @@ import os
 import sys
 import inspect
 import pandas as pd
+import warnings
+
+warnings.filterwarnings("ignore")
+
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 from dbServices import db_config, dbServices as db
 
 
-mqttClient = mqtt.Client("hubMemphis")
+mqttClient = mqtt.Client("hubMemphis", clean_session=False)
 mqtt_topic = db_config.topic
 mqttBroker = db_config.broker
 dbCon = db.conn

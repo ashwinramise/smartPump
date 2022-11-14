@@ -411,9 +411,9 @@ def home():
 def retCounts(site, pump, interval):
     if interval < 20000:
         if site is None and pump is None:
-            return "Make Selection", "Make Selection", "Make Selection"
+            return "Make Selection", "Make Selection", "Make Selection", None, None
         elif site is not None and pump is None:
-            return "Select a Pump", "Select a Pump", "Select a Pump"
+            return "Select a Pump", "Select a Pump", "Select a Pump", None, None
         elif site and pump:
             df = db.getData("PoC_SP_Metrics", "RecordID")
             df = df[(df['site'] == site) & (df['pumpID'] == pump)].head(1)

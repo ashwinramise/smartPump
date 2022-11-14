@@ -15,7 +15,8 @@ conn = db.connect(DRIVER='SQL Server',
                   SERVER=config.server_name,
                   UID=config.user,
                   PWD=config.pwd,
-                  DATABASE=config.database_name)
+                  DATABASE=config.database_name,)
+                  # MultipleActiveResultSets=True)
 
 
 def createTable(db_name, tablename, columns, conn=conn):
@@ -46,6 +47,7 @@ def writeValues(metrics, table, conn=conn):
         cur.execute(insertQ, values)
         conn.commit()
         print(f'Values Inserted: {values}')
+        cur.close()
     except (Exception, db.DatabaseError) as error:
         print(error)
 
