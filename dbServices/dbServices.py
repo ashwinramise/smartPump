@@ -57,6 +57,16 @@ def getData(tablename, orderby, conn=conn):
     alldata = pd.read_sql_query(qu, conn)
     return alldata
 
+def getRecordID(tablename, conn=conn):
+    qu = f'select MAX(RecordID) as RecordID FROM {tablename}'
+    cur = conn.cursor()
+    cur.execute(qu)
+    k = None
+    for i in cur:
+        k=i[0]
+    cur.close()
+    return k
+
 
 def delData(tablename, conn=conn):
     try:

@@ -18,7 +18,8 @@ conn = db.connect(DRIVER='SQL Server',
                   DATABASE=config.database_name,)
                   # MultipleActiveResultSets=True)
 
-qu = f'select top (1) * from "PoC_SP_Metrics" order by "RecordID" desc'
+# qu = f'select top (1) * from "PoC_SP_Metrics" order by "RecordID" desc'
+qu = 'select MAX(RecordID) as RecordID FROM PoC_SP_Metrics'
 cur = conn.cursor()
 cur.execute(qu)
 for i in cur:

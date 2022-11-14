@@ -55,11 +55,11 @@ def on_message(client, userdata, msg):
     load.append({'Timestamp': incoming['timestamp']})
     load.append({'site': incoming['site']})
     load.append({'pumpID': incoming['pump']})
-    history = db.getData('PoC_SP_Metrics', 'RecordID')
-    if len(history['RecordID'].tolist()) == 0:
+    history = db.getRecordID('PoC_SP_Metrics')
+    if history is None:
         record = 1
     else:
-        record = history['RecordID'].tolist()[0] + 1
+        record = history + 1
     load.append({'RecordID': record})
     metrics = getDict(load)
     db.writeValues(metrics, db_config.dataTable)
