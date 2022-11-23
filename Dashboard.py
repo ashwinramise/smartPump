@@ -703,10 +703,8 @@ def control():
 )
 def updatespeed(site, pump, interval):
     if interval < 20000 and site is not None and pump is not None:
-        df = db.getData("PoC_SP_Metrics", "RecordID")
-        df = df[(df['site'] == site) & (df['pumpID'] == pump)].head(1)
-        t = df['Timestamp'].tolist()[0]
-        speed = float(df['208'].tolist()[0]) / 10000
+        speed, t = db.getSpeedTime(site, pump)
+        # print(speed,t)
         X.append(t)
         Y.append(speed)
         data = go.Scatter(
@@ -731,28 +729,6 @@ def getpump(location):
     return [{'label': i, 'value': i} for i in r]
 
 
-@app.callback(
-    Output('powerON', 'on'),
-    Output('flow-rate', 'value'),
-    Input('site-1', 'value'),
-    Input('pump-1', 'value'),
-)
-def getStatus(site, pump):
-    if site is not None and pump is not None:
-        df = db.getData("PoC_SP_Metrics", "RecordID")
-        df = df[(df['site'] == site) & (df['pumpID'] == pump)].head(1)
-        print(df)
-        speed = float(df['208'].tolist()[0]) / 10000
-        on = int(df['104'].tolist()[0])
-        print(on, speed)
-        if on == 0:
-            p = True
-        elif on == 1:
-            p = False
-        return p, speed
-    else:
-        return False, 0
-
 
 @app.callback(
     Output('powerON', 'color'),
@@ -771,13 +747,27 @@ def powerON(n, site, pump):
 
 
 @app.callback(
+    Output('flow-rate', 'value'),
+    Input('site-1', 'value'),
+    Input('pump-1', 'value')
+)
+def getPumpSpeed(site, pump):
+    if site is not None and pump is not None:
+        s, t = db.getSpeedTime(site, pump)
+        return s
+    else:
+        return 0
+
+
+@app.callback(
     Output('flow-rate-monitor', 'value'),
+    Input('powerON', 'on'),
     Input('flow-rate', 'value'),
     Input('site-1', 'value'),
     Input('pump-1', 'value')
 )
-def update_output(value, site, pump, ):
-    if site is not None and pump is not None:
+def update_output(on, value, site, pump, ):
+    if on and site is not None and pump is not None:
         ctrl.pumpSpeed(site, pump, value)
     return [str(value)]
 

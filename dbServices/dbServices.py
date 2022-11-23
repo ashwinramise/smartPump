@@ -67,6 +67,29 @@ def getRecordID(tablename, conn=conn):
     cur.close()
     return k
 
+def getSpeedTime(site, pump):
+    qu = f'''select top(1) "208", Timestamp from "PoC_SP_Metrics" WHERE site like '{site}' AND pumpID like '{pump}' 
+    order by RecordID desc;'''
+    cur = conn.cursor()
+    cur.execute(qu)
+    speed = None
+    timestamp=None
+    for i in cur:
+        speed = int(i[0])/10000
+        timestamp = pd.to_datetime(i[1])
+    cur.close()
+    return speed, timestamp
+
+
+def getPowerStatus(site, pump):
+    qu = f'''select top(1) 104 from "PoC_SP_Metrics" WHERE site like '{site}' AND pumpID like '{pump}' 
+        order by RecordID desc;'''
+    cur = conn.cursor()
+    cur.execute(qu)
+    for i in cur:
+        power = int(i[0])
+    return power
+
 
 def delData(tablename, conn=conn):
     try:

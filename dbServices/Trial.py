@@ -19,8 +19,8 @@ conn = db.connect(DRIVER='SQL Server',
                   # MultipleActiveResultSets=True)
 
 # qu = f'select top (1) * from "PoC_SP_Metrics" order by "RecordID" desc'
-qu = 'select MAX(RecordID) as RecordID FROM PoC_SP_Metrics'
+qu = qu = f'''select top(1) "208", Timestamp from "PoC_SP_Metrics" WHERE site like 'DigitalHub' AND pumpID like 'DH_dda002' order by RecordID desc;'''
 cur = conn.cursor()
 cur.execute(qu)
 for i in cur:
-    print(i)
+    print(pd.to_datetime(i[1]).time())

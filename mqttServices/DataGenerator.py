@@ -10,7 +10,7 @@ import paho.mqtt.client as mqtt
 import json
 import mqtt_config as config
 
-mqtt_client = mqtt.Client(config.pumpName)
+mqtt_client = mqtt.Client(config.pumpName, clean_session=False)
 topic = config.domain + 'rawdata/' + config.Location + '/' + config.pumpName
 broker = config.mqtt_broker
 mqtt_topic = config.domain + 'edits/' + config.Location + '/' + config.pumpName
@@ -48,6 +48,7 @@ requirements = {
     308: [0, 20]
 }
 mqtt_client.connect(broker)
+mqtt_client.on_connect = on_connect
 while True:
     metrics = []
     current = {}
@@ -72,7 +73,7 @@ while True:
             print(f'{datetime.now()}: published {message} to {topic}')
         except Exception as r:
             print(f'There was an issue sending data because {r}.. Reconnecting')
-            connection = mqtt_client.connect(broker)
+            mqtt_client.on_disconnect = on_disconnect
     elif current == last_message:
         continue
     time.sleep(2)  # repeat

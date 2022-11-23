@@ -17,32 +17,57 @@ mqtt_client = mqtt.Client(config.mqtt_client)
 domain = config.domain
 broker = config.mqtt_broker
 
+
 pumpON = {'register': [101, 104], 'bit': [0x01, 0x00]}
 pumpOFF = {'register': [101, 104], 'bit': [0x01, 0x01]}
 
 
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Connected to MQTT Broker!")
+        # powerPump('DigitalHub', 'DH_dda001', False)
+    else:
+        print(f"Failed to connect, return code {rc}", "Error\t")
+
+
+def on_disconnect(client, userdata, rc):
+    print(f"Unexpected disconnection due to {rc}")
+    try:
+        print("Reconnecting...")
+        mqtt_client.reconnect()
+    except socket.error:
+        time.sleep(5)
+        mqtt_client.reconnect()
+
+
 def powerPump(location, pumpname, powerButton):
-    mqtt_client.connect(broker)
     topic = domain + 'edits/' + location + '/' + pumpname
     if powerButton:
         package = json.dumps(pumpON)
     if not powerButton:
         package = json.dumps(pumpOFF)
     try:
+        mqtt_client.loop_start()
+        mqtt_client.on_connect = on_connect
         mqtt_client.publish(topic, package, qos=0)  # publish to MQTT Broker every 5s
         print(f'{datetime.now()}: publishing {package} to {topic}')
-        mqtt_client.disconnect()
-    except Exception as e:
-        print(e)
+        mqtt_client.loop_stop()
+    except Exception as r:
+        print(f'There was an issue sending data because {r}')
 
 
 def pumpSpeed(location, pumpname, rate):
-    mqtt_client.connect(broker)
     topic = domain + 'edits/' + location + '/' + pumpname
     package = json.dumps({'register': [104, 107], 'bit': [0x00, int(rate * 10000)]})
     try:
+        mqtt_client.loop_start()
         mqtt_client.publish(topic, package, qos=0)  # publish to MQTT Broker every 5s
         print(f'{datetime.now()}: publishing {package} to {topic}')
-        mqtt_client.disconnect()
-    except Exception as e:
-        print(e)
+        mqtt_client.loop_stop()
+    except Exception as r:
+        print(f'There was an issue sending data because {r}')
+
+
+mqtt_client.connect(broker)
+mqtt_client.on_connect = on_connect
+mqtt_client.on_disconnect = on_disconnect
