@@ -19,8 +19,12 @@ conn = db.connect(DRIVER='SQL Server',
                   # MultipleActiveResultSets=True)
 
 # qu = f'select top (1) * from "PoC_SP_Metrics" order by "RecordID" desc'
-qu = qu = f'''select top(1) "208", Timestamp from "PoC_SP_Metrics" WHERE site like 'DigitalHub' AND pumpID like 'DH_dda002' order by RecordID desc;'''
+qu = qu = f'''select * from "PoC_SP_UserLogs" order by RecordID desc'''
 cur = conn.cursor()
 cur.execute(qu)
+df = pd.DataFrame(columns=["User", "Last_Access", "RecordID"])
+# df = pd.read_sql_query(qu, conn)
 for i in cur:
-    print(pd.to_datetime(i[1]).time())
+    log = [r for r in i]
+    df.loc[len(df)] = log
+print(df)

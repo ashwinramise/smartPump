@@ -49,7 +49,7 @@ X3 = deque(maxlen=20)
 Y3 = deque(maxlen=20)
 
 ####### Assets #####
-assets = db.getData("PoC_SP_Assets", "RecordID")
+assets = db.getAssetData()
 
 users = {
     'mmuthumani@buckman.com': 'pass@123',
@@ -89,7 +89,7 @@ def build_banner():
                     dbc.Button("Pages", id="open-offcanvas", n_clicks=0),
                     dbc.Offcanvas(children=[
                         html.Div([dbc.Button("Home", id="home", n_clicks=0)], style={'marginBottom': 5}),
-                        html.Div([dbc.Button("Assets", id="assets", n_clicks=0)], style={'marginBottom': 5}),
+                        # html.Div([dbc.Button("Assets", id="assets", n_clicks=0)], style={'marginBottom': 5}),
                         html.Div([dbc.Button("Logs", id="log", n_clicks=0)], style={'marginBottom': 5}),
                         html.Div(dbc.Button("Controls", id="controls", n_clicks=0, disabled=True))
                     ],
@@ -266,17 +266,11 @@ def toggle_modal2(n1, n2, is_open):
     ]
 )
 def editorpage(s, u, p):
-    history = db.getData('PoC_SP_UserLogs', 'RecordID')
-    if len(history['RecordID'].tolist()) == 0:
+    history = db.getRecordID('PoC_SP_UserLogs')
+    if history == 0:
         record = 0
     else:
-        record = history['RecordID'].tolist()[0]
-    history['Last_Access'] = [pd.to_datetime(d) for d in history['Last_Access']]
-    loglist = history.to_dict('records')
-    existing = [i['RecordID'] for i in logs]
-    for r in loglist:
-        if r['RecordID'] not in existing:
-            logs.append(r)
+        record = history
     if s and u in list(users.keys()) and p == users[u]:
         text = html.H6(u)
         new_record = {'RecordID': record + 1, 'User': u, 'Last_Access': str(datetime.now())}
@@ -415,10 +409,7 @@ def retCounts(site, pump, interval):
         elif site is not None and pump is None:
             return "Select a Pump", "Select a Pump", "Select a Pump"
         elif site and pump:
-            df = db.getData("PoC_SP_Metrics", "RecordID")
-            df = df[(df['site'] == site) & (df['pumpID'] == pump)].head(1)
-            df['Timestamp'] = [pd.to_datetime(i).time() for i in df['Timestamp'].tolist()]
-            h = df['104'].tolist()[0]
+            h, pressure, flowRate, t = db.getDashData(site, pump)
             if int(h) == 1:
                 disp_h = [
                     html.H4("Pump Status", className="card-title"),
@@ -435,7 +426,7 @@ def retCounts(site, pump, interval):
                         className="card-text",
                     ),
                 ]
-            pressure = float(df['312'].tolist()[0]) / 1000
+            # pressure = float(df['312'].tolist()[0]) / 1000
             disp_m = [
                 html.H4("Total Volume (l)", className="card-title"),
                 html.P(
@@ -443,7 +434,7 @@ def retCounts(site, pump, interval):
                     className="card-text",
                 ),
             ]
-            flowRate = int(df['208'].tolist()[0]) / 10000
+            # flowRate = int(df['208'].tolist()[0]) / 10000
             disp_l = [
                 html.H4("Flow Rate (l/h)", className="card-title"),
                 html.P(
@@ -452,7 +443,7 @@ def retCounts(site, pump, interval):
                 ),
             ]
             speed = flowRate
-            t = df['Timestamp'].tolist()[0]
+            # t = df['Timestamp'].tolist()[0]
             X1.append(t)
             Y1.append(speed)
             data = go.Scatter(
@@ -473,7 +464,7 @@ def retCounts(site, pump, interval):
             )
             flowFig2 = {'data': [data2], 'layout': go.Layout(xaxis=dict(range=[min(X1), max(X1)]),
                                                            yaxis=dict(range=[min(Y2), max(Y2)]),
-                                                           title="Total Volume Live", )}
+                                                           title="Pump Pressure Live", )}
             return disp_h, disp_m, disp_l, flowFig, flowFig2
 
 
@@ -779,7 +770,7 @@ app.layout = html.Div(
         build_banner(),
         dcc.Interval(
             id="interval-component",
-            interval=1 * 1000,  # in milliseconds
+            interval=1 * 3000,  # in milliseconds
             n_intervals=0,
             disabled=False,
         ),
@@ -794,17 +785,17 @@ app.layout = html.Div(
     ],
     inputs=[
         Input("home", "n_clicks"),
-        Input("assets", "n_clicks"),
+        # Input("assets", "n_clicks"),
         Input("log", "n_clicks"),
         Input("controls", "n_clicks"),
     ],
 )
-def getPages(h, a, l, c):
+def getPages(h, l, c):
     if h > 0:
         return [[build_banner(),
                  dcc.Interval(
                      id="interval-component",
-                     interval=1 * 1000,  # in milliseconds
+                     interval=1 * 3000,  # in milliseconds
                      n_intervals=0,
                      disabled=False,
                  ),
@@ -816,7 +807,7 @@ def getPages(h, a, l, c):
         return [[build_banner(),
                  dcc.Interval(
                      id="interval-component",
-                     interval=1 * 1000,  # in milliseconds
+                     interval=1 * 3000,  # in milliseconds
                      n_intervals=0,
                      disabled=False,
                  ),

@@ -90,6 +90,21 @@ def getPowerStatus(site, pump):
         power = int(i[0])
     return power
 
+def getDashData(site, pump):
+    qu = f'''select top(1) "104", "312", "208", Timestamp from "PoC_SP_Metrics" WHERE site like '{site}' AND pumpID 
+    like '{pump}' order by RecordID desc;'''
+    cur = conn.cursor()
+    cur.execute(qu)
+    speed = None
+    timestamp = None
+    for i in cur:
+        status = int(i[0])
+        pressure = float(i[1])/1000
+        speed = int(i[2]) / 10000
+        timestamp = pd.to_datetime(i[3])
+    cur.close()
+    return status, pressure, speed, timestamp
+
 
 def delData(tablename, conn=conn):
     try:
@@ -101,3 +116,27 @@ def delData(tablename, conn=conn):
             print("Delete Succesful")
     except (Exception, db.DatabaseError) as error:
         print(error)
+
+
+def getAssetData(conn=conn):
+    qu = f'''select * from "PoC_SP_Assets" order by RecordID desc'''
+    cur = conn.cursor()
+    cur.execute(qu)
+    df = pd.DataFrame(columns=['Location', 'PumpName'])
+    for i in cur:
+        df.loc[len(df)] = [i[0], i[1]]
+    cur.close()
+    return df
+
+
+def getUserLogs(conn=conn):
+    qu = f'''select * from "PoC_SP_UserLogs" order by RecordID desc'''
+    cur = conn.cursor()
+    cur.execute(qu)
+    df = pd.DataFrame(columns=["User", "Last_Access", "RecordID"])
+    for i in cur:
+        log = [r for r in i]
+        df.loc[len(df)] = log
+    cur.close()
+    return df.to_dict('records')
+

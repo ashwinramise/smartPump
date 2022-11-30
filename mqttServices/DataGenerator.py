@@ -76,4 +76,4 @@ while True:
             mqtt_client.on_disconnect = on_disconnect
     elif current == last_message:
         continue
-    time.sleep(2)  # repeat
+    time.sleep(3)  # repeat
