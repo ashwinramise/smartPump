@@ -48,6 +48,7 @@ users = {
 
 logs = []
 
+
 def build_banner():
     return html.Div(
         id="banner",
@@ -274,6 +275,7 @@ def editorpage(s, u, p):
         return False, True, text
 
 
+#### Main Display ###
 def home():
     return html.Div(
         children=[
@@ -292,11 +294,11 @@ def home():
                                 searchable=True
                             )
                         ],
-                        style={'marginTop': 0, 'marginBottom': 10, 'marginRight':5,
-                                  'font-size': 18,
-                                  'color': 'black',
-                                  'width': '20%',
-                                  'display': 'inline-block'}
+                        style={'marginTop': 0, 'marginBottom': 10, 'marginRight': 5,
+                               'font-size': 18,
+                               'color': 'black',
+                               'width': '20%',
+                               'display': 'inline-block'}
                     ),
                     html.Div(
                         [
@@ -308,7 +310,7 @@ def home():
                                 searchable=True
                             )
                         ],
-                        style={'marginTop': 0, 'marginBottom': 10, 'marginRight':5,
+                        style={'marginTop': 0, 'marginBottom': 10, 'marginRight': 5,
                                'font-size': 18,
                                'color': 'black',
                                'width': '20%',
@@ -324,7 +326,7 @@ def home():
                                 searchable=True
                             )
                         ],
-                        style={'marginTop': 0, 'marginBottom': 10,'marginRight':5,
+                        style={'marginTop': 0, 'marginBottom': 10, 'marginRight': 5,
                                'font-size': 18,
                                'color': 'black',
                                'width': '20%',
@@ -340,7 +342,7 @@ def home():
                                 searchable=True
                             )
                         ],
-                        style={'marginTop': 0, 'marginBottom': 10,'marginRight':5,
+                        style={'marginTop': 0, 'marginBottom': 10, 'marginRight': 5,
                                'font-size': 18,
                                'color': 'black',
                                'width': '20%',
@@ -350,6 +352,7 @@ def home():
             )
         ]
     )
+
 
 app.layout = html.Div(
     style={'background': 'white', 'width': '100%', 'height': '100%'},
@@ -368,4 +371,3 @@ app.layout = html.Div(
 
 if __name__ == "__main__":
     app.run(debug=True)
-
