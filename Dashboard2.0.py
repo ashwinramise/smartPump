@@ -66,22 +66,55 @@ logs = []
 
 ####### Generic Functions #####
 def genTextCard(id, title, text,text2, color2, color1='black'):
-    dbc.Card(
+    return dbc.Card(
         dbc.CardBody(
             id=id,
             children=[
                 html.H4(title, className="card-title"),
                 html.P(
-                    html.H1(text, style={'color': color1}),
+                    html.H5(text, style={'color': color1}),
                     className="card-text",
                 ),
                 html.P(
-                    html.H1(text2, style={'color': color2}),
+                    html.H5(text2, style={'color': color2}),
                     className="card-text",
                 )
             ]
         ),
-        style={"width": "18rem"},
+        style={"width": "10rem", 'display': 'inline-block'},
+    )
+
+
+def genPumpStatus(site, pump):
+    status = db.getPowerStatus(site, pump)
+    speed, time = db.getSpeedTime(site, pump)
+    if status is None:
+        color = 'red'
+        text = 'Disabled'
+    elif status == 0:
+        color = 'green'
+        text = 'Running'
+    elif status == 1:
+        color = 'red'
+        text = 'OFF!'
+    return dbc.Card(
+        dbc.CardBody(
+            id=id,
+            children=[
+                html.H4(pump, className="card-title"),
+                daq.Indicator(
+                    label=text,
+                    color=color,
+                    labelPosition='right'
+                ),
+                html.P(
+                    html.H5(f'flow = {speed}l/h', style={'color': 'black'}),
+                    className="card-text",
+                ),
+                dbc.CardFooter(f"Updated {time}")
+            ]
+        ),
+        style={"width": "10rem", 'display': 'inline-block'},
     )
 
 
@@ -370,7 +403,8 @@ def home():
                         sort_mode="multi",
                         page_size=5
                     ),
-                    html.Div(id='customer-expansion')
+                    html.Div(id='customer-expansion'),
+                    html.Div(id='site-profit')
                 ]
             ),
             html.Div(
@@ -396,47 +430,106 @@ def updateSiteData(active):
         customer = summary['Account'].tolist()[row]
         df = df[df['Account'] == customer][['Plant', 'Pump']]
         children = [
-            html.H2("Site Information",
-                    style={'marginLeft': 10}),
+            html.H3("Site Information",
+                    style={'marginLeft': 10, 'marginTop':10}),
             genTable('site-data', df)
         ]
         return children
 
 
 @app.callback(
+    Output('site-profit', 'children'),
+    Input('customer-sum', 'active_cell'),
+    Input('site-data', 'active_cell')
+)
+def updatePlantwise(c, s):
+    if s['column_id'] == 'Plant':
+        filtered = assets[['Account', 'Plant', 'Pump']].groupby(['Account', 'Plant']).count().reset_index()
+        customer = summary['Account'].tolist()[c['row']]
+        plants = filtered[filtered['Account'] == customer]
+        plant = plants['Plant'].tolist()[s['row']]
+        costs = db.getData('PoC_SP_Targets', 'ChemA_target')
+        chemicals = [c for c in assets.columns.tolist() if 'chem' in c.lower()]
+        if s is not None and c is not None:
+            # print(customer)
+            df = assets[['Plant', 'ChemD', 'ChemE', 'ChemB', 'ChemA', 'ChemC']].groupby(['Plant']).sum().reset_index()
+            df = df[df['Plant'] == plant]
+            # print(df)
+            cost = costs.groupby(['Plant']).sum().reset_index()
+            cost = cost[cost['Plant'] == plant]
+            # print(cost)
+            children = [
+                html.H3("Planned vs Actual Chemical Expenditure",
+                        style={'marginLeft': 10, 'marginTop':10})
+            ]
+            for c in chemicals:
+                plan_list = list(cost[[i for i in cost.columns.tolist() if c.lower() in i.lower()]].iloc[0])
+                # print(plan_list)
+                planned = plan_list[0]*plan_list[1]
+                actual = df[c].tolist()[0]*plan_list[1]
+                if planned >= actual:
+                    color = 'green'
+                else:
+                    color = 'red'
+                if planned < 1000:
+                    text1 = '$'+str(planned)
+                else:
+                    text1 = '$' + str(round(planned/1000, 2))+'k'
+                if actual < 1000:
+                    text2 = '$'+str(actual)
+                else:
+                    text2 = '$' + str(round(actual / 1000, 2)) + 'k'
+                card = genTextCard(c,c,text1,text2, color)
+                children.append(card)
+        else:
+            children=[None]
+    return children
+
+
+@app.callback(
     Output('body-right', 'children'),
     Input('customer-sum', 'active_cell'),
-    # Input('site-data', 'active_cell')
+    Input('site-data', 'active_cell')
 )
-def updateCosts(c):
-    customer = summary['Account'].tolist()[c['row']]
-    costs = db.getData('PoC_SP_Targets', 'ChemA_target')
-    # print(costs)
-    chemicals = [c for c in assets.columns.tolist() if 'chem' in c.lower()]
-    if customer is not None:
-        # print(customer)
-        df = assets[['Account', 'ChemD', 'ChemE', 'ChemB', 'ChemA', 'ChemC']].groupby(['Account']).sum().reset_index()
-        df = df[df['Account'] == customer]
-        # print(df)
-        cost = costs.groupby(['Account']).sum().reset_index()
-        cost = cost[cost['Account'] == customer]
-        # print(cost)
-        children = []
-        for c in chemicals:
-            plan_list = list(cost[[i for i in cost.columns.tolist() if c.lower() in i.lower()]].iloc[0])
-            # print(plan_list)
-            planned = plan_list[0]*plan_list[1]
-            actual = df[c].tolist()[0]*plan_list[1]
-            if planned >= actual:
-                color = 'green'
-            else:
-                color = 'red'
-            text1 = '$'+str(planned)
-            text2 = '$'+str(actual)
-            card = genTextCard(c,c,text1,text2, color)
-            children.append(card)
-            print(card)
-        return html.Div(children)
+def updateCosts(c, s):
+    if c['column_id'] == 'Account':
+        customer = summary['Account'].tolist()[c['row']]
+        costs = db.getData('PoC_SP_Targets', 'ChemA_target')
+        # print(costs)
+        chemicals = [c for c in assets.columns.tolist() if 'chem' in c.lower()]
+        if c is not None and s is None:
+            # print(customer)
+            df = assets[['Account', 'ChemD', 'ChemE', 'ChemB', 'ChemA', 'ChemC']].groupby(['Account']).sum().reset_index()
+            df = df[df['Account'] == customer]
+            # print(df)
+            cost = costs.groupby(['Account']).sum().reset_index()
+            cost = cost[cost['Account'] == customer]
+            # print(cost)
+            children = [
+                html.H3("Planned vs Actual Chemical Expenditure")
+            ]
+            for c in chemicals:
+                plan_list = list(cost[[i for i in cost.columns.tolist() if c.lower() in i.lower()]].iloc[0])
+                # print(plan_list)
+                planned = plan_list[0]*plan_list[1]
+                actual = df[c].tolist()[0]*plan_list[1]
+                if planned >= actual:
+                    color = 'green'
+                else:
+                    color = 'red'
+                if planned < 1000:
+                    text1 = '$'+str(planned)
+                else:
+                    text1 = '$' + str(round(planned/1000, 2))+'k'
+                if actual < 1000:
+                    text2 = '$'+str(actual)
+                else:
+                    text2 = '$' + str(round(actual / 1000, 2)) + 'k'
+                card = genTextCard(c, c, text1, text2, color)
+                children.append(card)
+        elif c is not None and s is not None:
+            filtered = assets[['Account', 'Plant', 'Pump']].groupby(['Account', 'Plant']).count().reset_index()
+        return children
 
 
 app.layout = html.Div(

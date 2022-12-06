@@ -10,27 +10,32 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 from dbServices import db_config as config
-
-conn = db.connect(DRIVER='SQL Server',
-                  SERVER=config.server_name,
-                  UID=config.user,
-                  PWD=config.pwd,
-                  DATABASE=config.database_name,)
                   # MultipleActiveResultSets=True)
 
 
-def createTable(db_name, tablename, columns, conn=conn):
+def createTable(db_name, tablename, columns):
+    conn = db.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
     insertCMD = f'''CREATE TABLE "{tablename}" ({columns});'''
     cur = conn.cursor()
     try:
         cur.execute(insertCMD)
         conn.commit()
         print(f"Table {tablename} was created in DB {db_name}")
+        conn.close()
     except(Exception, db.DatabaseError) as error:
         print(error)
 
 
-def writeValues(metrics, table, conn=conn):
+def writeValues(metrics, table):
+    conn = db.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
     try:
         cur = conn.cursor()
     except (Exception, db.DatabaseError) as error:
@@ -48,16 +53,28 @@ def writeValues(metrics, table, conn=conn):
         conn.commit()
         print(f'Values Inserted: {values}')
         cur.close()
+        conn.close()
     except (Exception, db.DatabaseError) as error:
         print(error)
 
 
-def getData(tablename, orderby, conn=conn):
+def getData(tablename, orderby):
+    conn = db.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
     qu = f'select * from "{tablename}" order by "{orderby}" desc'
     alldata = pd.read_sql_query(qu, conn)
+    conn.close()
     return alldata
 
-def getRecordID(tablename, conn=conn):
+def getRecordID(tablename):
+    conn = db.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
     qu = f'select MAX(RecordID) as RecordID FROM {tablename}'
     cur = conn.cursor()
     cur.execute(qu)
@@ -65,9 +82,15 @@ def getRecordID(tablename, conn=conn):
     for i in cur:
         k=i[0]
     cur.close()
+    conn.close()
     return k
 
 def getSpeedTime(site, pump):
+    conn = db.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
     qu = f'''select top(1) "208", Timestamp from "PoC_SP_Metrics" WHERE site like '{site}' AND pumpID like '{pump}' 
     order by RecordID desc;'''
     cur = conn.cursor()
@@ -78,19 +101,31 @@ def getSpeedTime(site, pump):
         speed = int(i[0])/10000
         timestamp = pd.to_datetime(i[1])
     cur.close()
+    conn.close()
     return speed, timestamp
 
 
 def getPowerStatus(site, pump):
+    conn = db.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
     qu = f'''select top(1) 104 from "PoC_SP_Metrics" WHERE site like '{site}' AND pumpID like '{pump}' 
         order by RecordID desc;'''
     cur = conn.cursor()
     cur.execute(qu)
     for i in cur:
         power = int(i[0])
+    conn.close()
     return power
 
 def getDashData(site, pump):
+    conn = db.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
     qu = f'''select top(1) "104", "312", "208", Timestamp from "PoC_SP_Metrics" WHERE site like '{site}' AND pumpID 
     like '{pump}' order by RecordID desc;'''
     cur = conn.cursor()
@@ -103,10 +138,16 @@ def getDashData(site, pump):
         speed = int(i[2]) / 10000
         timestamp = pd.to_datetime(i[3])
     cur.close()
+    conn.close()
     return status, pressure, speed, timestamp
 
 
-def delData(tablename, conn=conn):
+def delData(tablename):
+    conn = db.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
     try:
         cur = conn.cursor()
         q = f"delete from {tablename};"
@@ -114,11 +155,17 @@ def delData(tablename, conn=conn):
         l = getData(tablename, conn)
         if len(l['Address'].tolist()) == 0:
             print("Delete Succesful")
+            conn.close()
     except (Exception, db.DatabaseError) as error:
         print(error)
 
 
-def getAssetData(conn=conn):
+def getAssetData():
+    conn = db.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
     qu = f'''select * from "PoC_SP_Assets" order by RecordID desc'''
     cur = conn.cursor()
     cur.execute(qu)
@@ -126,10 +173,16 @@ def getAssetData(conn=conn):
     for i in cur:
         df.loc[len(df)] = [i[0], i[1]]
     cur.close()
+    conn.close()
     return df
 
 
-def getUserLogs(conn=conn):
+def getUserLogs():
+    conn = db.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
     qu = f'''select * from "PoC_SP_UserLogs" order by RecordID desc'''
     cur = conn.cursor()
     cur.execute(qu)
@@ -138,5 +191,6 @@ def getUserLogs(conn=conn):
         log = [r for r in i]
         df.loc[len(df)] = log
     cur.close()
+    conn.close()
     return df.to_dict('records')
 
