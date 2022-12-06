@@ -1,0 +1,137 @@
+AccountId,Account,PlantId,Plant,SystemTypeId,SystemType,Product,Pump,ChemD,ChemE,ChemB,ChemA,ChemC
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation Tissue Machine- 3,Stock Preparation Tissue Machine- 3_1,0.0,156.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Paper Machine 2,Paper Machine 2_1,0.0,0.0,72.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Paper Machine 2,Paper Machine 2_2,182.0,0.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Recaust,Recaust_1,0.0,0.0,0.0,52.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Clearwater Lewiston Recovery,Clearwater Lewiston Recovery_1,0.0,0.0,0.0,158.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Clearwater Lewiston Recovery,Clearwater Lewiston Recovery_2,0.0,0.0,0.0,0.0,138.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Clearwater Lewiston Recovery,Clearwater Lewiston Recovery_3,0.0,0.0,0.0,70.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Tissue Machine 3,Tissue Machine 3_1,0.0,197.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Tissue Machine 3,Tissue Machine 3_2,0.0,0.0,0.0,0.0,116.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Tissue Machine 3,Tissue Machine 3_3,0.0,196.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation Tissue Machine- 3,Stock Preparation Tissue Machine- 3_1,176.0,0.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Tissue Machine 3,Tissue Machine 3_1,0.0,0.0,0.0,147.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Tissue Machine 3,Tissue Machine 3_1,0.0,0.0,0.0,161.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp Washing - Kraft Chip Line 2,Pulp Washing - Kraft Chip Line 2_1,0.0,0.0,181.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp Washing - Kraft Chip Line 2,Pulp Washing - Kraft Chip Line 2_2,122.0,0.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp Washing - Kraft Chip Line 2,Pulp Washing - Kraft Chip Line 2_3,0.0,0.0,67.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Fiber Production - Kraft Saw Dust Line,Fiber Production - Kraft Saw Dust Line_1,135.0,0.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Fiber Production - Kraft Saw Dust Line,Fiber Production - Kraft Saw Dust Line_2,0.0,199.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,432,CLEARWATER PAPER,1,Cooling Water,Headspace System,Headspace System_1,0.0,52.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,432,CLEARWATER PAPER,1,Cooling Water,Headspace System,Headspace System_2,186.0,0.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,432,CLEARWATER PAPER,1,Cooling Water,Headspace System,Headspace System_3,0.0,0.0,178.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation Tissue Machine- 3,Stock Preparation Tissue Machine- 3_1,51.0,0.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation Tissue Machine- 3,Stock Preparation Tissue Machine- 3_2,0.0,0.0,60.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation Tissue Machine- 3,Stock Preparation Tissue Machine- 3_3,0.0,0.0,0.0,116.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock preparation for Paper Machine 2,Stock preparation for Paper Machine 2_1,0.0,0.0,0.0,152.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Headspace skid,Headspace skid_1,118.0,0.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Headspace skid,Headspace skid_2,57.0,0.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation paper machine 1,Stock Preparation paper machine 1_1,0.0,0.0,0.0,130.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation paper machine 1,Stock Preparation paper machine 1_2,0.0,0.0,0.0,190.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation paper machine 1,Stock Preparation paper machine 1_3,0.0,0.0,178.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock preparation: Paper Machine 1,Stock preparation: Paper Machine 1_1,0.0,0.0,0.0,0.0,131.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock preparation: Paper Machine 1,Stock preparation: Paper Machine 1_2,0.0,79.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock preparation: Paper Machine 1,Stock preparation: Paper Machine 1_3,0.0,0.0,0.0,0.0,177.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp bleaching:Kraft saw dust line,Pulp bleaching:Kraft saw dust line_1,0.0,0.0,0.0,142.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp bleaching:Kraft saw dust line,Pulp bleaching:Kraft saw dust line_2,0.0,99.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp washing: Kraft Chip line 2,Pulp washing: Kraft Chip line 2_1,0.0,72.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp washing: Kraft Chip line 2,Pulp washing: Kraft Chip line 2_2,0.0,0.0,0.0,0.0,120.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp washing: Kraft Chip line 2,Pulp washing: Kraft Chip line 2_3,0.0,0.0,0.0,142.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Paper Machine: PD,Paper Machine: PD_1,0.0,0.0,73.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp washing: Kraft saw dust,Pulp washing: Kraft saw dust_1,0.0,0.0,100.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp washing: Kraft saw dust,Pulp washing: Kraft saw dust_2,0.0,0.0,0.0,0.0,70.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Fiber Production - Kraft Chip Line 2,Fiber Production - Kraft Chip Line 2_1,0.0,140.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Fiber Production - Kraft Chip Line 1,Fiber Production - Kraft Chip Line 1_1,0.0,0.0,0.0,0.0,193.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Paper Machine 1,Paper Machine 1_1,0.0,80.0,0.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Paper Machine 1,Paper Machine 1_2,0.0,0.0,103.0,0.0,0.0
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Paper Machine 1,Paper Machine 1_3,0.0,0.0,0.0,0.0,89.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Kraft A,Fiber Production - Kraft A_1,0.0,0.0,0.0,51.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 2,Recovery Line 2_1,0.0,185.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 2,Recovery Line 2_2,0.0,117.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 2,Recovery Line 2_3,0.0,0.0,0.0,160.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 1,Recovery Line 1_1,0.0,0.0,59.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 1,Recovery Line 1_2,0.0,0.0,0.0,105.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 1,Recovery Line 1_3,130.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 1,Recovery Line 1_1,0.0,0.0,109.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 1,Recovery Line 1_2,0.0,0.0,0.0,130.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 6,Stock Preparation Paper Machine 6_1,0.0,0.0,0.0,56.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 6,Stock Preparation Paper Machine 6_2,0.0,0.0,0.0,0.0,123.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 6,Stock Preparation Paper Machine 6_3,52.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Kraft B,Fiber Production - Kraft B_1,84.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Kraft B,Fiber Production - Kraft B_2,141.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Kraft B,Fiber Production - Kraft B_3,127.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 2,Recovery Line 2_1,0.0,0.0,198.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 2,Recovery Line 2_2,0.0,0.0,0.0,113.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 2,Recovery Line 2_3,0.0,0.0,0.0,61.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Recycle Line 1,Fiber Production - Recycle Line 1_1,0.0,0.0,174.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing - Carbonate Line,Pulp Washing - Carbonate Line_1,0.0,83.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing - Kraft A,Pulp Washing - Kraft A_1,0.0,0.0,109.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing - Kraft A,Pulp Washing - Kraft A_2,0.0,0.0,0.0,160.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing - Kraft B,Pulp Washing - Kraft B_1,0.0,0.0,106.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water, Paper Machine 6, Paper Machine 6_1,0.0,0.0,0.0,183.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water, Paper Machine 6, Paper Machine 6_2,0.0,72.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water, Paper Machine 6, Paper Machine 6_3,0.0,0.0,0.0,79.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Kraft D,Fiber Production - Kraft D_1,174.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Kraft D,Fiber Production - Kraft D_2,55.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Kraft D,Fiber Production - Kraft D_3,128.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 2,Stock Preparation Paper Machine 2_1,0.0,0.0,0.0,140.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 2,Stock Preparation Paper Machine 2_2,0.0,0.0,0.0,0.0,84.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 2,Stock Preparation Paper Machine 2_3,0.0,124.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 1,Stock Preparation Paper Machine 1_1,0.0,100.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 1,Stock Preparation Paper Machine 1_2,0.0,0.0,165.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Carbonate Line,Fiber Production - Carbonate Line_1,0.0,0.0,0.0,0.0,183.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Carbonate Line,Fiber Production - Carbonate Line_2,153.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Paper Machine 2,Paper Machine 2_1,0.0,0.0,0.0,0.0,122.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 2,Recovery Line 2_1,0.0,0.0,0.0,0.0,156.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing Kraft D Line,Pulp Washing Kraft D Line_1,0.0,0.0,0.0,0.0,50.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing Kraft D Line,Pulp Washing Kraft D Line_2,93.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing Recycle Line 1,Pulp Washing Recycle Line 1_1,0.0,0.0,111.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing Recycle Line 1,Pulp Washing Recycle Line 1_2,58.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing Recycle Line 1,Pulp Washing Recycle Line 1_3,0.0,0.0,62.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 5,Stock Preparation Paper Machine 5_1,0.0,182.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing Recycle Line 2,Pulp Washing Recycle Line 2_1,157.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing Recycle Line 2,Pulp Washing Recycle Line 2_2,0.0,169.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing Recycle Line 2,Pulp Washing Recycle Line 2_3,148.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 1,Recovery Line 1_1,0.0,0.0,0.0,198.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 1,Recovery Line 1_2,0.0,147.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 1,Recovery Line 1_3,165.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production Recycle Line 2,Fiber Production Recycle Line 2_1,0.0,0.0,158.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production Recycle Line 2,Fiber Production Recycle Line 2_2,0.0,160.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production Recycle Line 2,Fiber Production Recycle Line 2_3,0.0,0.0,57.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 7,Stock Preparation Paper Machine 7_1,0.0,0.0,83.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 7,Stock Preparation Paper Machine 7_2,0.0,0.0,131.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water, Paper Machine 7, Paper Machine 7_1,0.0,0.0,86.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water, Paper Machine 7, Paper Machine 7_2,0.0,0.0,95.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water, Paper Machine 7, Paper Machine 7_3,64.0,0.0,0.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recaust,Recaust_1,0.0,0.0,87.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Paper Machine 5,Paper Machine 5_1,0.0,0.0,58.0,0.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Paper Machine 5,Paper Machine 5_2,0.0,0.0,0.0,82.0,0.0
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water, Paper Machine 1, Paper Machine 1_1,0.0,0.0,0.0,140.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,6270,International Paper Moses Lake WA (US),1,Cooling Water,U300 PCW CT5001/2 and CT5003/4,U300 PCW CT5001/2 and CT5003/4_1,0.0,0.0,0.0,77.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,6270,International Paper Moses Lake WA (US),1,Cooling Water,U300 PCW CT5001/2 and CT5003/4,U300 PCW CT5001/2 and CT5003/4_2,0.0,0.0,0.0,189.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,42,IP Valliant OK (US),1,Cooling Water,july122021,july122021_1,0.0,163.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,42,IP Valliant OK (US),1,Cooling Water,july122021,july122021_2,0.0,149.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,42,IP Valliant OK (US),1,Cooling Water,july122021,july122021_3,132.0,0.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,4586,IP Rome GA (US),3,Influent,5,5_1,0.0,0.0,0.0,153.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,4586,IP Rome GA (US),3,Influent,5,5_2,0.0,0.0,0.0,0.0,64.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Fiber Production: Recycle line 1,Fiber Production: Recycle line 1_1,98.0,0.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Fiber Production: Recycle line 1,Fiber Production: Recycle line 1_2,140.0,0.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,High Density Tower: Recycle line 2,High Density Tower: Recycle line 2_1,0.0,0.0,143.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,High Density Tower: Recycle line 2,High Density Tower: Recycle line 2_2,0.0,0.0,113.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Stock preparation for paper machine 1,Stock preparation for paper machine 1_1,0.0,0.0,0.0,0.0,53.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Stock preparation for paper machine 1,Stock preparation for paper machine 1_2,0.0,0.0,0.0,0.0,151.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Stock preparation for paper machine 1,Stock preparation for paper machine 1_3,0.0,66.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Paper machine 2,Paper machine 2_1,0.0,0.0,156.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Paper machine 2,Paper machine 2_2,0.0,0.0,0.0,0.0,132.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Paper machine 2,Paper machine 2_3,0.0,141.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Fiber production: Recycle line 1,Fiber production: Recycle line 1_1,0.0,120.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Fiber production: Recycle line 1,Fiber production: Recycle line 1_2,0.0,0.0,0.0,0.0,173.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Pulp washing: Recycle line 2,Pulp washing: Recycle line 2_1,197.0,0.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Pulp washing: Recycle line 2,Pulp washing: Recycle line 2_2,53.0,0.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Paper machine 1,Paper machine 1_1,0.0,77.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Stock preparation for paper machine 2,Stock preparation for paper machine 2_1,0.0,0.0,0.0,50.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Stock preparation for paper machine 2,Stock preparation for paper machine 2_2,183.0,0.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Stock preparation for paper machine 2,Stock preparation for paper machine 2_3,0.0,0.0,0.0,159.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Pulp washing: Recycle line 1,Pulp washing: Recycle line 1_1,0.0,91.0,0.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Pulp washing: Recycle line 1,Pulp washing: Recycle line 1_2,0.0,0.0,119.0,0.0,0.0
+40,BLOCKED INTERNATIONAL PAPER,12216,KBG IP Pensacola Cantonment FL (US),5,Other,Headspace Skid QA,Headspace Skid QA_1,0.0,0.0,0.0,0.0,182.0

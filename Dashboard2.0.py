@@ -38,15 +38,63 @@ app.config.suppress_callback_exceptions = True
 ######## App Declarations ########
 
 ####### Assets #####
-assets = db.getData("PoC_SP_Assets", "RecordID")
+assets = db.getData("PoC_SP_CustomerData", "AccountId")
+m = []
+for ac in assets.Account.unique():
+    sites = assets[assets['Account'] == ac].Plant.unique().tolist()
+    pumps = assets[assets['Account'] == ac].Pump.unique().tolist()
+    m.append({
+        'Account': ac,
+        'Sites': len(sites),
+        'Pumps': len(pumps)
+    })
+summary = pd.DataFrame.from_dict(m)
 
+####### Users #####
 users = {
     'mmuthumani@buckman.com': 'pass@123',
     'ramachandran@buckman.com': 'password',
     'mscatolin@buckman.com': 'password123'
 }
+####### Users #####
 
+####### LogData #####
 logs = []
+
+
+####### LogData #####
+
+####### Generic Functions #####
+def genTextCard(id, title, text,text2, color2, color1='black'):
+    dbc.Card(
+        dbc.CardBody(
+            id=id,
+            children=[
+                html.H4(title, className="card-title"),
+                html.P(
+                    html.H1(text, style={'color': color1}),
+                    className="card-text",
+                ),
+                html.P(
+                    html.H1(text2, style={'color': color2}),
+                    className="card-text",
+                )
+            ]
+        ),
+        style={"width": "18rem"},
+    )
+
+
+def genTable(id, df):
+    return dash_table.DataTable(
+        id=id,
+        data=df.to_dict('records'),
+        columns=[{"name": i, "id": i} for i in df.columns],
+        style_cell={'textAlign': 'center'},
+        filter_action="native",
+        sort_action="native",
+        sort_mode="multi"
+    )
 
 
 def build_banner():
@@ -278,80 +326,117 @@ def editorpage(s, u, p):
 #### Main Display ###
 def home():
     return html.Div(
+        style={'textAlign': 'center'},
         children=[
+            html.Div(id='Headers',
+                     children=[
+                         html.Div(
+                             style={'marginTop': 5, 'marginBottom': 0, 'marginRight': 5,
+                                    'font-size': 12,
+                                    'color': 'black',
+                                    'width': '45%',
+                                    'display': 'inline-block'},
+                             children=[
+                                 html.H2("Customer Data",
+                                         style={'marginLeft': 10}),]
+                         ),
+                         html.Div(
+                             style={'marginTop': 5, 'marginBottom': 0, 'marginRight': 5,
+                                    'font-size': 12,
+                                    'color': 'black',
+                                    'width': '45%',
+                                    'display': 'inline-block'},
+                             children=[
+                                 html.H2("At A Glance",
+                                         style={'marginLeft': 10}), ]
+                         )
+                     ]),
             html.Div(
-                style={'marginTop': 15, 'width': "100%",
-                       'display': 'inline-block', 'textAlign': 'center', 'marginRight': 40, 'verticalAlign': 'top'},
+                id='body-left',
+                style={'marginTop': 5, 'marginBottom': 0, 'marginRight': 5,
+                       'font-size': 12,
+                       'color': 'black',
+                       'width': '45%',
+                       'display': 'inline-block'},
                 children=[
-                    html.Div(
-                        [
-                            dcc.Dropdown(
-                                id='customer-1',
-                                multi=False,
-                                style={'height': 15},
-                                placeholder='Select Customer',
-                                options=assets['Location'].unique(),
-                                searchable=True
-                            )
-                        ],
-                        style={'marginTop': 0, 'marginBottom': 10, 'marginRight': 5,
-                               'font-size': 18,
-                               'color': 'black',
-                               'width': '20%',
-                               'display': 'inline-block'}
+                    html.H6('Select a customer'),
+                    dash_table.DataTable(
+                        id='customer-sum',
+                        data=summary.to_dict('records'),
+                        columns=[{"name": i, "id": i} for i in summary.columns],
+                        style_cell={'textAlign': 'center'},
+                        filter_action="native",
+                        sort_action="native",
+                        sort_mode="multi",
+                        page_size=5
                     ),
-                    html.Div(
-                        [
-                            dcc.Dropdown(
-                                id='site-1',
-                                multi=False,
-                                style={'height': 15},
-                                placeholder='Select Site',
-                                searchable=True
-                            )
-                        ],
-                        style={'marginTop': 0, 'marginBottom': 10, 'marginRight': 5,
-                               'font-size': 18,
-                               'color': 'black',
-                               'width': '20%',
-                               'display': 'inline-block'}
-                    ),
-                    html.Div(
-                        [
-                            dcc.Dropdown(
-                                id='offering-1',
-                                multi=False,
-                                style={'height': 15},
-                                placeholder='Select Offering',
-                                searchable=True
-                            )
-                        ],
-                        style={'marginTop': 0, 'marginBottom': 10, 'marginRight': 5,
-                               'font-size': 18,
-                               'color': 'black',
-                               'width': '20%',
-                               'display': 'inline-block'}
-                    ),
-                    html.Div(
-                        [
-                            dcc.Dropdown(
-                                id='pump-1',
-                                multi=False,
-                                style={'height': 15},
-                                placeholder='Select Pump',
-                                searchable=True
-                            )
-                        ],
-                        style={'marginTop': 0, 'marginBottom': 10, 'marginRight': 5,
-                               'font-size': 18,
-                               'color': 'black',
-                               'width': '20%',
-                               'display': 'inline-block'}
-                    )
+                    html.Div(id='customer-expansion')
                 ]
-            )
+            ),
+            html.Div(
+                id='body-right',
+                style={'marginTop': 5, 'marginBottom': 0, 'marginRight': 5,
+                       'font-size': 12,
+                       'color': 'black',
+                       'width': '45%',
+                       'display': 'inline-block'},
+            ),
         ]
     )
+
+
+@app.callback(
+    Output('customer-expansion', 'children'),
+    Input('customer-sum', 'active_cell')
+)
+def updateSiteData(active):
+    if active['column_id'] == 'Account':
+        df = assets[['Account', 'Plant', 'Pump']].groupby(['Account', 'Plant']).count().reset_index()
+        row = active['row']
+        customer = summary['Account'].tolist()[row]
+        df = df[df['Account'] == customer][['Plant', 'Pump']]
+        children = [
+            html.H2("Site Information",
+                    style={'marginLeft': 10}),
+            genTable('site-data', df)
+        ]
+        return children
+
+
+@app.callback(
+    Output('body-right', 'children'),
+    Input('customer-sum', 'active_cell'),
+    # Input('site-data', 'active_cell')
+)
+def updateCosts(c):
+    customer = summary['Account'].tolist()[c['row']]
+    costs = db.getData('PoC_SP_Targets', 'ChemA_target')
+    # print(costs)
+    chemicals = [c for c in assets.columns.tolist() if 'chem' in c.lower()]
+    if customer is not None:
+        # print(customer)
+        df = assets[['Account', 'ChemD', 'ChemE', 'ChemB', 'ChemA', 'ChemC']].groupby(['Account']).sum().reset_index()
+        df = df[df['Account'] == customer]
+        # print(df)
+        cost = costs.groupby(['Account']).sum().reset_index()
+        cost = cost[cost['Account'] == customer]
+        # print(cost)
+        children = []
+        for c in chemicals:
+            plan_list = list(cost[[i for i in cost.columns.tolist() if c.lower() in i.lower()]].iloc[0])
+            # print(plan_list)
+            planned = plan_list[0]*plan_list[1]
+            actual = df[c].tolist()[0]*plan_list[1]
+            if planned >= actual:
+                color = 'green'
+            else:
+                color = 'red'
+            text1 = '$'+str(planned)
+            text2 = '$'+str(actual)
+            card = genTextCard(c,c,text1,text2, color)
+            children.append(card)
+            print(card)
+        return html.Div(children)
 
 
 app.layout = html.Div(

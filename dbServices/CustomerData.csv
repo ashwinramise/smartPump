@@ -1,0 +1,515 @@
+AccountId,Account,PlantId,Plant,SystemTypeId,SystemType,Name
+1,AEMETIS ADVANCED FUELS KEYES INC,1,Aemetis Advanced Fuels KeyesCeres CA(US),4,Boiler,Test Boiler 28-Nov--2
+1,AEMETIS ADVANCED FUELS KEYES INC,1,Aemetis Advanced Fuels KeyesCeres CA(US),4,Boiler,Test boiler
+1,AEMETIS ADVANCED FUELS KEYES INC,4355,AEMETIS ADVANCED FUELS KEYES INC,5,Other,Test
+1,AEMETIS ADVANCED FUELS KEYES INC,1,Aemetis Advanced Fuels KeyesCeres CA(US),10053,Closed Loop System,AEM 290
+1,AEMETIS ADVANCED FUELS KEYES INC,1,Aemetis Advanced Fuels KeyesCeres CA(US),5,Other,TEST COMPONENT
+1,AEMETIS ADVANCED FUELS KEYES INC,4355,AEMETIS ADVANCED FUELS KEYES INC,5,Other,Headspace Fermenter Line 1
+2,CC METALS & ALLOYS LLC,2,CC Metals Alloys Calvert City KY (US),1,Cooling Water,test sm
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,10053,Closed Loop System,Closed Loop
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,1,Cooling Water,Click to set System Group Name
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,9,Paper Machine,Paper Machine  Packaging
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,10052,Bleaching,Bleaching
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,3,Influent,Influent
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,2,Effluent,Effluent
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,10010,Machine Process,machine process
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,6,Fermentation Line,Fermenation24
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,10051,Stock Preparation,Stock preparation
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,6,Fermentation Line,Fermentation25
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,9,Paper Machine,
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,1,Cooling Water,HeadSpace Testing
+2,CC METALS & ALLOYS LLC,7353,CC METALS & ALLOYS LLC,1,Cooling Water,Test S
+3,CERTAINTEED CORP,10681,CERTAINTEED CORP,4,Boiler,Group of Boiler v11115 qa
+3,CERTAINTEED CORP,10681,CERTAINTEED CORP,10046,Feedwater system,Feed water
+3,CERTAINTEED CORP,10681,CERTAINTEED CORP,4,Boiler,test suite
+3,CERTAINTEED CORP,10681,CERTAINTEED CORP,3,Influent,Group of Influent v 11116 qa
+4,CLEARWATER PAPER,1089,Clearwater Arkansas City AR (US),1,Cooling Water,Headspace test
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation paper machine 1
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock preparation: Paper Machine 1
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Paper Machine: PD
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp bleaching:Kraft saw dust line
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp washing: Kraft Chip line 2
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp washing: Kraft saw dust
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Fiber Production - Kraft Chip Line 2
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Fiber Production - Kraft Chip Line 1
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Paper Machine 1
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock preparation for Paper Machine 2
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Headspace skid
+4,CLEARWATER PAPER,432,CLEARWATER PAPER,1,Cooling Water,Headspace System
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Fiber Production - Kraft Saw Dust Line
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Pulp Washing - Kraft Chip Line 2
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Tissue Machine 3
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Tissue Machine 3
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation Tissue Machine- 3
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation Tissue Machine- 3
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Tissue Machine 3
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Clearwater Lewiston Recovery
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Recaust
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Paper Machine 2
+4,CLEARWATER PAPER,4,Clearwater Lewiston ID (US),1,Cooling Water,Stock Preparation Tissue Machine- 3
+5,DART POLYMERS INC,386,DART POLYMERS INC,4,Boiler,Boiler Test
+5,DART POLYMERS INC,5,Dart Polymers Owensboro KY (US),5,Other,CL_DEMO
+5,DART POLYMERS INC,386,DART POLYMERS INC,10010,Machine Process,test duplicate remove
+5,DART POLYMERS INC,5,Dart Polymers Owensboro KY (US),1,Cooling Water,ism 
+5,DART POLYMERS INC,386,DART POLYMERS INC,5,Other,Cool
+5,DART POLYMERS INC,386,DART POLYMERS INC,4,Boiler,check system offering counter
+5,DART POLYMERS INC,5,Dart Polymers Owensboro KY (US),1,Cooling Water,TEST 30-Nov
+5,DART POLYMERS INC,386,DART POLYMERS INC,1,Cooling Water,cooling water 
+5,DART POLYMERS INC,5,Dart Polymers Owensboro KY (US),5,Other,
+5,DART POLYMERS INC,5,Dart Polymers Owensboro KY (US),1,Cooling Water,Test
+5,DART POLYMERS INC,5,Dart Polymers Owensboro KY (US),4,Boiler,test demo
+7,GEORGIA PACIFIC,8,GP Naheola Pennington AL (US),1,Cooling Water,Kraft Hardwood 2: Pulp Washing
+7,GEORGIA PACIFIC,1071,GP Rincon GA (US),7,Fiber Production,Fiber_Feb25
+7,GEORGIA PACIFIC,8,GP Naheola Pennington AL (US),1,Cooling Water,Kraft Softwood: Pulp Washing
+9,GREEN PLAINS OBION LLC,648,GREEN PLAINS OBION LLC,1,Cooling Water,headspace system group
+9,GREEN PLAINS OBION LLC,10,Green Plains Rives TN (US),1,Cooling Water,Headspace Skid
+11,JOPPA HOLCIM INC,12,Joppa Holcim Grand Chain IL (US),3,Influent,Influent
+11,JOPPA HOLCIM INC,12,Joppa Holcim Grand Chain IL (US),1,Cooling Water,Cooling Water
+11,JOPPA HOLCIM INC,12,Joppa Holcim Grand Chain IL (US),6,Fermentation Line,Headspace survey
+11,JOPPA HOLCIM INC,12,Joppa Holcim Grand Chain IL (US),4,Boiler,Boiler
+11,JOPPA HOLCIM INC,12,Joppa Holcim Grand Chain IL (US),6,Fermentation Line,Fermentation line
+11,JOPPA HOLCIM INC,12,Joppa Holcim Grand Chain IL (US),8,Pulp Washing,1435 Pulp Washing
+11,JOPPA HOLCIM INC,12,Joppa Holcim Grand Chain IL (US),7,Fiber Production,1435 Fiber Production
+12,LES ENTREPRISES ROLLAND,15,Rolland Breakeyville QC (CA),2,Effluent,Effluent1
+13,PACKAGING CORP OF AMERICA,14,Packaging Corp of America Wallula WA(US),1,Cooling Water,Kraft Line A - Pulp Washing
+13,PACKAGING CORP OF AMERICA,14,Packaging Corp of America Wallula WA(US),1,Cooling Water,Kraft Line A - Fibre Production
+13,PACKAGING CORP OF AMERICA,14,Packaging Corp of America Wallula WA(US),1,Cooling Water,Kraft Line B- Fibre Production
+13,PACKAGING CORP OF AMERICA,14,Packaging Corp of America Wallula WA(US),1,Cooling Water,Kraft Line B - Pulp Washing
+14,SEMINOLE GENERATING STATION,17,Seminole Generating Stn Palatka FL (US),1,Cooling Water,<Click to set System Group Name>
+14,SEMINOLE GENERATING STATION,17,Seminole Generating Stn Palatka FL (US),1,Cooling Water,Seminole Oxamine System
+14,SEMINOLE GENERATING STATION,17,Seminole Generating Stn Palatka FL (US),1,Cooling Water,<Click to set System Group Name>
+15,THOMAS HILL ENERGY CENTER,6289,THOMAS HILL ENERGY CENTER,4,Boiler,Boiler_Feb26
+15,THOMAS HILL ENERGY CENTER,6289,THOMAS HILL ENERGY CENTER,10010,Machine Process,Machine_Feb26
+15,THOMAS HILL ENERGY CENTER,6289,THOMAS HILL ENERGY CENTER,10046,Feedwater system,FeedWater_Feb26
+16,VERSO,4591,Verso Bucksport ME (US),10046,Feedwater system,Feed_Dec13
+16,VERSO,4591,Verso Bucksport ME (US),4,Boiler,Boiler_Dec13
+16,VERSO,4591,Verso Bucksport ME (US),10045,Pre-treatment,Pre_Dec13
+17,BLOCKED WSTROCK CHARLES Use 203153,13,KBG Westrock North Charleston SC (US),3,Influent,Influent_Dec14
+17,BLOCKED WSTROCK CHARLES Use 203153,13,KBG Westrock North Charleston SC (US),2,Effluent,Efluent_Dec14
+17,BLOCKED WSTROCK CHARLES Use 203153,13,KBG Westrock North Charleston SC (US),10010,Machine Process,Machine_Dec14
+17,BLOCKED WSTROCK CHARLES Use 203153,13,KBG Westrock North Charleston SC (US),10051,Stock Preparation,Stock_Dec14
+17,BLOCKED WSTROCK CHARLES Use 203153,13,KBG Westrock North Charleston SC (US),1,Cooling Water,Pulp Washing  Kraft E
+17,BLOCKED WSTROCK CHARLES Use 203153,13,KBG Westrock North Charleston SC (US),1,Cooling Water,Pulp Washing  Kraft F
+17,BLOCKED WSTROCK CHARLES Use 203153,13,KBG Westrock North Charleston SC (US),1,Cooling Water,Pulp Washing  Kraft G
+17,BLOCKED WSTROCK CHARLES Use 203153,13,KBG Westrock North Charleston SC (US),9,Paper Machine,Paper_Dec14
+17,BLOCKED WSTROCK CHARLES Use 203153,13,KBG Westrock North Charleston SC (US),10052,Bleaching,Bleach_Dec14
+18,山东百沅供应链有限公司,20,Site 1001 (US),1,Cooling Water,test group2
+18,山东百沅供应链有限公司,20,Site 1001 (US),1,Cooling Water,HS skid-Swagatika
+18,山东百沅供应链有限公司,20,Site 1001 (US),5,Other,System group Lili
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,Headspace Skid Swagatika
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,esesses
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,test sys grp
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,MAP 13K
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,HS SYS GRP
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,test
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,<Process view test 01
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,test
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,test
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,a162021
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,
+19,SYRAL BELGIUM N.V.,21,Site 1002 (US),1,Cooling Water,AQ Sys Grop
+20,FUCHS JAPAN LTD,22,Site 1003 (US),1,Cooling Water,BBTS Process
+20,FUCHS JAPAN LTD,22,Site 1003 (US),1,Cooling Water,aug92021
+20,FUCHS JAPAN LTD,22,Site 1003 (US),1,Cooling Water,BBTS Process
+20,FUCHS JAPAN LTD,22,Site 1003 (US),1,Cooling Water,new group01
+20,FUCHS JAPAN LTD,22,Site 1003 (US),1,Cooling Water,STP 
+20,FUCHS JAPAN LTD,22,Site 1003 (US),1,Cooling Water,System Name
+20,FUCHS JAPAN LTD,22,Site 1003 (US),1,Cooling Water,s1
+20,FUCHS JAPAN LTD,6785,FUCHS JAPAN (JP),5,Other,Headspace
+20,FUCHS JAPAN LTD,22,Site 1003 (US),1,Cooling Water,STP 
+21,CHEMCO PRODUCTS INC,23,Site 1004 (US),1,Cooling Water,<Fiber Line1
+21,CHEMCO PRODUCTS INC,23,Site 1004 (US),1,Cooling Water,FLUME 5
+21,CHEMCO PRODUCTS INC,23,Site 1004 (US),1,Cooling Water,<Mixing
+21,CHEMCO PRODUCTS INC,23,Site 1004 (US),1,Cooling Water,Feed water
+21,CHEMCO PRODUCTS INC,23,Site 1004 (US),1,Cooling Water,New sensors simulation test
+21,CHEMCO PRODUCTS INC,23,Site 1004 (US),1,Cooling Water,Cooling Loop
+21,CHEMCO PRODUCTS INC,23,Site 1004 (US),1,Cooling Water,
+21,CHEMCO PRODUCTS INC,23,Site 1004 (US),1,Cooling Water,Clarifier
+21,CHEMCO PRODUCTS INC,23,Site 1004 (US),1,Cooling Water,Process Heat Ex
+21,CHEMCO PRODUCTS INC,23,Site 1004 (US),1,Cooling Water,Test2
+22,LUIS FERNANDO STERTZ,24,Site 1005 (US),1,Cooling Water,sample check
+22,LUIS FERNANDO STERTZ,24,Site 1005 (US),1,Cooling Water,sample 2 system group
+22,LUIS FERNANDO STERTZ,24,Site 1005 (US),1,Cooling Water,Chemical Containers
+22,LUIS FERNANDO STERTZ,24,Site 1005 (US),1,Cooling Water,Fiber Production: Sunds Line
+22,LUIS FERNANDO STERTZ,24,Site 1005 (US),1,Cooling Water,Boiler Unit
+22,LUIS FERNANDO STERTZ,24,Site 1005 (US),1,Cooling Water,Fiber Production: Pandia Line#1
+22,LUIS FERNANDO STERTZ,24,Site 1005 (US),1,Cooling Water,Fiber Production: Recycle Line
+22,LUIS FERNANDO STERTZ,24,Site 1005 (US),1,Cooling Water,sample system group
+22,LUIS FERNANDO STERTZ,24,Site 1005 (US),1,Cooling Water,Leather SCADA sample
+24,ALBERTA PACIFIC FOREST IND.INC.,25,Alberta Pacific Forest Ind Boyle AB (CA),1,Cooling Water,Pulp Washing - Kraft Line
+27,CANADIAN KRAFT PAPER INDUSTRIES LIM,28,Canadian Kraft Paper Ind The Pas MB (CA),1,Cooling Water,PAPER MACHINE 1
+27,CANADIAN KRAFT PAPER INDUSTRIES LIM,28,Canadian Kraft Paper Ind The Pas MB (CA),1,Cooling Water,STOCK PREPERATION
+29,CARAUSTAR,51,Tama Paperboard Tama IA (US),1,Cooling Water,Stock Preparation - PM1
+29,CARAUSTAR,51,Tama Paperboard Tama IA (US),1,Cooling Water,<Click to set System Group Name>
+30,CATALYST PAPER,30,Catalyst Port Alberni BC (CA),1,Cooling Water,Stock Preparation (PM5)
+30,CATALYST PAPER,30,Catalyst Port Alberni BC (CA),1,Cooling Water,Paper Machine (PM5)
+31,CERTAINTEED CORPORATION IG KANSAS C,31,Certainteed IG Kansas City KS (US),1,Cooling Water,COOLING TOWERS
+31,CERTAINTEED CORPORATION IG KANSAS C,31,Certainteed IG Kansas City KS (US),1,Cooling Water, BUILDING BOILER SYSTEM
+31,CERTAINTEED CORPORATION IG KANSAS C,31,Certainteed IG Kansas City KS (US),1,Cooling Water,CHRYSLER BUILDING BOILER SYSTEM
+31,CERTAINTEED CORPORATION IG KANSAS C,31,Certainteed IG Kansas City KS (US),1,Cooling Water,K21 SYSTEM
+31,CERTAINTEED CORPORATION IG KANSAS C,31,Certainteed IG Kansas City KS (US),1,Cooling Water,K11 OXAMINE SYSTEM
+32,COMPASS CHEMICAL INTL LLC,32,Compass Chemical Int'l Smyrna GA (US),1,Cooling Water,Cooling Tower group 1
+33,DOMTAR INDUSTRIES INC,6339,Domtar Nekoosa WI Church Ave (US),1,Cooling Water,Test
+33,DOMTAR INDUSTRIES INC,33,Domtar Nekoosa WI (US),1,Cooling Water,Stock Preparation for Paper Machine 2
+33,DOMTAR INDUSTRIES INC,33,Domtar Nekoosa WI (US),1,Cooling Water,Paper machine 9
+33,DOMTAR INDUSTRIES INC,33,Domtar Nekoosa WI (US),1,Cooling Water,Stock preparation for Paper Machine 9
+33,DOMTAR INDUSTRIES INC,33,Domtar Nekoosa WI (US),1,Cooling Water,Recaust
+33,DOMTAR INDUSTRIES INC,33,Domtar Nekoosa WI (US),1,Cooling Water,Recovery
+33,DOMTAR INDUSTRIES INC,33,Domtar Nekoosa WI (US),1,Cooling Water,Stock preparation for Paper Machine 4
+33,DOMTAR INDUSTRIES INC,33,Domtar Nekoosa WI (US),1,Cooling Water,Bleach plant
+33,DOMTAR INDUSTRIES INC,6339,Domtar Nekoosa WI Church Ave (US),1,Cooling Water,cooling test
+33,DOMTAR INDUSTRIES INC,33,Domtar Nekoosa WI (US),1,Cooling Water,Pulp washing
+33,DOMTAR INDUSTRIES INC,33,Domtar Nekoosa WI (US),1,Cooling Water,Pulping
+34,DS SMITH READING,34,DS Smith Reading PA (US),1,Cooling Water,Pulp Washing: Recycle Line
+34,DS SMITH READING,34,DS Smith Reading PA (US),1,Cooling Water,Paper Machine#2
+34,DS SMITH READING,34,DS Smith Reading PA (US),1,Cooling Water,High Density Pulp Tower: Recycle Line
+34,DS SMITH READING,34,DS Smith Reading PA (US),1,Cooling Water,Stock Preparation
+36,GEORGIA PACIFIC CORP,38,GP Palatka FL (US),1,Cooling Water,FLUME 5
+36,GEORGIA PACIFIC CORP,38,GP Palatka FL (US),1,Cooling Water,
+36,GEORGIA PACIFIC CORP,38,GP Palatka FL (US),1,Cooling Water,<Mixing
+36,GEORGIA PACIFIC CORP,38,GP Palatka FL (US),1,Cooling Water,Feed water
+37,Georgia Pacific-Mill,36,GP Big Island VA (US),1,Cooling Water,Paper Machine 4
+37,Georgia Pacific-Mill,36,GP Big Island VA (US),1,Cooling Water,Stock preparation Paper machine 4
+38,GRAND RIVER DAM AUTHORITY,39,Grand R Dam Chouteau OK (US),1,Cooling Water,CONDENSER SYSTEM
+38,GRAND RIVER DAM AUTHORITY,39,Grand R Dam Chouteau OK (US),1,Cooling Water,CHILLER
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Paper Machine 2
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Carbonate Line
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 2
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing Kraft D Line
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing Recycle Line 1
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing Recycle Line 2
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 5
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Paper Machine 5
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 1
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production Recycle Line 2
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 7
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water, Paper Machine 7
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recaust
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 1
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water, Paper Machine 1
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 2
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water, Paper Machine 6
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Stock Preparation Paper Machine 6
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 2
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 1
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 1
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Kraft A
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Kraft B
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Kraft D
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Fiber Production - Recycle Line 1
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing - Carbonate Line
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing - Kraft A
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Recovery Line 2
+39,GRAPHIC PACKAGING INTERNATIONAL,40,Graphic Pack West Monroe LA (US),1,Cooling Water,Pulp Washing - Kraft B
+40,BLOCKED INTERNATIONAL PAPER,10502,Sylvamo North America Eastover SC (US),3,Influent,Testdev123
+40,BLOCKED INTERNATIONAL PAPER,12216,KBG IP Pensacola Cantonment FL (US),5,Other,Headspace Skid QA
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Pulp washing: Recycle line 1
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Stock preparation for paper machine 2
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Stock preparation for paper machine 1
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Paper machine 1
+40,BLOCKED INTERNATIONAL PAPER,12092,International Paper Amarillo TX (US),1,Cooling Water,Test
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Pulp washing: Recycle line 2
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Fiber production: Recycle line 1
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Paper machine 2
+40,BLOCKED INTERNATIONAL PAPER,1069,IP Auburn ME (US),2,Effluent,Testdev
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,High Density Tower: Recycle line 2
+40,BLOCKED INTERNATIONAL PAPER,6270,International Paper Moses Lake WA (US),1,Cooling Water,test bug
+40,BLOCKED INTERNATIONAL PAPER,6270,International Paper Moses Lake WA (US),1,Cooling Water,U300 PCW CT5001/2 and CT5003/4
+40,BLOCKED INTERNATIONAL PAPER,42,IP Valliant OK (US),1,Cooling Water,july122021
+40,BLOCKED INTERNATIONAL PAPER,4586,IP Rome GA (US),3,Influent,5
+40,BLOCKED INTERNATIONAL PAPER,6270,International Paper Moses Lake WA (US),1,Cooling Water,test bug
+40,BLOCKED INTERNATIONAL PAPER,10502,Sylvamo North America Eastover SC (US),3,Influent,Test
+40,BLOCKED INTERNATIONAL PAPER,203,INTERNATIONAL PAPER,3,Influent,Test5
+40,BLOCKED INTERNATIONAL PAPER,12092,International Paper Amarillo TX (US),1,Cooling Water,Testdev
+40,BLOCKED INTERNATIONAL PAPER,41,IP Cedar Rapids IA (US),1,Cooling Water,Fiber Production: Recycle line 1
+40,BLOCKED INTERNATIONAL PAPER,203,INTERNATIONAL PAPER,1,Cooling Water,Test1
+40,BLOCKED INTERNATIONAL PAPER,9235,International Paper Butler IN (US),4,Boiler,Testdev1
+41,KRUGER TROIS-RIVIERES S.E.C.,43,Kruger Trois-Rivieres QC (CA),1,Cooling Water,Stock Preparation Paper Machine 10
+41,KRUGER TROIS-RIVIERES S.E.C.,43,Kruger Trois-Rivieres QC (CA),1,Cooling Water,Paper Machine 10
+42,MOHAWK,44,Mohawk Cohoes NY (US),1,Cooling Water,Stock preparation for Paper Machine 1
+42,MOHAWK,44,Mohawk Cohoes NY (US),1,Cooling Water,Paper Machine 1
+44,NGC INDUSTRIES,45,National Gypsum Pryor OK (US),1,Cooling Water,Stock preparation
+45,PRATT,49,Pratt Wapakoneta OH (US),1,Cooling Water,Paper Machine 17
+45,PRATT,48,Pratt Valparaiso IN (US),1,Cooling Water,Paper Machine - 16
+46,PRATT PAPER LLC,47,Pratt Paper Wapakoneta OH (US),1,Cooling Water,Stock Preparation Paper Machine 10
+46,PRATT PAPER LLC,47,Pratt Paper Wapakoneta OH (US),1,Cooling Water,Paper Machine -10
+47,SIKESTON POWER,50,Sikeston Pow Sikeston MO (US),1,Cooling Water,SIKESTON POWER
+49,VERSO WISCONSIN RAPIDS,54,Verso Fourth Av Wisconsin Rapids WI (US),1,Cooling Water,Fiber Line1: Pulp Washing
+49,VERSO WISCONSIN RAPIDS,54,Verso Fourth Av Wisconsin Rapids WI (US),1,Cooling Water,<Click to set System Group Name>
+49,VERSO WISCONSIN RAPIDS,54,Verso Fourth Av Wisconsin Rapids WI (US),1,Cooling Water,Fiber Line1: Pulp Washing
+49,VERSO WISCONSIN RAPIDS,54,Verso Fourth Av Wisconsin Rapids WI (US),1,Cooling Water,Liner
+49,VERSO WISCONSIN RAPIDS,54,Verso Fourth Av Wisconsin Rapids WI (US),1,Cooling Water,Filler
+49,VERSO WISCONSIN RAPIDS,54,Verso Fourth Av Wisconsin Rapids WI (US),1,Cooling Water,Fiber Line2: Pulp Washing
+53,Training Account 1,60,Training Site 1,1,Cooling Water,Recaust
+53,Training Account 1,60,Training Site 1,1,Cooling Water,Paper machine 4
+53,Training Account 1,60,Training Site 1,1,Cooling Water,Recovery
+53,Training Account 1,60,Training Site 1,1,Cooling Water,Paper Mchine 2
+53,Training Account 1,60,Training Site 1,1,Cooling Water,Bleach plant
+53,Training Account 1,60,Training Site 1,1,Cooling Water,Paper machine 9
+53,Training Account 1,60,Training Site 1,1,Cooling Water,Pulp washing
+53,Training Account 1,60,Training Site 1,1,Cooling Water,Stock preparation for Paper Machine 9
+53,Training Account 1,60,Training Site 1,1,Cooling Water,Stock Preparation for Paper Machine 2
+53,Training Account 1,60,Training Site 1,1,Cooling Water,Stock preparation for Paper Machine 4
+53,Training Account 1,60,Training Site 1,1,Cooling Water,Pulping
+54,Training Account 2,62,Training Site 2,1,Cooling Water,training grou
+55,CASCADES EMBALLAGE CARTON-CAISSE-CA,63,Cascades Emballage Ctn Cabano QC (CA),1,Cooling Water,Fiber Production: Sunds Line
+55,CASCADES EMBALLAGE CARTON-CAISSE-CA,63,Cascades Emballage Ctn Cabano QC (CA),1,Cooling Water,Fiber Production: Recycle Line
+55,CASCADES EMBALLAGE CARTON-CAISSE-CA,63,Cascades Emballage Ctn Cabano QC (CA),1,Cooling Water,Fiber Production: Pandia Line#1
+56,DOMTAR,65,Domtar Kingsport TN (US),1,Cooling Water,Bleach Plant
+56,DOMTAR,65,Domtar Kingsport TN (US),1,Cooling Water,Pulp Washing
+56,DOMTAR,65,Domtar Kingsport TN (US),3,Influent,Influent_Dec21
+56,DOMTAR,65,Domtar Kingsport TN (US),1,Cooling Water,Cooling Water
+56,DOMTAR,65,Domtar Kingsport TN (US),6,Fermentation Line,fermentation
+56,DOMTAR,65,Domtar Kingsport TN (US),1,Cooling Water,Fibre Production
+56,DOMTAR,65,Domtar Kingsport TN (US),6,Fermentation Line,Click to set System Group Name
+56,DOMTAR,65,Domtar Kingsport TN (US),6,Fermentation Line,ferment
+56,DOMTAR,65,Domtar Kingsport TN (US),10053,Closed Loop System,closed loop
+56,DOMTAR,65,Domtar Kingsport TN (US),5,Other,fermetation line
+56,DOMTAR,65,Domtar Kingsport TN (US),9,Paper Machine,paper Machine
+56,DOMTAR,65,Domtar Kingsport TN (US),2,Effluent,Effluent_Dec21
+56,DOMTAR,65,Domtar Kingsport TN (US),5,Other,K1 Paper Machine
+56,DOMTAR,65,Domtar Kingsport TN (US),1,Cooling Water,cooling water 
+56,DOMTAR,65,Domtar Kingsport TN (US),1,Cooling Water,Buckman Chemicals
+57,GRAPHIC PACKAGING INTERNATIONAL LLC,66,Graphic Packaging Intl Augusta GA (US),1,Cooling Water,Fiber Production - Kraft Line - 1
+57,GRAPHIC PACKAGING INTERNATIONAL LLC,66,Graphic Packaging Intl Augusta GA (US),1,Cooling Water,Fiber Production - Kraft Line - 1
+57,GRAPHIC PACKAGING INTERNATIONAL LLC,66,Graphic Packaging Intl Augusta GA (US),1,Cooling Water,Bleaching - Kraft Line - 2
+57,GRAPHIC PACKAGING INTERNATIONAL LLC,66,Graphic Packaging Intl Augusta GA (US),1,Cooling Water,Bleaching - Kraft Line - 3
+57,GRAPHIC PACKAGING INTERNATIONAL LLC,66,Graphic Packaging Intl Augusta GA (US),1,Cooling Water,Pulp Washing - Kraft Line - 1
+57,GRAPHIC PACKAGING INTERNATIONAL LLC,66,Graphic Packaging Intl Augusta GA (US),1,Cooling Water,Pulp Washing - Kraft Line 2
+57,GRAPHIC PACKAGING INTERNATIONAL LLC,66,Graphic Packaging Intl Augusta GA (US),1,Cooling Water,Pulp Washing - Kraft Line 3
+57,GRAPHIC PACKAGING INTERNATIONAL LLC,66,Graphic Packaging Intl Augusta GA (US),1,Cooling Water,Fiber Production - Kraft Line - 1
+59,Training Account - 1200,107,John Carter ,1,Cooling Water,Stock Preparation for Paper Machine 2
+59,Training Account - 1200,107,John Carter ,1,Cooling Water,Paper Mchine 2
+59,Training Account - 1200,107,John Carter ,1,Cooling Water,Bleach plant
+59,Training Account - 1200,107,John Carter ,1,Cooling Water,Pulp washing
+59,Training Account - 1200,107,John Carter ,1,Cooling Water,Pulping
+59,Training Account - 1200,107,John Carter ,1,Cooling Water,Recovery
+59,Training Account - 1200,107,John Carter ,1,Cooling Water,Stock preparation for Paper Machine 4
+59,Training Account - 1200,107,John Carter ,1,Cooling Water,Stock preparation for Paper Machine 9
+59,Training Account - 1200,107,John Carter ,1,Cooling Water,Paper machine 9
+59,Training Account - 1200,107,John Carter ,1,Cooling Water,Recaust
+62,Training Account - 1203,110,Adam Ropp,1,Cooling Water,Pulping
+62,Training Account - 1203,110,Adam Ropp,1,Cooling Water,Stock preparation for Paper Machine 9
+62,Training Account - 1203,110,Adam Ropp,1,Cooling Water,Pulp washing
+62,Training Account - 1203,110,Adam Ropp,1,Cooling Water,Stock Preparation for Paper Machine 2
+62,Training Account - 1203,110,Adam Ropp,1,Cooling Water,Paper Mchine 2
+62,Training Account - 1203,110,Adam Ropp,1,Cooling Water,Paper machine 9
+62,Training Account - 1203,110,Adam Ropp,1,Cooling Water,Paper machine 4
+62,Training Account - 1203,110,Adam Ropp,1,Cooling Water,Bleach plant
+62,Training Account - 1203,110,Adam Ropp,1,Cooling Water,Recovery
+62,Training Account - 1203,110,Adam Ropp,1,Cooling Water,Recaust
+62,Training Account - 1203,110,Adam Ropp,1,Cooling Water,Stock preparation for Paper Machine 4
+63,Training Account - 1204,111,Christopher Janse,1,Cooling Water,Green Plains Rives TN(US)
+63,Training Account - 1204,111,Christopher Janse,1,Cooling Water,Green Plains Rives TN( US)
+64,Training Account - 1205,112,Cody Schultz,1,Cooling Water,Pulping
+64,Training Account - 1205,112,Cody Schultz,1,Cooling Water,Paper Mchine 2
+64,Training Account - 1205,112,Cody Schultz,1,Cooling Water,Recovery
+64,Training Account - 1205,112,Cody Schultz,1,Cooling Water,Recaust
+64,Training Account - 1205,112,Cody Schultz,1,Cooling Water,Stock preparation for Paper Machine 4
+64,Training Account - 1205,112,Cody Schultz,1,Cooling Water,Paper machine 9
+64,Training Account - 1205,112,Cody Schultz,1,Cooling Water,Pulp washing
+64,Training Account - 1205,112,Cody Schultz,1,Cooling Water,Bleach plant
+64,Training Account - 1205,112,Cody Schultz,1,Cooling Water,Paper machine 4
+64,Training Account - 1205,112,Cody Schultz,1,Cooling Water,Stock Preparation for Paper Machine 2
+64,Training Account - 1205,112,Cody Schultz,1,Cooling Water,Stock preparation for Paper Machine 9
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Buckman Chemicals
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Recovery
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Stock preparation for Paper Machine 4
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Paper machine 4
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,O2 Delig
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Bleach plant
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Stock preparation for Paper Machine 9
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Paper machine 9
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Pulp washing
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Pulping
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Stock Preparation for Paper Machine 2
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Recaust
+65,Training Account - 1206,113,Connor Chapek,1,Cooling Water,Paper Mchine 2
+66,Training Account - 1207,114,Errol Agee-Thomas,1,Cooling Water,Recaust
+66,Training Account - 1207,114,Errol Agee-Thomas,1,Cooling Water,Recovery
+66,Training Account - 1207,114,Errol Agee-Thomas,1,Cooling Water,Stock preparation for Paper Machine 4
+66,Training Account - 1207,114,Errol Agee-Thomas,1,Cooling Water,Paper machine 4
+66,Training Account - 1207,114,Errol Agee-Thomas,1,Cooling Water,Bleach plant
+66,Training Account - 1207,114,Errol Agee-Thomas,1,Cooling Water,Pulp washing
+66,Training Account - 1207,114,Errol Agee-Thomas,1,Cooling Water,Paper machine 9
+66,Training Account - 1207,114,Errol Agee-Thomas,1,Cooling Water,Stock preparation for Paper Machine 9
+66,Training Account - 1207,114,Errol Agee-Thomas,1,Cooling Water,Pulping
+66,Training Account - 1207,114,Errol Agee-Thomas,1,Cooling Water,Paper Mchine 2
+66,Training Account - 1207,114,Errol Agee-Thomas,1,Cooling Water,Stock Preparation for Paper Machine 2
+67,Training Account - 1208,115,Kevin Mundell,1,Cooling Water,Corn Oil Recovery Unit
+68,Training Account - 1209,116,Leigh Windsor,1,Cooling Water,B Bleach - Crofton
+69,Training Account - 1210,117,Marcelo Fraga de Sousa,1,Cooling Water,Brine Curing Raceway Process
+70,Training Account - 1211,118,Matthew McCurdy,1,Cooling Water,Green Plains Rives TN(US)
+70,Training Account - 1211,118,Matthew McCurdy,1,Cooling Water,Green Plains Rives TN(US)
+70,Training Account - 1211,118,Matthew McCurdy,1,Cooling Water,Green Plains Rives TN( US)
+70,Training Account - 1211,118,Matthew McCurdy,1,Cooling Water,Cooling System>
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,Recovery
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,Recaust
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,Paper Mchine 2
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,Stock Preparation for Paper Machine 2
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,Bleach plant
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,Paper machine 9
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,Paper machine 4
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,<Click to set System Group Name>
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,Pulp washing
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,Pulping
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,Stock preparation for Paper Machine 9
+71,Training Account - 1212,119,Michael Western,1,Cooling Water,Stock preparation for Paper Machine 4
+72,Training Account - 1213,120,Richard Dufreche,1,Cooling Water,Recaust
+72,Training Account - 1213,120,Richard Dufreche,1,Cooling Water,Stock preparation for Paper Machine 9
+72,Training Account - 1213,120,Richard Dufreche,1,Cooling Water,Bleach plant
+72,Training Account - 1213,120,Richard Dufreche,1,Cooling Water,Stock Preparation for Paper Machine 2
+72,Training Account - 1213,120,Richard Dufreche,1,Cooling Water,Paper Mchine 2
+72,Training Account - 1213,120,Richard Dufreche,1,Cooling Water,Paper machine 4
+72,Training Account - 1213,120,Richard Dufreche,1,Cooling Water,Stock preparation for Paper Machine 4
+72,Training Account - 1213,120,Richard Dufreche,1,Cooling Water,Paper machine 9
+72,Training Account - 1213,120,Richard Dufreche,1,Cooling Water,Recovery
+72,Training Account - 1213,120,Richard Dufreche,1,Cooling Water,Pulping
+72,Training Account - 1213,120,Richard Dufreche,1,Cooling Water,Pulp washing
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Pulp washing
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Bleach plant
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Stock Preparation for Paper Machine 2
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Paper machine 4
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Stock preparation for Paper Machine 4
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Recovery
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Recaust
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Stock preparation for Paper Machine 9
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Paper machine 9
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,<Click to set System Group Name>
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Paper Machine
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Test Group
+73,Training Account - 1214,121,Seth Dugan,1,Cooling Water,Pulping
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,Recaust
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,<Click to set System Group Name>
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,Paper machine 9
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,Stock preparation for Paper Machine 9
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,Paper Mchine 2
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,Stock preparation for Paper Machine 4
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,Paper machine 4
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,Stock Preparation for Paper Machine 2
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,Bleach plant
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,Pulp washing
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,Pulping
+74,Training Account - 1215,122,Xavier Wildes,1,Cooling Water,Recovery
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Paper Machine: PD
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Tissue Machine 3
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Stock preparation: Paper Machine 1
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Sawdust Brown Side
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Tissue Machine 3
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Sawdust M&D Digesters
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Fiberline Continuous Digester
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Recaust
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Stock Preparation Tissue Machine- 3
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Fiberline Brown Side
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Stock Preparation Tissue Machine- 3
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Pulp bleaching:Kraft saw dust line
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Clearwater Lewiston Recovery
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Tissue Machine 3
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Paper Machine 2
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Fiberline Bleach
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Stock Preparation Tissue Machine- 3
+75,Training Account - 1216,123,Justin Krutsinger,1,Cooling Water,Stock preparation for Paper Machine 2
+77,Training Account - 1218,125,Training Site - 1218,1,Cooling Water,SG1
+80,Training Account - 1221,128,Training Site - 1221,1,Cooling Water,Test1
+81,Training Account - 1222,129,Training Site - 1222,1,Cooling Water,Cooling Tower #1
+83,Training Account - 1224,131,Training Site - 1224,1,Cooling Water,1224 system group
+99,DUNN PAPER,147,Dunn Paper Wiggins MS (US),2,Effluent,Demo
+117,LIQUID FUEL TECHNOLOGY LLC,578,LIQUID FUEL TECHNOLOGY LLC,1,Cooling Water,Headspace Skid01
+118,**LIVINGSTON OR LAUFER/SSL**,839,**LIVINGSTON OR LAUFER/SSL**,5,Other,titan
+128,㈜한창제지,12551,¿¿¿¿¿,7,Fiber Production,Fiber Production kraft A
+140,TOCHIGI LEATHER,12618,¿¿¿¿¿¿¿¿¿,6,Fermentation Line,Testing System Group
+142,株式会社アスクオール,3282,¿¿¿¿¿¿¿¿¿¿,5,Other,test1
+157,3M DO BRASIL LTDA.,4875,3M Do Brasil Sumare SP (BR),5,Other,Kraft Line A
+161,A & S FABRICATING CO,12201,A & S Fabricating Livermore KY (US),1,Cooling Water,Bulk tank 1
+172,A.A.M. SERVICE LTDA. - ME.,11284,A.A.M. SERVICE LTDA. - ME.,1,Cooling Water,Test1
+174,A.B.C. PAPER & PAPER MILLS PTY LTD,3178,ABC Paper Mills Wetherill Park NS (,1,Cooling Water,test 1
+176,A.G. CASTRO - QUIMICOS LTDA.,11061,A.G. CASTRO - QUIMICOS LTDA.,1,Cooling Water,testsystem
+191,AB7 Industries,12004,AB7 Deyme (FR),6,Fermentation Line,test1
+195,ABC - EMPILHADEIRAS LTDA. - ME.,5180,ABC - EMPILHADEIRAS LTDA. - ME.,4,Boiler,rama
+204,ABHINANDAN MEHRA,4110,Abhinandan Mehra,1,Cooling Water,Aquaman
+206,ABLE WESTCHEM,3221,Able Westchem WA (AU),1,Cooling Water,PMB - Chemical
+221,ACCO UNLIMITED,7015,Acco Unlimited Johnston IA (US),2,Effluent,Fermentor1
+221,ACCO UNLIMITED,7015,Acco Unlimited Johnston IA (US),1,Cooling Water,Fermentor2
+221,ACCO UNLIMITED,7015,Acco Unlimited Johnston IA (US),3,Influent,Fermentor3
+221,ACCO UNLIMITED,7015,Acco Unlimited Johnston IA (US),1,Cooling Water,Fermentor4
+229,ACEFER FERRAMENTAS E TINTAS LTDA.,5194,ACEFER FERRAMENTAS E TINTAS LTDA.,6,Fermentation Line,test system
+458,Alfred County Water CC t/a AC Water,2759,AC Water (ZA),4,Boiler,Sys 1
+458,Alfred County Water CC t/a AC Water,2759,AC Water (ZA),4,Boiler,Test Boiler 24-Nov
+458,Alfred County Water CC t/a AC Water,2759,AC Water (ZA),8,Pulp Washing,acm4
+458,Alfred County Water CC t/a AC Water,2759,AC Water (ZA),4,Boiler,TEST 30-Nov
+705,APERAM BIOENERGIA LTDA.,4802,Aperam Veredinha MG (BR),1,Cooling Water,test
+705,APERAM BIOENERGIA LTDA.,4802,Aperam Veredinha MG (BR),1,Cooling Water,<Click to set System Group Name>
+1546,Buckman Laboratories Brazil,10434,Buckman Laboratorios (BR),1,Cooling Water,Test defect BP-593
+1548,Buckman Laboratories dia) Pvt,11969,Buckman Laboratories (India) (IN),4,Boiler,Boiler
+1548,Buckman Laboratories dia) Pvt,11969,Buckman Laboratories (India) (IN),6,Fermentation Line,Fermentor01
+1548,Buckman Laboratories dia) Pvt,11969,Buckman Laboratories (India) (IN),6,Fermentation Line,fermentator 1
+1548,Buckman Laboratories dia) Pvt,11969,Buckman Laboratories (India) (IN),9,Paper Machine,HS Application
+1551,BUCKMAN LABORATORIES (INDIA)PVT LTD,2713,BUCKMAN India,1,Cooling Water,Test group
+1551,BUCKMAN LABORATORIES (INDIA)PVT LTD,2713,BUCKMAN India,5,Other,SG1
+3010,DOMTAR CORPORATION,10279,Domtar Windsor QC (CA),33,System type v1.10.8 qa,test system update
+3010,DOMTAR CORPORATION,10279,Domtar Windsor QC (CA),4,Boiler,Test
+3011,DOMTAR INC.,7592,DOMTAR INC ESPANOLA,5,Other,Headspace QA
+3011,DOMTAR INC.,7592,DOMTAR INC ESPANOLA,6,Fermentation Line,Test1
+3011,DOMTAR INC.,7592,DOMTAR INC ESPANOLA,1,Cooling Water,
+3087,DS SMITH PACKAGING,2192,DS Smith Gent (BE),5,Other,Test
+3093,DJP- De Hoop B.V.,6024,DS Smith De Hoop Eerbeek (NL),5,Other,Test
+3631,FERRARI AGROINDUSTRIA S.A.,1393,Ferrari Pirassununga SP (BR),1,Cooling Water,Fermentation
+3672,FIORDE-ASSESSORIA E DESPACHOS LTDA,1452,Fiorde Santos SP (BR),5,Other,Line 01
+3672,FIORDE-ASSESSORIA E DESPACHOS LTDA,1452,Fiorde Santos SP (BR),5,Other,Line 02
+3672,FIORDE-ASSESSORIA E DESPACHOS LTDA,1452,Fiorde Santos SP (BR),1,Cooling Water,<Click to set System Group Name>
+3736,Form 4 Industries GmbH,6171,Form 4 Indust. Ansfelden (AT),5,Other,Bulab 6044c
+3736,Form 4 Industries GmbH,6171,Form 4 Indust. Ansfelden (AT),5,Other,BUSAN 94S
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 303 Octene 3 Temperd Water
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 303 Octene 3 Hot Water
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 255 Raw Water Clarification
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 304 Cooling Water System
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 300 Cooling water loop 1
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 237 Wash Water defoamer
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 590 Process Cooling Water System
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Water Recovery - Unit 252 and Unit 258
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water, U300 PCW CT5001/2 and CT5003/4
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 300 PCW CT5005
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 37 Wash Water defoamer
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 203 Outside Ash
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 303 Octene 3 Hot 
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 300 Cooling water loop 2
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 300 PCW CT5001_2  & CT5003_4 1
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water,Unit 590 - Ethylacetate
+3810,FRIGORIFICO BETTER BEEF LTDA.,8175,Better Beef Rancharia SP (BR),1,Cooling Water, U300 PCW CT5001/2 and CT5003/4
+4187,Gruppo Mastrotto Arzign. (IT),1894,Gruppo Mastrotto SPA,5,Other,Material Unit Test
+5434,Juja Pulp and Paper Limited,1905,Juja Pulp and Paper (KE),5,Other,Headspace QA
+6264,MAS TANNERY LTD,11568,MAS Tannery Nairobi (KE),10046,Feedwater system,feedwater
+6264,MAS TANNERY LTD,11568,MAS Tannery Nairobi (KE),1,Cooling Water,Test
+6264,MAS TANNERY LTD,11568,MAS Tannery Nairobi (KE),5,Other,Click to set System Group Name
+7173,PSC STARCH PRODUCTS PCL,8896,P.S.C. Starch Samutprakarn BK (TH),1,Cooling Water,Test
+9415,STONE PANELS,7714,Stone Panels Coppell TX (US),5,Other,test1
+9415,STONE PANELS,7714,Stone Panels Coppell TX (US),2,Effluent,test duplicate group
+10271,USINA SANTA FE S.A.,7981,Usina Santa Fe Nova Europa SP (BR),1,Cooling Water,Headspace skid
+11223,Buckman Memphis AQ (Alpha),12778,Buckman Lab UAT,5,Other,<Click to set System Group Name>
+11223,Buckman Memphis AQ (Alpha),12778,Buckman Lab UAT,1,Cooling Water,<Click to set System Group Name>
+11223,Buckman Memphis AQ (Alpha),12778,Buckman Lab UAT,4,Boiler,Testdev
+11223,Buckman Memphis AQ (Alpha),12778,Buckman Lab UAT,6,Fermentation Line,Testfile
+11223,Buckman Memphis AQ (Alpha),12778,Buckman Lab UAT,4,Boiler,Test1
+11223,Buckman Memphis AQ (Alpha),12778,Buckman Lab UAT,2,Effluent,Test2
+11223,Buckman Memphis AQ (Alpha),12778,Buckman Lab UAT,4,Boiler,testing1
+11223,Buckman Memphis AQ (Alpha),12778,Buckman Lab UAT,4,Boiler,Testsystem
+11223,Buckman Memphis AQ (Alpha),12778,Buckman Lab UAT,1,Cooling Water,Testing 5
+11223,Buckman Memphis AQ (Alpha),12778,Buckman Lab UAT,10052,Bleaching,test
+11223,Buckman Memphis AQ (Alpha),12778,Buckman Lab UAT,5,Other,sdghhfjdkhfjkdhkjhsfjkhjdkfshjkfdhkjhfdsjkhjkdfshjkhdfsjkhdfsjkhdskhskjfdhkjhsdfjkhfdjkshdfskjhjdksfhjkfdhjksdhkjfhsdkjhjfkdshjkfsdh
+13706,MAS TANNERY LTD,15399,MAS Tannery Nairobi (KE),1,Cooling Water,Cooling
+13706,MAS TANNERY LTD,15399,MAS Tannery Nairobi (KE),5,Other,niyamath testing
+13706,MAS TANNERY LTD,15399,MAS Tannery Nairobi (KE),4,Boiler,Test Boiler 28-Nov
+13706,MAS TANNERY LTD,15399,MAS Tannery Nairobi (KE),5,Other,Test
+13706,MAS TANNERY LTD,15399,MAS Tannery Nairobi (KE),1,Cooling Water,testing niyam
+13706,MAS TANNERY LTD,15399,MAS Tannery Nairobi (KE),1,Cooling Water,Test CW 6 28-Nov-22
+13706,MAS TANNERY LTD,15399,MAS Tannery Nairobi (KE),5,Other,
+13706,MAS TANNERY LTD,15399,MAS Tannery Nairobi (KE),5,Other,cl tESTING
+13706,MAS TANNERY LTD,15399,MAS Tannery Nairobi (KE),5,Other,testing 2302
+13725,M.S.TRADERS,15418,M.S.Traders Chennai TN (IN),1,Cooling Water,cooling water
+13729,PRIME ENTERPRISES,15422,Prime Enterprises Chennai TN (IN),4,Boiler,boiler
+13729,PRIME ENTERPRISES,15422,Prime Enterprises Chennai TN (IN),8,Pulp Washing,papermachine
+14335,PAULO SERGIO OLIVEIRA BELTRAO,15786,PSB Paulinia SP (BR),5,Other,SG2
+14335,PAULO SERGIO OLIVEIRA BELTRAO,15786,PSB Paulinia SP (BR),5,Other,SG1
+14459,株式会社ヤスハラ,15900,YASUHARA (JP),5,Other,SG1
+14459,株式会社ヤスハラ,15900,YASUHARA (JP),5,Other,SG2
+14664,Sasol Synfuels div of Sasol SA Ltd,16209,Sasol Bioplant Synfuels (ZA),4,Boiler,Boiler 1
