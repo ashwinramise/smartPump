@@ -117,8 +117,8 @@ def getPowerStatus(site, pump):
     cur.execute(qu)
     for i in cur:
         power = int(i[0])
-    conn.close()
-    return power
+        conn.close()
+        return power
 
 def getDashData(site, pump):
     conn = db.connect(DRIVER='SQL Server',

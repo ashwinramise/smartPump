@@ -88,6 +88,10 @@ def genTextCard(id, title, text,text2, color2, color1='black'):
 def genPumpStatus(site, pump):
     status = db.getPowerStatus(site, pump)
     speed, time = db.getSpeedTime(site, pump)
+    if speed is None:
+        speed = 0
+    if time is None:
+        time = datetime.now().time()
     if status is None:
         color = 'red'
         text = 'Disabled'
@@ -99,16 +103,16 @@ def genPumpStatus(site, pump):
         text = 'OFF!'
     return dbc.Card(
         dbc.CardBody(
-            id=id,
+            id=pump,
             children=[
-                html.H4(pump, className="card-title"),
+                html.H6(pump, className="card-title"),
                 daq.Indicator(
                     label=text,
                     color=color,
                     labelPosition='right'
                 ),
                 html.P(
-                    html.H5(f'flow = {speed}l/h', style={'color': 'black'}),
+                    html.H6(f'flow = {speed} l/h', style={'color': 'blue'}),
                     className="card-text",
                 ),
                 dbc.CardFooter(f"Updated {time}")
@@ -403,13 +407,24 @@ def home():
                         sort_mode="multi",
                         page_size=5
                     ),
-                    html.Div(id='customer-expansion'),
+                    html.Div(id='customer-expansion',
+                             children=[
+                                 html.H3("Site Information",
+                                         style={'marginLeft': 10, 'marginTop': 10}),
+                                 dash_table.DataTable(
+                                     id='site-data',
+                                     style_cell={'textAlign': 'center'},
+                                     filter_action="native",
+                                     sort_action="native",
+                                     sort_mode="multi"
+                                 )
+                             ]),
                     html.Div(id='site-profit')
                 ]
             ),
             html.Div(
                 id='body-right',
-                style={'marginTop': 5, 'marginBottom': 0, 'marginRight': 5,
+                style={'marginTop': 0, 'marginBottom': 0, 'marginRight': 0,
                        'font-size': 12,
                        'color': 'black',
                        'width': '45%',
@@ -420,7 +435,8 @@ def home():
 
 
 @app.callback(
-    Output('customer-expansion', 'children'),
+    Output('site-data', 'data'),
+    Output('site-data', 'columns'),
     Input('customer-sum', 'active_cell')
 )
 def updateSiteData(active):
@@ -429,12 +445,9 @@ def updateSiteData(active):
         row = active['row']
         customer = summary['Account'].tolist()[row]
         df = df[df['Account'] == customer][['Plant', 'Pump']]
-        children = [
-            html.H3("Site Information",
-                    style={'marginLeft': 10, 'marginTop':10}),
-            genTable('site-data', df)
-        ]
-        return children
+        data = df.to_dict('records')
+        columns = [{"name": i, "id": i} for i in df.columns]
+        return data, columns
 
 
 @app.callback(
@@ -528,7 +541,16 @@ def updateCosts(c, s):
                 card = genTextCard(c, c, text1, text2, color)
                 children.append(card)
         elif c is not None and s is not None:
-            filtered = assets[['Account', 'Plant', 'Pump']].groupby(['Account', 'Plant']).count().reset_index()
+            df = assets[['Account', 'Plant', 'Pump']].groupby(['Account', 'Plant']).count().reset_index()
+            filtered = assets[['Account', 'Plant', 'Pump']]
+            if s['column_id'] == 'Plant':
+                site = list(df[df['Account'] == customer]['Plant'])[s['row']]
+                plantPumps = filtered[(filtered['Account'] == customer) & (filtered['Plant'] == site)]
+                # print(plantPumps)
+                children = [html.H3("Pump Status")]
+                for pump in plantPumps['Pump'].tolist():
+                    # print(genPumpStatus(site, pump))
+                    children.append(genPumpStatus(site, pump))
         return children
 
 
