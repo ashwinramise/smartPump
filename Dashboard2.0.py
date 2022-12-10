@@ -65,7 +65,7 @@ logs = []
 ####### LogData #####
 
 ####### Generic Functions #####
-def genTextCard(id, title, text,text2, color2, color1='black'):
+def genTextCard(id, title, text, text2, color2, color1='black'):
     return dbc.Card(
         dbc.CardBody(
             id=id,
@@ -375,7 +375,7 @@ def home():
                                     'display': 'inline-block'},
                              children=[
                                  html.H2("Customer Data",
-                                         style={'marginLeft': 10}),]
+                                         style={'marginLeft': 10}), ]
                          ),
                          html.Div(
                              style={'marginTop': 5, 'marginBottom': 0, 'marginRight': 5,
@@ -473,29 +473,29 @@ def updatePlantwise(c, s):
             # print(cost)
             children = [
                 html.H3("Planned vs Actual Chemical Expenditure",
-                        style={'marginLeft': 10, 'marginTop':10})
+                        style={'marginLeft': 10, 'marginTop': 10})
             ]
             for c in chemicals:
                 plan_list = list(cost[[i for i in cost.columns.tolist() if c.lower() in i.lower()]].iloc[0])
                 # print(plan_list)
-                planned = plan_list[0]*plan_list[1]
-                actual = df[c].tolist()[0]*plan_list[1]
+                planned = plan_list[0] * plan_list[1]
+                actual = df[c].tolist()[0] * plan_list[1]
                 if planned >= actual:
                     color = 'green'
                 else:
                     color = 'red'
                 if planned < 1000:
-                    text1 = '$'+str(planned)
+                    text1 = '$' + str(planned)
                 else:
-                    text1 = '$' + str(round(planned/1000, 2))+'k'
+                    text1 = '$' + str(round(planned / 1000, 2)) + 'k'
                 if actual < 1000:
-                    text2 = '$'+str(actual)
+                    text2 = '$' + str(actual)
                 else:
                     text2 = '$' + str(round(actual / 1000, 2)) + 'k'
-                card = genTextCard(c,c,text1,text2, color)
+                card = genTextCard(c, c, text1, text2, color)
                 children.append(card)
         else:
-            children=[None]
+            children = [None]
     return children
 
 
@@ -512,7 +512,8 @@ def updateCosts(c, s):
         chemicals = [c for c in assets.columns.tolist() if 'chem' in c.lower()]
         if c is not None and s is None:
             # print(customer)
-            df = assets[['Account', 'ChemD', 'ChemE', 'ChemB', 'ChemA', 'ChemC']].groupby(['Account']).sum().reset_index()
+            df = assets[['Account', 'ChemD', 'ChemE', 'ChemB', 'ChemA', 'ChemC']].groupby(
+                ['Account']).sum().reset_index()
             df = df[df['Account'] == customer]
             # print(df)
             cost = costs.groupby(['Account']).sum().reset_index()
@@ -524,18 +525,18 @@ def updateCosts(c, s):
             for c in chemicals:
                 plan_list = list(cost[[i for i in cost.columns.tolist() if c.lower() in i.lower()]].iloc[0])
                 # print(plan_list)
-                planned = plan_list[0]*plan_list[1]
-                actual = df[c].tolist()[0]*plan_list[1]
+                planned = plan_list[0] * plan_list[1]
+                actual = df[c].tolist()[0] * plan_list[1]
                 if planned >= actual:
                     color = 'green'
                 else:
                     color = 'red'
                 if planned < 1000:
-                    text1 = '$'+str(planned)
+                    text1 = '$' + str(planned)
                 else:
-                    text1 = '$' + str(round(planned/1000, 2))+'k'
+                    text1 = '$' + str(round(planned / 1000, 2)) + 'k'
                 if actual < 1000:
-                    text2 = '$'+str(actual)
+                    text2 = '$' + str(actual)
                 else:
                     text2 = '$' + str(round(actual / 1000, 2)) + 'k'
                 card = genTextCard(c, c, text1, text2, color)
@@ -554,6 +555,128 @@ def updateCosts(c, s):
         return children
 
 
+def control():
+    return html.Div(
+        children=[
+            html.Div(
+                children=[
+                    dcc.Dropdown(
+                        id='customer-select',
+                        options=assets['Account'].unique(),
+                        placeholder='Select a customer',
+                        searchable=True,
+                        style={'height': 15},
+                    )
+                ],
+                style={'marginTop': 0, 'marginBottom': 10,
+                       'font-size': 18,
+                       'color': 'black',
+                       'width': '25%',
+                       'display': 'inline-block'}
+            ),
+            html.Div(
+                id='asset-table'
+            )
+        ]
+    )
+    pass
+
+
+def history():
+    return html.Div(
+        style={'textAlign': 'center'},
+        children=[
+            html.Div(
+                id='users-log',
+                style={'marginTop': 15, 'width': "40%",
+                       'display': 'inline-block', 'textAlign': 'center', 'marginRight': 40, 'verticalAlign': 'top'},
+                children=[
+                    html.Div(
+                        [
+                            html.Div(dcc.DatePickerRange(
+                                id='my-date-picker-range',
+                                end_date=datetime.now().date()
+                            ), style={'display': 'inline-block', 'marginRight': 10}),
+                            html.Div(dbc.Button(
+                                "View Logs", id="logme", className="ms-auto", n_clicks=0),
+                                style={'display': 'inline-block'}),
+                        ]),
+                    html.Div(
+                        id='usage-g', style={'marginTop': 25},
+                        children=[
+                            html.Div(
+                                [
+                                    dcc.Graph(id='usage-stats'),
+                                ],
+                                style={'marginTop': 30}
+                            )
+                        ]
+                    ),
+                ]
+            ),
+            html.Div(
+                id='logs',
+                style={'marginTop': 15, 'width': "60%",
+                       'display': 'inline-block', 'textAlign': 'center', 'marginRight': 40, 'verticalAlign': 'top'},
+            )
+        ]
+    )
+
+
+@app.callback(
+    [Output('logs', 'children'),
+     Output('usage-stats', 'figure')],
+    [Input('my-date-picker-range', 'start_date'),
+     Input('my-date-picker-range', 'end_date'),
+     Input('logme', 'n_clicks')]
+)
+def updateLogs(d1, d2, clicks):
+    # print(len(logs))
+    data = pd.DataFrame.from_dict(logs)
+    if d1 is None:
+        # data = db.getData("PoC_SP_UserLogs", "RecordID")
+        data['Last_Access'] = [pd.to_datetime(i) for i in data['Last_Access'].tolist()]
+        data.sort_values(by='Last_Access', ascending=False, inplace=True)
+        t = f"Usage Statistics upto {d2}"
+    elif d1 is not None and clicks:
+        l = data
+        l['Last_Access'] = [pd.to_datetime(i) for i in l['Last_Access'].tolist()]
+        l['date'] = [d.date() for d in l['Last_Access'].tolist()]
+        data = l[(l['date'] <= pd.Timestamp(d2).date()) & (l['date'] > pd.Timestamp(d1).date())].sort_values(
+            by='Last_Access',
+            ascending=False)
+        t = f"Usage Statistics from {d1} to {d2}"
+    cols = [
+        {"name": i, "id": i} for i in data.columns
+    ]
+    rows = data.to_dict('records')
+    table = [
+        dash_table.DataTable(
+            id='data-table',
+            columns=cols,
+            style_cell={
+                'textAlign': 'center',
+                'font_size': '15px'
+            },
+            data=rows,
+            editable=False,
+            filter_action="native",
+            sort_action="native",
+            sort_mode="multi",
+            page_action="native",
+            page_current=0,
+            page_size=20,
+        )
+    ]
+    n = pd.DataFrame()
+    n['Users'] = [u.split('@')[0] for u in data['User'].unique()]
+    n['Counts'] = [data['User'].tolist().count(u) for u in data['User'].unique()]
+    n.sort_values(by='Counts', inplace=True, ascending=False)
+    use = px.bar(n, x='Users', y='Counts', color='Users', title=t)
+    return table, use
+
+
+
 app.layout = html.Div(
     style={'background': 'white', 'width': '100%', 'height': '100%'},
     id="big-app-container",
@@ -568,6 +691,41 @@ app.layout = html.Div(
         home()
     ]
 )
+
+@app.callback(
+    output=[
+        Output("big-app-container", "children"),
+    ],
+    inputs=[
+        Input("home", "n_clicks"),
+        # Input("assets", "n_clicks"),
+        Input("log", "n_clicks"),
+        Input("controls", "n_clicks"),
+    ],
+)
+def getPages(h, l, c):
+    if h > 0:
+        return [[build_banner(),
+                 dcc.Interval(
+                     id="interval-component",
+                     interval=1 * 3000,  # in milliseconds
+                     n_intervals=0,
+                     disabled=False,
+                 ),
+                 home()]]
+    elif l > 0:
+        return [[build_banner(),
+                 history()]]
+    elif c > 0:
+        return [[build_banner(),
+                 dcc.Interval(
+                     id="interval-component",
+                     interval=1 * 3000,  # in milliseconds
+                     n_intervals=0,
+                     disabled=False,
+                 ),
+                 control()]]
+
 
 if __name__ == "__main__":
     app.run(debug=True)
