@@ -111,7 +111,7 @@ def getPowerStatus(site, pump):
                       UID=config.user,
                       PWD=config.pwd,
                       DATABASE=config.database_name, )
-    qu = f'''select top(1) 104 from "PoC_SP_Metrics" WHERE site like '{site}' AND pumpID like '{pump}' 
+    qu = f'''select top(1) "104" from "PoC_SP_Metrics" WHERE site like '{site}' AND pumpID like '{pump}' 
         order by RecordID desc;'''
     cur = conn.cursor()
     cur.execute(qu)

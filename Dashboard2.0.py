@@ -130,7 +130,8 @@ def genTable(id, df):
         style_cell={'textAlign': 'center'},
         filter_action="native",
         sort_action="native",
-        sort_mode="multi"
+        sort_mode="multi",
+        page_size=5
     )
 
 
@@ -428,7 +429,9 @@ def home():
                        'font-size': 12,
                        'color': 'black',
                        'width': '45%',
-                       'display': 'inline-block'},
+                       'display': 'inline-block',
+                       'verticalAlign': 'top'
+                       },
             ),
         ]
     )
@@ -557,29 +560,227 @@ def updateCosts(c, s):
 
 def control():
     return html.Div(
-        children=[
+        [
             html.Div(
                 children=[
-                    dcc.Dropdown(
-                        id='customer-select',
-                        options=assets['Account'].unique(),
-                        placeholder='Select a customer',
-                        searchable=True,
-                        style={'height': 15},
-                    )
-                ],
-                style={'marginTop': 0, 'marginBottom': 10,
-                       'font-size': 18,
-                       'color': 'black',
-                       'width': '25%',
-                       'display': 'inline-block'}
+                    html.Div(
+                        children=[
+                            dcc.Dropdown(
+                                id='customer-select',
+                                options=assets['Account'].unique(),
+                                placeholder='Select a customer',
+                                searchable=True,
+                                style={'height': 15},
+                            )
+                        ],
+                        style={'marginTop': 0, 'marginBottom': 10,
+                               'font-size': 18,
+                               'color': 'black',
+                               'width': '25%',
+                               'display': 'inline-block'}
+                    ),
+                    html.Div(
+                        children=[
+                            dcc.Dropdown(
+                                id='site-select',
+                                placeholder='Select a site',
+                                searchable=True,
+                                style={'height': 15},
+                            )
+                        ],
+                        style={'marginTop': 0, 'marginBottom': 10,
+                               'font-size': 18,
+                               'color': 'black',
+                               'width': '25%',
+                               'display': 'inline-block'}
+                    ),
+                    html.H4("Pump Controls",
+                            style={'width': '45%', 'display': 'inline-block',
+                                   'marginLeft': 20, 'textAlign': 'center'})
+                ]
             ),
             html.Div(
-                id='asset-table'
+                id='controlBody',
+                style={'textAlign': 'center'},
+                children=[
+                    html.Div(
+                        id='asset-table',
+                        style={'width': '40%', 'marginTop': 15, 'marginLeft': 5, 'display': 'inline-block',
+                               'verticalAlign': 'top'}
+                    ),
+                    html.Div(
+                        id='pump-controls',
+                        style={'width': '40%', 'marginTop': 15, 'marginLeft': 5, 'display': 'inline-block',
+                               'verticalAlign': 'top', 'textAlign': 'right'},
+                        children=[
+                            html.Div(
+                                id='pump-identifier',
+                            ),
+                            html.Div(
+                                [
+                                    html.H6("Pump Power:"),
+                                    daq.PowerButton(
+                                        id='powerON',
+                                        on=False
+                                    )
+                                ],
+                                style={'marginTop': 15, 'textAlign': 'center'}
+                            ),
+                            html.Div(
+                                [
+                                    html.H6("Flow Rate (l/h) "),
+                                    html.Div(
+                                        daq.Knob(
+                                            id='flow-rate',
+                                            size=140,
+                                            max=6.3,
+                                            value=None,
+                                            persistence=True,
+                                            persisted_props=True,
+                                        )
+                                        ,
+                                        style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
+                                               }
+                                    )
+                                ],
+                                style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
+                                       }
+                            ),
+                            html.Div(
+                                [
+                                    html.Div(
+                                        daq.LEDDisplay(
+                                            id='flow-rate-monitor',
+                                            color="#FF5E5E"
+                                        ),
+                                        style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
+                                               }
+                                    )
+                                ],
+                                style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
+                                       }
+                            )
+                        ]
+                    )
+                ]
             )
         ]
     )
-    pass
+
+
+@app.callback(
+    Output('site-select', 'options'),
+    Input('customer-select', 'value'),
+)
+def getsites(location):
+    sites = assets[assets['Account'] == location]
+    r = sites['Plant'].unique().tolist()
+    return [{'label': i, 'value': i} for i in r]
+
+
+@app.callback(
+    Output('asset-table', 'children'),
+    Input('site-select', 'value'),
+)
+def updateSitePumps(plant):
+    if plant:
+        pumps = assets[assets['Plant'] == plant]['Pump'].tolist()
+        print(pumps)
+        data = pd.DataFrame()
+        data['Pump'] = pumps
+        pumpStatus = []
+        pumpSpeed = []
+        lastUpdate = []
+        for p in pumps:
+            status = db.getPowerStatus(plant, p)
+            print(status)
+            speed, time = db.getSpeedTime(plant, p)
+            print(speed,time)
+            if speed is None:
+                speed = 0
+            if time is None:
+                time = datetime.now().time()
+            if status is None:
+                text = 'Disabled'
+            elif status == 0:
+                text = 'Running'
+            elif status == 1:
+                text = 'OFF'
+            pumpStatus.append(text)
+            pumpSpeed.append(speed)
+            lastUpdate.append(time)
+        data['Status'] = pumpStatus
+        data['FlowRate'] = pumpSpeed
+        data['Last Updated'] = lastUpdate
+        return genTable('pumps', data)
+
+
+@app.callback(
+    Output('pump-identifier', 'children'),
+    Input('site-select', 'value'),
+    Input('pumps', 'active_cell')
+)
+def dispPumpname(plant, pump):
+    if plant:
+        pumps = assets[assets['Plant'] == plant]['Pump'].tolist()
+        if pump['column_id'] == 'Pump':
+            pumpName = pumps[pump['row']]
+            name = html.H3(pumpName)
+        else:
+            name = html.H3('Select Pump')
+    else:
+        name = html.H3('Select Plant')
+    return name
+
+
+@app.callback(
+    Output('powerON', 'color'),
+    Input('powerON', 'on'),
+    Input('customer-select', 'value'),
+    Input('site-select', 'value'),
+    Input('pumps', 'active_cell')
+)
+def powerON(n, customer, site, cell):
+    pumps = assets[assets['Plant'] == site]['Pump'].tolist()
+    pump = pumps[cell['row']]
+    if site is not None and pump is not None:
+        ctrl.powerPump(customer, site, pump, n)
+    if n:
+        color = '#63ff5e'
+    if not n:
+        color = '#e6110e'
+    return color
+
+
+@app.callback(
+    Output('flow-rate', 'value'),
+    Input('site-select', 'value'),
+    Input('pumps', 'active_cell')
+)
+def getPumpSpeed(site, cell):
+    pumps = assets[assets['Plant'] == site]['Pump'].tolist()
+    pump = pumps[cell['row']]
+    if site is not None and pump is not None:
+        s, t = db.getSpeedTime(site, pump)
+        return s
+    else:
+        return 0
+
+
+@app.callback(
+    Output('flow-rate-monitor', 'value'),
+    Input('powerON', 'on'),
+    Input('flow-rate', 'value'),
+    Input('customer-select', 'value'),
+    Input('site-select', 'value'),
+    Input('pumps', 'active_cell')
+)
+def update_output(on, value, customer, site, cell, ):
+    pumps = assets[assets['Plant'] == site]['Pump'].tolist()
+    pump = pumps[cell['row']]
+    if on and site is not None and pump is not None:
+        ctrl.pumpSpeed(customer, site, pump, value)
+    return [str(value)]
 
 
 def history():
@@ -676,7 +877,6 @@ def updateLogs(d1, d2, clicks):
     return table, use
 
 
-
 app.layout = html.Div(
     style={'background': 'white', 'width': '100%', 'height': '100%'},
     id="big-app-container",
@@ -691,6 +891,7 @@ app.layout = html.Div(
         home()
     ]
 )
+
 
 @app.callback(
     output=[

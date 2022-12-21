@@ -40,8 +40,8 @@ def on_disconnect(client, userdata, rc):
         mqtt_client.reconnect()
 
 
-def powerPump(location, pumpname, powerButton):
-    topic = domain + 'edits/' + location + '/' + pumpname
+def powerPump(customer, location, pumpname, powerButton):
+    topic = domain + 'edits/' + customer + '/' + location + '/' + pumpname
     if powerButton:
         package = json.dumps(pumpON)
     if not powerButton:
@@ -56,8 +56,8 @@ def powerPump(location, pumpname, powerButton):
         print(f'There was an issue sending data because {r}')
 
 
-def pumpSpeed(location, pumpname, rate):
-    topic = domain + 'edits/' + location + '/' + pumpname
+def pumpSpeed(customer, location, pumpname, rate):
+    topic = domain + 'edits/' + customer + '/' + location + '/' + pumpname
     package = json.dumps({'register': [104, 107], 'bit': [0x00, int(rate * 10000)]})
     try:
         mqtt_client.loop_start()
