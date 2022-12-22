@@ -7,19 +7,24 @@ import sys
 import inspect
 import pandas as pd
 import warnings
+import pyodbc as dbc
 
 warnings.filterwarnings("ignore")
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from dbServices import db_config, dbServices as db
-
+from dbServices import db_config as config
+from dbServices import dbServices as db
 
 mqttClient = mqtt.Client("hubMemphis", clean_session=False)
-mqtt_topic = db_config.topic
-mqttBroker = db_config.broker
-dbCon = db.conn
+mqtt_topic = config.topic
+mqttBroker = config.broker
+dbCon = dbc.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
 
 
 def getDict(metrics):
@@ -62,7 +67,7 @@ def on_message(client, userdata, msg):
         record = history + 1
     load.append({'RecordID': record})
     metrics = getDict(load)
-    db.writeValues(metrics, db_config.dataTable)
+    db.writeValues(metrics, config.dataTable)
 
 
 mqttClient.connect(mqttBroker)
