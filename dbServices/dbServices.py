@@ -120,6 +120,23 @@ def getPowerStatus(site, pump):
         conn.close()
         return power
 
+
+def getAlarmStatus(site, pump):
+    conn = db.connect(DRIVER='SQL Server',
+                      SERVER=config.server_name,
+                      UID=config.user,
+                      PWD=config.pwd,
+                      DATABASE=config.database_name, )
+    qu = f'''select top(1) "218" from "PoC_SP_Metrics" WHERE site like '{site}' AND pumpID like '{pump}' 
+        order by RecordID desc;'''
+    cur = conn.cursor()
+    cur.execute(qu)
+    for i in cur:
+        alarm = int(i[0])
+        conn.close()
+        return alarm
+
+
 def getDashData(site, pump):
     conn = db.connect(DRIVER='SQL Server',
                       SERVER=config.server_name,

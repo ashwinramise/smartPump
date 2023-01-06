@@ -50,6 +50,13 @@ for ac in assets.Account.unique():
     })
 summary = pd.DataFrame.from_dict(m)
 
+Alarms = db.getData("PoC_SP_Alarm", "Event_code")
+Codes = Alarms['Event_code'].tolist()
+Al = Alarms['Event_description'].tolist()
+AlarmDict = {}
+for i in range(len(Codes)):
+    AlarmDict.update({Codes[i]: Al[i]})
+
 ####### Users #####
 users = {
     'mmuthumani@buckman.com': 'pass@123',
@@ -65,7 +72,7 @@ logs = []
 ####### LogData #####
 
 ####### Generic Functions #####
-def genTextCard(id, title, text, text2, color2, color1='black'):
+def genTextCard(id, title, text, text2, color2, color1='black', width="10rem"):
     return dbc.Card(
         dbc.CardBody(
             id=id,
@@ -81,7 +88,7 @@ def genTextCard(id, title, text, text2, color2, color1='black'):
                 )
             ]
         ),
-        style={"width": "10rem", 'display': 'inline-block'},
+        style={"width": width, 'display': 'inline-block'},
     )
 
 
@@ -659,6 +666,10 @@ def control():
                                 ],
                                 style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
                                        }
+                            ),
+                            html.Div(
+                                id="alarms",
+                                style={'marginTop': 25, 'textAlign': 'center', 'width': "100%"}
                             )
                         ]
                     )
@@ -685,7 +696,7 @@ def getsites(location):
 def updateSitePumps(plant):
     if plant:
         pumps = assets[assets['Plant'] == plant]['Pump'].tolist()
-        print(pumps)
+        # print(pumps)
         data = pd.DataFrame()
         data['Pump'] = pumps
         pumpStatus = []
@@ -693,9 +704,9 @@ def updateSitePumps(plant):
         lastUpdate = []
         for p in pumps:
             status = db.getPowerStatus(plant, p)
-            print(status)
+            # print(status)
             speed, time = db.getSpeedTime(plant, p)
-            print(speed,time)
+            # print(speed, time)
             if speed is None:
                 speed = 0
             if time is None:
@@ -743,8 +754,25 @@ def dispPumpname(plant, pump):
 def powerON(n, customer, site, cell):
     pumps = assets[assets['Plant'] == site]['Pump'].tolist()
     pump = pumps[cell['row']]
+    record = db.getRecordID('PoC_SP_Change')
+    if record is None:
+        record = 0
+    else:
+        record = record
+    user = logs[-1]['User']
+    speed, last = db.getSpeedTime(site, pump)
     if site is not None and pump is not None:
         ctrl.powerPump(customer, site, pump, n)
+        metrics = {
+            'RecordID': record + 1,
+            'UserName': user,
+            'Site': site,
+            'Pump': pump,
+            'Power': str(n),
+            'Speed': speed,
+            'Timestamp': str(datetime.now())
+        }
+        db.writeValues(metrics, "PoC_SP_Change")
     if n:
         color = '#63ff5e'
     if not n:
@@ -778,9 +806,41 @@ def getPumpSpeed(site, cell):
 def update_output(on, value, customer, site, cell, ):
     pumps = assets[assets['Plant'] == site]['Pump'].tolist()
     pump = pumps[cell['row']]
+    record = db.getRecordID('PoC_SP_Change')
+    if record is None:
+        record = 0
+    else:
+        record = record
+    user = logs[-1]['User']
     if on and site is not None and pump is not None:
         ctrl.pumpSpeed(customer, site, pump, value)
+    metrics = {
+        'RecordID': record + 1,
+        'UserName':user,
+        'Site': site,
+        'Pump': pump,
+        'Power': str(on),
+        'Speed': value,
+        'Timestamp': str(datetime.now())
+    }
+    db.writeValues(metrics, "PoC_SP_Change")
     return [str(value)]
+
+
+@app.callback(
+    Output('alarms', 'children'),
+    Input('site-select', 'value'),
+    Input('pumps', 'active_cell'),
+    Input("interval-component", "n_intervals")
+)
+def getAlarms(site, cell, interval):
+    pumps = assets[assets['Plant'] == site]['Pump'].tolist()
+    pump = pumps[cell['row']]
+    if interval < 2000000:
+        alarm = db.getAlarmStatus(site, pump)
+        description = AlarmDict[alarm]
+        card = genTextCard('Alarm', "Current Alarm", str(alarm), description, 'red', width="25rem")
+        return card
 
 
 def history():
