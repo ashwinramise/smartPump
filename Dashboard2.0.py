@@ -636,23 +636,37 @@ def control():
                             html.Div(
                                 [
                                     html.H6("Flow Rate (l/h) "),
-                                    html.Div(
-                                        daq.Knob(
-                                            id='flow-rate',
-                                            size=140,
-                                            max=6.3,
-                                            value=None,
-                                            persistence=True,
-                                            persisted_props=True,
-                                        )
-                                        ,
-                                        style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
-                                               }
-                                    )
+                                    html.Div
+                                        (
+                                        [
+                                            html.Div(style={'marginTop': 25, 'textAlign': 'center', 'width': "33.33%",
+                                                            'display': 'inline-block'}),
+                                            html.Div(
+                                                [
+                                                    dbc.Input(
+                                                        id='flow-value',
+                                                        type='number',
+                                                        min=0.01,
+                                                        max=30,
+                                                        step=0.01,
+                                                        placeholder='Enter Flow Rate Change in l/h',
+                                                        persistence=True,
+                                                        style={'marginBottom': 5, 'textAlign': 'center'}
+                                                    ),
+                                                    dbc.Button("submit", id="submit-flow", n_clicks=0),
+                                                ],
+                                                style={'marginTop': 25, 'textAlign': 'center', 'width': "33.33%",
+                                                       'display': 'inline-block'}
+                                            ),
+                                            html.Div(style={'marginTop': 25, 'textAlign': 'center', 'width': "33.33%",
+                                                            'display': 'inline-block'}),
+                                        ]
+                                    ),
                                 ],
                                 style={'marginTop': 25, 'textAlign': 'center', 'width': "100%",
                                        }
                             ),
+
                             html.Div(
                                 [
                                     html.Div(
@@ -761,6 +775,8 @@ def powerON(n, customer, site, cell):
         record = record
     user = logs[-1]['User']
     speed, last = db.getSpeedTime(site, pump)
+    if speed is None:
+        speed = 0
     if site is not None and pump is not None:
         ctrl.powerPump(customer, site, pump, n)
         metrics = {
@@ -781,7 +797,7 @@ def powerON(n, customer, site, cell):
 
 
 @app.callback(
-    Output('flow-rate', 'value'),
+    Output('flow-value', 'value'),
     Input('site-select', 'value'),
     Input('pumps', 'active_cell')
 )
@@ -792,18 +808,29 @@ def getPumpSpeed(site, cell):
         s, t = db.getSpeedTime(site, pump)
         return s
     else:
-        return 0
+        return 0.1
 
 
+# @app.callback(
+#     Output('flow-rate-monitor', 'value'),
+#     Input('flow-value', 'value'),
+#     Input('submit-flow', 'n_clicks'),
+# )
+# def update_val(entry, submit):
+#     if entry is not None and submit > 0:
+#         return str(entry)
+#     else:
+#         return str(0)
 @app.callback(
     Output('flow-rate-monitor', 'value'),
     Input('powerON', 'on'),
-    Input('flow-rate', 'value'),
+    Input('flow-value', 'value'),
     Input('customer-select', 'value'),
     Input('site-select', 'value'),
-    Input('pumps', 'active_cell')
+    Input('pumps', 'active_cell'),
+    Input('submit-flow', 'n_clicks')
 )
-def update_output(on, value, customer, site, cell, ):
+def update_output(on, value, customer, site, cell, submit):
     pumps = assets[assets['Plant'] == site]['Pump'].tolist()
     pump = pumps[cell['row']]
     record = db.getRecordID('PoC_SP_Change')
@@ -812,11 +839,11 @@ def update_output(on, value, customer, site, cell, ):
     else:
         record = record
     user = logs[-1]['User']
-    if on and site is not None and pump is not None:
+    if on and site is not None and pump is not None and submit > 0:
         ctrl.pumpSpeed(customer, site, pump, value)
     metrics = {
         'RecordID': record + 1,
-        'UserName':user,
+        'UserName': user,
         'Site': site,
         'Pump': pump,
         'Power': str(on),
