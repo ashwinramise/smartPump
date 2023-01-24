@@ -95,6 +95,8 @@ def genTextCard(id, title, text, text2, color2, color1='black', width="10rem"):
 def genPumpStatus(site, pump):
     status = db.getPowerStatus(site, pump)
     speed, time = db.getSpeedTime(site, pump)
+    alarm = db.getAlarmStatus(site, pump)
+    description = AlarmDict[alarm]
     if speed is None:
         speed = 0
     if time is None:
@@ -108,6 +110,10 @@ def genPumpStatus(site, pump):
     elif status == 1:
         color = 'red'
         text = 'OFF!'
+    if alarm == 0:
+        color1 = 'green'
+    else:
+        color1 = 'red'
     return dbc.Card(
         dbc.CardBody(
             id=pump,
@@ -120,6 +126,10 @@ def genPumpStatus(site, pump):
                 ),
                 html.P(
                     html.H6(f'flow = {speed} l/h', style={'color': 'blue'}),
+                    className="card-text",
+                ),
+                html.P(
+                    html.H6(f'Alarm = {alarm}', style={'color': color1}),
                     className="card-text",
                 ),
                 dbc.CardFooter(f"Updated {time}")

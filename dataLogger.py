@@ -74,5 +74,5 @@ mqttClient.connect(mqttBroker)
 mqttClient.on_connect = on_connect
 mqttClient.on_message = on_message
 mqttClient.on_disconnect = on_disconnect
-mqttClient.subscribe(mqtt_topic)
+mqttClient.subscribe(mqtt_topic, qos=1)
 mqttClient.loop_forever()
