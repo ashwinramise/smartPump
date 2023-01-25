@@ -67,6 +67,8 @@ users = {
 
 ####### LogData #####
 logs = []
+speed_change = []
+submit_counter = []
 
 
 ####### LogData #####
@@ -627,18 +629,18 @@ def control():
                     ),
                     html.Div(
                         id='pump-controls',
-                        style={'width': '40%', 'marginTop': 15, 'marginLeft': 5, 'display': 'inline-block',
+                        style={'width': '45%', 'marginTop': 15, 'marginLeft': 20, 'display': 'inline-block',
                                'verticalAlign': 'top', 'textAlign': 'right'},
                         children=[
                             html.Div(
                                 id='pump-identifier',
+                                style={'textAlign': 'center'}
                             ),
                             html.Div(
                                 [
                                     html.H6("Pump Power:"),
                                     daq.PowerButton(
-                                        id='powerON',
-                                        on=False
+                                        id='powerON'
                                     )
                                 ],
                                 style={'marginTop': 15, 'textAlign': 'center'}
@@ -694,7 +696,8 @@ def control():
                             html.Div(
                                 id="alarms",
                                 style={'marginTop': 25, 'textAlign': 'center', 'width': "100%"}
-                            )
+                            ),
+                            html.Div(id='dummy')  # dummy for tests
                         ]
                     )
                 ]
@@ -769,6 +772,27 @@ def dispPumpname(plant, pump):
 
 
 @app.callback(
+    Output('powerON', 'on'),
+    Input('site-select', 'value'),
+    Input('pumps', 'active_cell')
+)
+def powerStatus(site, cell):
+    if site is not None:
+        pumps = assets[assets['Plant'] == site]['Pump'].tolist()
+        pump = pumps[cell['row']]
+        power = db.getPowerStatus(site, pump)
+        if power == 1:
+            status = False
+        elif power == 0:
+            status = True
+        elif power is None:
+            status = False
+    else:
+        status = False
+    return status
+
+
+@app.callback(
     Output('powerON', 'color'),
     Input('powerON', 'on'),
     Input('customer-select', 'value'),
@@ -831,6 +855,8 @@ def getPumpSpeed(site, cell):
 #         return str(entry)
 #     else:
 #         return str(0)
+
+
 @app.callback(
     Output('flow-rate-monitor', 'value'),
     Input('powerON', 'on'),
@@ -841,6 +867,7 @@ def getPumpSpeed(site, cell):
     Input('submit-flow', 'n_clicks')
 )
 def update_output(on, value, customer, site, cell, submit):
+    # print(submit, len(k))
     pumps = assets[assets['Plant'] == site]['Pump'].tolist()
     pump = pumps[cell['row']]
     record = db.getRecordID('PoC_SP_Change')
@@ -849,18 +876,20 @@ def update_output(on, value, customer, site, cell, submit):
     else:
         record = record
     user = logs[-1]['User']
-    if on and site is not None and pump is not None and submit > 0:
+    if on and site is not None and pump is not None and submit > len(submit_counter):
+        submit_counter.append(submit)
+        # print(k)
         ctrl.pumpSpeed(customer, site, pump, value)
-    metrics = {
-        'RecordID': record + 1,
-        'UserName': user,
-        'Site': site,
-        'Pump': pump,
-        'Power': str(on),
-        'Speed': value,
-        'Timestamp': str(datetime.now())
-    }
-    db.writeValues(metrics, "PoC_SP_Change")
+        metrics = {
+            'RecordID': record + 1,
+            'UserName': user,
+            'Site': site,
+            'Pump': pump,
+            'Power': str(on),
+            'Speed': value,
+            'Timestamp': str(datetime.now())
+        }
+        db.writeValues(metrics, "PoC_SP_Change")
     return [str(value)]
 
 

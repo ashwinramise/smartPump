@@ -17,7 +17,6 @@ mqtt_client = mqtt.Client(config.mqtt_client)
 domain = config.domain
 broker = config.mqtt_broker
 
-
 pumpON = {'register': [101, 104], 'bit': [0x01, 0x00]}
 pumpOFF = {'register': [101, 104], 'bit': [0x01, 0x01]}
 
