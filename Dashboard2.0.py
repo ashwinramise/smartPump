@@ -805,8 +805,8 @@ def analytics_graphing(site, pump, start, end, submit):
         volume = getTotals(gData, 314) / 1000
         cost = volume * 200 / 1000
         # print(volume, cost)
-    volume_disp = genTextCard('volume', 'Consumption', str(volume) + 'l', width="20rem")
-    cost_disp = genTextCard('cost', 'Cost', '$' + str(cost) + 'k', width="20rem")
+    volume_disp = genTextCard('volume', 'Consumption', str(round(volume,2)) + 'l', width="20rem")
+    cost_disp = genTextCard('cost', 'Cost', '$' + str(round(cost,2)) + 'k', width="20rem")
     speed = px.line(gData, x='Timestamp', y='208', title=t)
     return volume_disp, cost_disp, speed
     pass
