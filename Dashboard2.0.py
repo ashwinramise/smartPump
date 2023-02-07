@@ -74,7 +74,25 @@ submit_counter = []
 ####### LogData #####
 
 ####### Generic Functions #####
-def genTextCard(id, title, text, text2, color2, color1='black', width="10rem"):
+def getTotals(data, columnHigh):
+    k = data[data['104'] < 2]
+    k = k[[str(columnHigh), str(columnHigh + 1)]]
+    k.dropna(inplace=True)
+    k[str(columnHigh)] = [int(i) for i in k[str(columnHigh)]]
+    k[str(columnHigh + 1)] = [int(i) for i in k[str(columnHigh + 1)]]
+    changes = k[str(columnHigh)].unique().tolist()
+    unique_data = []
+    for change in changes:
+        m = k[k[str(columnHigh)] == change]
+        unique_data.append(m[str(columnHigh + 1)].tolist())
+    total = 0
+    for e in unique_data:
+        t = max(e) - min(e)
+        total = total + t
+    return total
+
+
+def genTextCard(id, title, text, text2=None, color2=None, color1='black', width="10rem"):
     return dbc.Card(
         dbc.CardBody(
             id=id,
@@ -186,6 +204,7 @@ def build_banner():
                     dbc.Offcanvas(children=[
                         html.Div([dbc.Button("Home", id="home", n_clicks=0)], style={'marginBottom': 5}),
                         html.Div([dbc.Button("Logs", id="log", n_clicks=0)], style={'marginBottom': 5}),
+                        html.Div([dbc.Button("Analytics", id="analytics", n_clicks=0)], style={'marginBottom': 5}),
                         html.Div(dbc.Button("Controls", id="controls", n_clicks=0, disabled=True))
                     ],
                         id="offcanvas",
@@ -575,6 +594,222 @@ def updateCosts(c, s):
                     # print(genPumpStatus(site, pump))
                     children.append(genPumpStatus(site, pump))
         return children
+
+
+### Analytics
+def analytics():
+    return html.Div(
+        [
+            html.Div(
+                children=[
+                    html.Div(
+                        children=[
+                            dcc.Dropdown(
+                                id='customer-select2',
+                                options=assets['Account'].unique(),
+                                placeholder='Select a customer',
+                                searchable=True,
+                                style={'height': 15},
+                            )
+                        ],
+                        style={'marginTop': 0, 'marginBottom': 10,
+                               'font-size': 18,
+                               'color': 'black',
+                               'width': '25%',
+                               'display': 'inline-block'}
+                    ),
+                    html.Div(
+                        children=[
+                            dcc.Dropdown(
+                                id='site-select2',
+                                placeholder='Select a site',
+                                searchable=True,
+                                style={'height': 15},
+                            )
+                        ],
+                        style={'marginTop': 0, 'marginBottom': 10,
+                               'font-size': 18,
+                               'color': 'black',
+                               'width': '25%',
+                               'display': 'inline-block'}
+                    ),
+                    html.H4("Pump Analytics",
+                            style={'width': '45%', 'display': 'inline-block',
+                                   'marginLeft': 20, 'textAlign': 'center'})
+                ]
+            ),
+            html.Div(
+                id='anaBody',
+                style={'textAlign': 'center'},
+                children=[
+                    html.Div(
+                        id='asset-table2',
+                        style={'width': '40%', 'marginTop': 15, 'marginLeft': 5, 'display': 'inline-block',
+                               'verticalAlign': 'top'}
+                    ),
+                    html.Div(
+                        id='pump-analytics',
+                        style={'width': '45%', 'marginTop': 15, 'marginLeft': 20, 'display': 'inline-block',
+                               'verticalAlign': 'top', 'textAlign': 'right'},
+                        children=[
+                            html.Div(
+                                id='pump-identifier2',
+                                style={'textAlign': 'center'}
+                            ),
+                            html.Div(
+                                [
+                                    html.Div(
+                                        dcc.DatePickerRange(
+                                            id='my-date-picker-range2',
+                                            end_date=datetime.now().date()
+                                        ),
+                                        style={'display': 'inline-block', 'marginRight': 10}
+                                    ),
+                                    html.Div(
+                                        dbc.Button(
+                                            "View Data", id="logme2", className="ms-auto", n_clicks=0
+                                        ),
+                                        style={'display': 'inline-block'}
+                                    ),
+                                ],
+                                style={'textAlign': 'center'}
+                            ),
+                            html.Div(
+                                [
+                                    html.Div(
+                                        id='volume-total',
+                                        style={'textAlign': 'center', 'display': 'inline-block', 'marginRight': 10}
+                                    ),
+                                    html.Div(
+                                        id='cost-component',
+                                        style={'textAlign': 'center', 'display': 'inline-block', 'marginRight': 10}
+                                    )
+                                ],
+                                style={'textAlign': 'center', 'marginTop': 10}
+                            ),
+                            html.Div(
+                                dcc.Graph(
+                                    id='speed-g'
+                                ),
+                                style={'textAlign': 'center', 'marginTop': 10}
+                            )
+                        ]
+                    )
+                ]
+            )
+        ]
+    )
+
+
+@app.callback(
+    Output('site-select2', 'options'),
+    Input('customer-select2', 'value'),
+)
+def getsites(location):
+    sites = assets[assets['Account'] == location]
+    r = sites['Plant'].unique().tolist()
+    return [{'label': i, 'value': i} for i in r]
+
+
+@app.callback(
+    Output('asset-table2', 'children'),
+    Input('site-select2', 'value'),
+)
+def updateSitePumps(plant):
+    if plant:
+        pumps = assets[assets['Plant'] == plant]['Pump'].tolist()
+        # print(pumps)
+        data = pd.DataFrame()
+        data['Pump'] = pumps
+        pumpStatus = []
+        pumpSpeed = []
+        lastUpdate = []
+        for p in pumps:
+            status = db.getPowerStatus(plant, p)
+            # print(status)
+            speed, time = db.getSpeedTime(plant, p)
+            # print(speed, time)
+            if speed is None:
+                speed = 0
+            if time is None:
+                time = datetime.now().time()
+            if status is None:
+                text = 'Disabled'
+            elif status == 0:
+                text = 'Running'
+            elif status == 1:
+                text = 'OFF'
+            pumpStatus.append(text)
+            pumpSpeed.append(speed)
+            lastUpdate.append(time)
+        data['Status'] = pumpStatus
+        data['FlowRate'] = pumpSpeed
+        data['Last Updated'] = lastUpdate
+        return genTable('pumps2', data)
+
+
+@app.callback(
+    Output('pump-identifier2', 'children'),
+    Input('site-select2', 'value'),
+    Input('pumps2', 'active_cell')
+)
+def dispPumpname(plant, pump):
+    if plant:
+        pumps = assets[assets['Plant'] == plant]['Pump'].tolist()
+        if pump['column_id'] == 'Pump':
+            pumpName = pumps[pump['row']]
+            name = html.H3(pumpName)
+        else:
+            name = html.H3('Select Pump')
+    else:
+        name = html.H3('Select Plant')
+    return name
+
+
+@app.callback(
+    Output('volume-total', 'children'),
+    Output('cost-component', 'children'),
+    Output('speed-g', 'figure'),
+    Input('site-select2', 'value'),
+    Input('pumps2', 'active_cell'),
+    Input('my-date-picker-range2', 'start_date'),
+    Input('my-date-picker-range2', 'end_date'),
+    Input('logme2', 'n_clicks')
+)
+def analytics_graphing(site, pump, start, end, submit):
+    data = db.getData("PoC_SP_Metrics", "RecordID")
+    data = data.astype({'104': 'int32', '208': 'int32'})
+    data = data[data['104'] < 2]
+    data['208'] = data['208'] / 10000
+    data['Timestamp'] = [pd.to_datetime(i) for i in data['Timestamp'].tolist()]
+    data.sort_values(by='Timestamp', ascending=False, inplace=True)
+    data['date'] = [d.date() for d in data['Timestamp'].tolist()]
+    if site:
+        pumps = assets[assets['Plant'] == site]['Pump'].tolist()
+        if pump['column_id'] == 'Pump':
+            pumpName = pumps[pump['row']]
+            pumpData = data[data['pumpID'] == pumpName]
+            # print(pumpName)
+    if start is None:
+        gData = pumpData
+        t = f"Flow Rate Data (l/h) upto {end}"
+        volume = getTotals(gData, 314) / 1000
+        cost = volume * 200 / 1000
+        # print(volume, cost)
+    elif start is not None and submit:
+        gData = pumpData[(pumpData['date'] <= pd.Timestamp(end).date()) &
+                         (pumpData['date'] > pd.Timestamp(start).date())].sort_values(
+            by='Timestamp',
+            ascending=False)
+        t = f"Speed Data from {start} to {end}"
+        volume = getTotals(gData, 314) / 1000
+        cost = volume * 200 / 1000
+        # print(volume, cost)
+    volume_disp = genTextCard('volume', 'Consumption', str(volume) + 'l', width="20rem")
+    cost_disp = genTextCard('cost', 'Cost', '$' + str(cost) + 'k', width="20rem")
+    speed = px.line(gData, x='Timestamp', y='208', title=t)
+    return volume_disp, cost_disp, speed
+    pass
 
 
 def control():
@@ -1027,10 +1262,11 @@ app.layout = html.Div(
         Input("home", "n_clicks"),
         # Input("assets", "n_clicks"),
         Input("log", "n_clicks"),
+        Input('analytics', 'n_clicks'),
         Input("controls", "n_clicks"),
     ],
 )
-def getPages(h, l, c):
+def getPages(h, l, a, c):
     if h > 0:
         return [[build_banner(),
                  dcc.Interval(
@@ -1043,6 +1279,9 @@ def getPages(h, l, c):
     elif l > 0:
         return [[build_banner(),
                  history()]]
+    elif a > 0:
+        return [[build_banner(),
+                 analytics()]]
     elif c > 0:
         return [[build_banner(),
                  dcc.Interval(
