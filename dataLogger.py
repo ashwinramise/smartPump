@@ -17,6 +17,7 @@ sys.path.insert(0, parentdir)
 from dbServices import db_config as config
 from dbServices import dbServices as db
 
+# mqttClient = mqtt.Client("hubMemphis", clean_session=False)
 mqttClient = mqtt.Client("hubMemphis", clean_session=False)
 mqtt_topic = config.topic
 mqttBroker = config.broker
@@ -70,7 +71,12 @@ def on_message(client, userdata, msg):
     db.writeValues(metrics, config.dataTable)
 
 
-mqttClient.connect(mqttBroker)
+# enable TLS
+mqttClient.tls_set()
+# set username and password
+mqttClient.username_pw_set(config.mqtt_username, config.mqtt_pass)
+# connect to HiveMQ Cloud on port 8883
+mqttClient.connect(mqttBroker, 8883)
 mqttClient.on_connect = on_connect
 mqttClient.on_message = on_message
 mqttClient.on_disconnect = on_disconnect
