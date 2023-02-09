@@ -48,6 +48,7 @@ def powerPump(customer, location, pumpname, powerButton):
     try:
         mqtt_client.loop_start()
         mqtt_client.on_connect = on_connect
+        mqtt_client.on_disconnect = on_disconnect
         mqtt_client.publish(topic, package, qos=1)  # publish to MQTT Broker every 5s
         print(f'{datetime.now()}: publishing {package} to {topic}')
         mqtt_client.loop_stop()
@@ -60,6 +61,8 @@ def pumpSpeed(customer, location, pumpname, rate):
     package = json.dumps({'register': [104, 107], 'bit': [0x00, int(rate * 10000)]})
     try:
         mqtt_client.loop_start()
+        mqtt_client.on_connect = on_connect
+        mqtt_client.on_disconnect = on_disconnect
         mqtt_client.publish(topic, package, qos=1)  # publish to MQTT Broker every 5s
         print(f'{datetime.now()}: publishing {package} to {topic}')
         mqtt_client.loop_stop()
