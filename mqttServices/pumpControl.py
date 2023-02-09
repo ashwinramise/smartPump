@@ -67,6 +67,10 @@ def pumpSpeed(customer, location, pumpname, rate):
         print(f'There was an issue sending data because {r}')
 
 
-mqtt_client.connect(broker)
+mqtt_client.tls_set()
+# set username and password
+mqtt_client.username_pw_set(config.mqtt_username, config.mqtt_pass)
+# connect to HiveMQ Cloud on port 8883
+mqtt_client.connect(broker, 8883)
 mqtt_client.on_connect = on_connect
 mqtt_client.on_disconnect = on_disconnect
