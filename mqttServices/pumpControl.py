@@ -13,7 +13,8 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 from mqttServices import mqtt_config as config
 
-mqtt_client = mqtt.Client(config.mqtt_client)
+mqtt_client = mqtt.Client(config.mqtt_client, clean_session=False)
+mqtt_client._connect_timeout = 1.0
 domain = config.domain
 broker = config.mqtt_broker
 
@@ -74,6 +75,6 @@ mqtt_client.tls_set()
 # set username and password
 mqtt_client.username_pw_set(config.mqtt_username, config.mqtt_pass)
 # connect to HiveMQ Cloud on port 8883
-mqtt_client.connect(broker, 8883, keepalive=60)
+mqtt_client.connect(broker, 8883)
 mqtt_client.on_connect = on_connect
 mqtt_client.on_disconnect = on_disconnect
