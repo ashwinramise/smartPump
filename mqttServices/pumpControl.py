@@ -59,7 +59,8 @@ def powerPump(customer, location, pumpname, powerButton):
 
 def pumpSpeed(customer, location, pumpname, rate):
     topic = domain + 'edits/' + customer + '/' + location + '/' + pumpname
-    package = json.dumps({'register': [104, 107], 'bit': [0x00, int(rate * 10000)]})
+    package = json.dumps({'register': [107], 'bit': [int(rate * 10000)]})
+    # package = json.dumps({'register': [104, 107], 'bit': [0x00, int(rate * 10000)]})
     try:
         mqtt_client.loop_start()
         mqtt_client.on_connect = on_connect
