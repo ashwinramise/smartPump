@@ -12,7 +12,6 @@ sys.path.insert(0, parentdir)
 from dbServices import db_config as config
                   # MultipleActiveResultSets=True)
 
-
 def createTable(db_name, tablename, columns):
     conn = db.connect(DRIVER='SQL Server',
                       SERVER=config.server_name,
