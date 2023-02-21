@@ -18,8 +18,8 @@ mqtt_client._connect_timeout = 1.0
 domain = config.domain
 broker = config.mqtt_broker
 
-pumpON = {'register': [101, 104], 'bit': [0x01, 0x00]}
-pumpOFF = {'register': [101, 104], 'bit': [0x01, 0x01]}
+pumpON = {'change': 'change', 'register': [101, 104], 'bit': [0x01, 0x00]}
+pumpOFF = {'change': 'change', 'register': [101, 104], 'bit': [0x01, 0x01]}
 
 
 def on_connect(client, userdata, flags, rc):
@@ -59,7 +59,7 @@ def powerPump(customer, location, pumpname, powerButton):
 
 def pumpSpeed(customer, location, pumpname, rate):
     topic = domain + 'edits/' + customer + '/' + location + '/' + pumpname
-    package = json.dumps({'register': [107], 'bit': [int(rate * 10000)]})
+    package = json.dumps({'change': 'change', 'register': [107], 'bit': [int(rate * 10000)]})
     # package = json.dumps({'register': [104, 107], 'bit': [0x00, int(rate * 10000)]})
     try:
         mqtt_client.loop_start()
@@ -70,6 +70,21 @@ def pumpSpeed(customer, location, pumpname, rate):
         mqtt_client.loop_stop()
     except Exception as r:
         print(f'There was an issue sending data because {r}')
+
+
+def pingPump(customer, location, pumpname):
+    topic = domain + 'edits/' + customer + '/' + location + '/' + pumpname
+    package = json.dumps({'change': 'ping'})
+    try:
+        mqtt_client.loop_start()
+        mqtt_client.on_connect = on_connect
+        mqtt_client.on_disconnect = on_disconnect
+        mqtt_client.publish(topic, package, qos=1)  # publish to MQTT Broker every 5s
+        print(f'{datetime.now()}: publishing {package} to {topic}')
+        mqtt_client.loop_stop()
+    except Exception as r:
+        print(f'There was an issue sending data because {r}')
+
 
 
 mqtt_client.tls_set()
