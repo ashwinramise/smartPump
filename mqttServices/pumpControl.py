@@ -47,12 +47,14 @@ def powerPump(customer, location, pumpname, powerButton):
     if not powerButton:
         package = json.dumps(pumpOFF)
     try:
+        # connect to HiveMQ Cloud on port 8883
+        mqtt_client.connect(broker, 8883)
         mqtt_client.loop_start()
         mqtt_client.on_connect = on_connect
-        mqtt_client.on_disconnect = on_disconnect
         mqtt_client.publish(topic, package, qos=1)  # publish to MQTT Broker every 5s
         print(f'{datetime.now()}: publishing {package} to {topic}')
         mqtt_client.loop_stop()
+        mqtt_client.disconnect()
     except Exception as r:
         print(f'There was an issue sending data because {r}')
 
@@ -62,12 +64,14 @@ def pumpSpeed(customer, location, pumpname, rate):
     package = json.dumps({'change': 'change', 'register': [107], 'bit': [int(rate * 10000)]})
     # package = json.dumps({'register': [104, 107], 'bit': [0x00, int(rate * 10000)]})
     try:
+        # connect to HiveMQ Cloud on port 8883
+        mqtt_client.connect(broker, 8883)
         mqtt_client.loop_start()
         mqtt_client.on_connect = on_connect
-        mqtt_client.on_disconnect = on_disconnect
         mqtt_client.publish(topic, package, qos=1)  # publish to MQTT Broker every 5s
         print(f'{datetime.now()}: publishing {package} to {topic}')
         mqtt_client.loop_stop()
+        mqtt_client.disconnect()
     except Exception as r:
         print(f'There was an issue sending data because {r}')
 
@@ -76,12 +80,14 @@ def pingPump(customer, location, pumpname):
     topic = domain + 'edits/' + customer + '/' + location + '/' + pumpname
     package = json.dumps({'change': 'ping'})
     try:
+        # connect to HiveMQ Cloud on port 8883
+        mqtt_client.connect(broker, 8883)
         mqtt_client.loop_start()
         mqtt_client.on_connect = on_connect
-        mqtt_client.on_disconnect = on_disconnect
         mqtt_client.publish(topic, package, qos=1)  # publish to MQTT Broker every 5s
         print(f'{datetime.now()}: publishing {package} to {topic}')
         mqtt_client.loop_stop()
+        mqtt_client.disconnect()
     except Exception as r:
         print(f'There was an issue sending data because {r}')
 
@@ -90,7 +96,3 @@ def pingPump(customer, location, pumpname):
 mqtt_client.tls_set()
 # set username and password
 mqtt_client.username_pw_set(config.mqtt_username, config.mqtt_pass)
-# connect to HiveMQ Cloud on port 8883
-mqtt_client.connect(broker, 8883)
-mqtt_client.on_connect = on_connect
-mqtt_client.on_disconnect = on_disconnect
