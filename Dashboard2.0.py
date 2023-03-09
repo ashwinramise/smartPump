@@ -204,6 +204,7 @@ def build_banner():
                     dbc.Offcanvas(children=[
                         html.Div([dbc.Button("Home", id="home", n_clicks=0)], style={'marginBottom': 5}),
                         html.Div([dbc.Button("Logs", id="log", n_clicks=0)], style={'marginBottom': 5}),
+                        html.Div([dbc.Button("ChangeLog", id="chlog", n_clicks=0)], style={'marginBottom': 5}),
                         html.Div([dbc.Button("Analytics", id="analytics", n_clicks=0)], style={'marginBottom': 5}),
                         html.Div(dbc.Button("Controls", id="controls", n_clicks=0, disabled=True))
                     ],
@@ -1238,6 +1239,100 @@ def updateLogs(d1, d2, clicks):
     return table, use
 
 
+def changelog():
+    return html.Div(
+        style={'textAlign': 'center'},
+        children=[
+            html.Div(
+                id='users-log2',
+                style={'marginTop': 15, 'width': "40%",
+                       'display': 'inline-block', 'textAlign': 'center', 'marginRight': 40, 'verticalAlign': 'top'},
+                children=[
+                    html.Div(
+                        [
+                            html.Div(dcc.DatePickerRange(
+                                id='my-date-picker-range2',
+                                end_date=datetime.now().date()
+                            ), style={'display': 'inline-block', 'marginRight': 10}),
+                            html.Div(dbc.Button(
+                                "View Logs", id="logme2", className="ms-auto", n_clicks=0),
+                                style={'display': 'inline-block'}),
+                        ]),
+                    html.Div(
+                        id='usage-g2', style={'marginTop': 25},
+                        children=[
+                            html.Div(
+                                [
+                                    dcc.Graph(id='change-stats'),
+                                ],
+                                style={'marginTop': 30}
+                            )
+                        ]
+                    ),
+                ]
+            ),
+            html.Div(
+                id='changelogs',
+                style={'marginTop': 15, 'width': "60%",
+                       'display': 'inline-block', 'textAlign': 'center', 'marginRight': 40, 'verticalAlign': 'top'},
+            )
+        ]
+    )
+
+
+@app.callback(
+    [Output('changelogs', 'children'),
+     Output('change-stats', 'figure')],
+    [Input('my-date-picker-range2', 'start_date'),
+     Input('my-date-picker-range2', 'end_date'),
+     Input('logme2', 'n_clicks')]
+)
+def updateLogs(d1, d2, clicks):
+    # print(len(logs))
+    data = db.getData('PoC_SP_Change', 'RecordID')
+    if d1 is None:
+        # data = db.getData("PoC_SP_UserLogs", "RecordID")
+        data['Timestamp'] = [pd.to_datetime(i) for i in data['Timestamp'].tolist()]
+        data.sort_values(by='Timestamp', ascending=False, inplace=True)
+        t = f"Usage Statistics upto {d2}"
+    elif d1 is not None and clicks:
+        l = data
+        l['Timestamp'] = [pd.to_datetime(i) for i in l['Timestamp'].tolist()]
+        l['date'] = [d.date() for d in l['Timestamp'].tolist()]
+        data = l[(l['date'] <= pd.Timestamp(d2).date()) & (l['date'] > pd.Timestamp(d1).date())].sort_values(
+            by='Timestamp',
+            ascending=False)
+        t = f"Change Statistics from {d1} to {d2}"
+    cols = [
+        {"name": i, "id": i} for i in data.columns
+    ]
+    rows = data.to_dict('records')
+    table = [
+        dash_table.DataTable(
+            id='data-table2',
+            columns=cols,
+            style_cell={
+                'textAlign': 'center',
+                'font_size': '15px'
+            },
+            data=rows,
+            editable=False,
+            filter_action="native",
+            sort_action="native",
+            sort_mode="multi",
+            page_action="native",
+            page_current=0,
+            page_size=20,
+        )
+    ]
+    n = pd.DataFrame()
+    n['Users'] = [u.split('@')[0] for u in data['UserName'].unique()]
+    n['Counts'] = [data['UserName'].tolist().count(u) for u in data['UserName'].unique()]
+    n.sort_values(by='Counts', inplace=True, ascending=False)
+    use = px.bar(n, x='Users', y='Counts', color='Users', title=t)
+    return table, use
+
+
 app.layout = html.Div(
     style={'background': 'white', 'width': '100%', 'height': '100%'},
     id="big-app-container",
@@ -1260,13 +1355,13 @@ app.layout = html.Div(
     ],
     inputs=[
         Input("home", "n_clicks"),
-        # Input("assets", "n_clicks"),
+        Input("chlog", "n_clicks"),
         Input("log", "n_clicks"),
         Input('analytics', 'n_clicks'),
         Input("controls", "n_clicks"),
     ],
 )
-def getPages(h, l, a, c):
+def getPages(h, cl, l, a, c):
     if h > 0:
         return [[build_banner(),
                  dcc.Interval(
@@ -1276,6 +1371,9 @@ def getPages(h, l, a, c):
                      disabled=False,
                  ),
                  home()]]
+    elif cl > 0:
+        return [[build_banner(),
+                 changelog()]]
     elif l > 0:
         return [[build_banner(),
                  history()]]
